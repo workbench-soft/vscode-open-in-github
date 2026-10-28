@@ -1,0 +1,188 @@
+{
+  "name": "open-in-remote-repo",
+  "displayName": "Open in Remote Repo",
+  "description": "Open or copy a link to a file or folder on GitHub, GitLab or Bitbucket. Links point to main or master.",
+  "license": "MIT",
+  "version": "1.19.0",
+  "publisher": "oleg-chibikov",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "multi-root ready",
+    "vscode",
+    "github",
+    "gitlab",
+    "bitbucket",
+    "git"
+  ],
+  "homepage": "https://github.com/workbench-soft/vscode-open-in-github",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/workbench-soft/vscode-open-in-github.git"
+  },
+  "bugs": "https://github.com/workbench-soft/vscode-open-in-github/issues",
+  "main": "./out/extension.js",
+  "icon": "./assets/icon.jpg",
+  "contributes": {
+    "menus": {
+      "editor/context": [
+        {
+          "command": "openInGithub.openInGitHubFile",
+          "group": "OpenInGithub",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "openInGithub.copyInGitHubFile",
+          "group": "OpenInGithub",
+          "when": "editorTextFocus"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "openInGithub.openInGitHubExplorer",
+          "group": "OpenInGithub"
+        },
+        {
+          "command": "openInGithub.copyInGitHubExplorer",
+          "group": "OpenInGithub"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "openInGithub.openInGitHubExplorer",
+          "when": "false"
+        },
+        {
+          "command": "openInGithub.copyInGitHubExplorer",
+          "when": "false"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "openInGithub.openInGitHubFile",
+        "title": "Remote Repo: Open File URL"
+      },
+      {
+        "command": "openInGithub.openInGitHubBlame",
+        "title": "Remote Repo: Open Blame URL"
+      },
+      {
+        "command": "openInGithub.openInGitHubHistory",
+        "title": "Remote Repo: Open History URL"
+      },
+      {
+        "command": "openInGithub.copyInGitHubFile",
+        "title": "Remote Repo: Copy File URL"
+      },
+      {
+        "command": "openInGithub.copyInGitHubBlame",
+        "title": "Remote Repo: Copy Blame URL"
+      },
+      {
+        "command": "openInGithub.copyInGitHubHistory",
+        "title": "Remote Repo: Copy History URL"
+      },
+      {
+        "command": "openInGithub.openInGitHubExplorer",
+        "title": "Remote Repo: Open URL"
+      },
+      {
+        "command": "openInGithub.copyInGitHubExplorer",
+        "title": "Remote Repo: Copy URL"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Open in Remote Repo",
+      "properties": {
+        "openInGitHub.defaultBranch": {
+          "scope": "resource",
+          "type": "string",
+          "default": "",
+          "description": "Branch to link to first. When empty, the remote default branch, then main, then master. Falls back to the current branch when the file isn't there."
+        },
+        "openInGitHub.defaultRemote": {
+          "scope": "resource",
+          "type": "string",
+          "default": "origin",
+          "description": "Controls which remote will be treated as default."
+        },
+        "openInGitHub.repositoryType": {
+          "scope": "resource",
+          "type": "string",
+          "default": "auto",
+          "enum": [
+            "auto",
+            "github",
+            "bitbucket",
+            "bitbucket-server",
+            "gitlab"
+          ],
+          "enumDescriptions": [
+            "Auto detection of repository type",
+            "Github",
+            "Bitbucket",
+            "Bitbucket Server (uses /projects/<project>/repos/<repo> repository URL scheme)",
+            "Gitlab"
+          ],
+          "description": "Defines type of repository"
+        },
+        "openInGitHub.remoteURLMapping": {
+          "scope": "resource",
+          "type": "object",
+          "default": {},
+          "description": "Allows to override URL that will be opened for specific remote."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "node ./build.js",
+    "watch": "node ./build.js --watch",
+    "package": "tsc --noEmit -p tsconfig.json && node ./build.js --production",
+    "compile-tests": "tsc -p .",
+    "watch-tests": "tsc -p . -w",
+    "pretest": "npm run compile-tests && npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "lint:staged": "lint-staged --no-stash"
+  },
+  "devDependencies": {
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^16.x",
+    "@types/ramda": "^0.25.41",
+    "@types/vscode": "^1.75.0",
+    "@vscode/test-electron": "^2.1.5",
+    "esbuild": "^0.15.6",
+    "glob": "^8.0.3",
+    "lint-staged": "^10.1.3",
+    "mocha": "^10.0.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.2"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "pre-commit": [
+    "lint:staged"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "dependencies": {
+    "clipboardy": "^2.3.0",
+    "open": "^8.4.2",
+    "ramda": "^0.25.0"
+  }
+}
