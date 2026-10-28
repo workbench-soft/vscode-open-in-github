@@ -9,7 +9,7 @@ A fork of [Open in GitHub](https://github.com/d4rkr00t/vscode-open-in-github) by
 Launch VS Code Quick Open (⌘+P), paste the following command, and press Enter.
 
 ```
-ext install oleg-chibikov.open-in-remote-repo
+ext install workbench-soft.open-in-remote-repo
 ```
 
 Uninstall the original Open in GitHub first. Both use the same command ids.
