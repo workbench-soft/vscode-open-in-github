@@ -4,7 +4,7 @@
   "description": "Open or copy a link to a file or folder on GitHub, GitLab or Bitbucket. Links point to main or master.",
   "license": "MIT",
   "version": "1.19.0",
-  "publisher": "oleg-chibikov",
+  "publisher": "workbench-soft",
   "engines": {
     "vscode": "^1.75.0"
   },
