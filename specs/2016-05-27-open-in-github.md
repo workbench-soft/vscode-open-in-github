@@ -1,31 +1,31 @@
-# Open the current file in GitHub from VS Code
+# Jump from VS Code to the file on GitHub
 
-Done from 2016-05-27 to 2016-05-29, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built from 2016-05-27 to 2016-05-29. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-Finding the file on GitHub by hand to share a link took too long.
+People shared links by looking the file up on GitHub by hand, and that was slow.
 
-## User flows it touches
+## What changes for people
 
-- **Command palette** open the file on GitHub at the current line.
-- **Settings** pick the default branch.
+- **Command palette** a command opens the file on GitHub at the cursor line.
+- **Settings** a setting names the default branch.
 
-## Changes
+## Files
 
-- **`package.json`** new.
-- **`src/extension.ts`** new.
-- **`test/extension.test.ts`** new.
-- **`.gitignore`** new.
-- **`.editorconfig`** new.
-- **`.vscodeignore`** new.
-- **`test/index.ts`** new.
-- **`tsconfig.json`** new.
-- **`.vscode/launch.json`** new.
-- **`.vscode/settings.json`** new.
-- **Other files** 9 more.
+- **`package.json`** added.
+- **`src/extension.ts`** added.
+- **`test/extension.test.ts`** added.
+- **`.gitignore`** added.
+- **`.editorconfig`** added.
+- **`.vscodeignore`** added.
+- **`test/index.ts`** added.
+- **`tsconfig.json`** added.
+- **`.vscode/launch.json`** added.
+- **`.vscode/settings.json`** added.
+- **The rest** 9 more files.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. feat(*): Init (ac4bc18, 2016-05-27)
 2. test(*): Increase test coverage (abc5a0d, 2016-05-28)
@@ -40,6 +40,6 @@ Finding the file on GitHub by hand to share a link took too long.
 11. docs(package,readme): Update display name and docs (eb282c6, 2016-05-29)
 12. chore(version): v1.0.1 (a78e3d1, 2016-05-29)
 
-## Docs to update
+## Docs it updated
 
 - `README.md`

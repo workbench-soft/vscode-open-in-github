@@ -1,30 +1,30 @@
-# Copy the link instead of opening it
+# Commands that copy the link
 
-Done from 2020-05-02 to 2021-03-02, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built from 2020-05-02 to 2021-03-02. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-Often the link goes into a chat, not a browser.
+Many links end up pasted in a chat, so a browser tab gets in the way.
 
-## User flows it touches
+## What changes for people
 
-- **Command palette** copy the file, blame or history link.
+- **Command palette** 3 new commands copy the file, blame or history link.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/common.ts`** changed.
-- **`test/common.test.ts`** changed.
-- **`src/blame.ts`** changed.
-- **`src/extension.ts`** changed.
-- **`src/file.ts`** changed.
-- **`src/history.ts`** changed.
-- **`src/bitbucketServer.ts`** changed.
-- **`test/bitbucketServer.test.ts`** changed.
-- **`test/blame.test.ts`** changed.
-- **Other files** 3 more.
+- **`package.json`** edited.
+- **`src/common.ts`** edited.
+- **`test/common.test.ts`** edited.
+- **`src/blame.ts`** edited.
+- **`src/extension.ts`** edited.
+- **`src/file.ts`** edited.
+- **`src/history.ts`** edited.
+- **`src/bitbucketServer.ts`** edited.
+- **`test/bitbucketServer.test.ts`** edited.
+- **`test/blame.test.ts`** edited.
+- **The rest** 3 more files.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. fix: respect defaultRemote when sorting remotes (c151d09, 2020-05-02)
 2. 1.13.1 (6b96c81, 2020-05-02)
@@ -34,6 +34,6 @@ Often the link goes into a chat, not a browser.
 6. feat: update opn -> open (e6d0f6c, 2021-03-02)
 7. 1.15.0 (3fdfeb0, 2021-03-02)
 
-## Docs to update
+## Docs it updated
 
 - `README.md`

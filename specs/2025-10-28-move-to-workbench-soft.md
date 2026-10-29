@@ -1,23 +1,23 @@
-# Move vscode-open-in-github to workbench-soft and make it private
+# vscode-open-in-github moves to workbench-soft as a private repo
 
-## Why
+## The problem
 
-The repo moved from `oleg-chibikov` to the `workbench-soft` org and is private now.
-`package.json` still names the old address for the homepage, the repo and the issues.
+The repo left `oleg-chibikov` for the `workbench-soft` org, and it is private now.
+The homepage, repo and issues fields in `package.json` still held the old address.
 
-## User flows it touches
+## What changes for people
 
-- **Marketplace page** its Repository and Issues links come from `package.json` on the next publish.
+- **Marketplace page** the next publish takes its Repository and Issues links from `package.json`.
 
-## Changes
+## Files
 
-- **`package.json`** `homepage`, `repository` and `bugs` name `workbench-soft`. The publisher stays `oleg-chibikov`, the Marketplace id.
-- **`CHANGELOG.md`** new, with one entry.
+- **`package.json`** `homepage`, `repository` and `bugs` point at `workbench-soft`. The publisher keeps the Marketplace id `oleg-chibikov`.
+- **`CHANGELOG.md`** added, holding one entry.
 
-## Steps, in commit order
+## Commits, oldest first
 
-1. Point `package.json` at the new owner.
+1. Make `package.json` name the new owner.
 
-## Docs to update
+## Docs it updated
 
-- None. The README names the Marketplace id only.
+- None. The README holds the Marketplace id and no repo address.

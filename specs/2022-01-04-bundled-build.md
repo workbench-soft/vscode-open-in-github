@@ -1,31 +1,31 @@
-# A bundled build, plain markdown links and remote fixes
+# One bundled file, plain markdown links and fixes for remote windows
 
-Done from 2022-01-04 to 2023-04-10, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built from 2022-01-04 to 2023-04-10. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-The extension loaded slowly and markdown links showed the rendered page.
+The extension took long to load. Links to markdown also opened the rendered page.
 
-## User flows it touches
+## What changes for people
 
-- **Install** a smaller extension that loads faster.
-- **Markdown file** links add `?plain=1`.
+- **Install** the package is smaller and loads faster.
+- **Markdown file** each link ends in `?plain=1`.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/common.ts`** changed.
-- **`build.js`** new.
-- **`.vscode/tasks.json`** changed.
-- **`tsconfig.json`** changed.
-- **`.vscode/launch.json`** changed.
-- **`src/test/file.test.ts`** changed.
-- **`LICENSE`** new.
-- **`src/test/bitbucketServer.test.ts`** moved here.
-- **`src/test/blame.test.ts`** moved here.
-- **Other files** 7 more.
+- **`package.json`** edited.
+- **`src/common.ts`** edited.
+- **`build.js`** added.
+- **`.vscode/tasks.json`** edited.
+- **`tsconfig.json`** edited.
+- **`.vscode/launch.json`** edited.
+- **`src/test/file.test.ts`** edited.
+- **`LICENSE`** added.
+- **`src/test/bitbucketServer.test.ts`** moved in.
+- **`src/test/blame.test.ts`** moved in.
+- **The rest** 7 more files.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. chore: add license (a2bb99d, 2022-01-04)
 2. chore(deps): bump ansi-regex from 5.0.0 to 5.0.1 (b795201, 2022-01-03)
@@ -43,6 +43,6 @@ The extension loaded slowly and markdown links showed the rendered page.
 14. 1.17.2 (67a49a7, 2023-04-10)
 15. chore: ignore more files to reduce the size of the extension (30abd7b, 2023-04-10)
 
-## Docs to update
+## Docs it updated
 
-None.
+No doc needed a change.

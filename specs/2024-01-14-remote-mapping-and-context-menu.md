@@ -1,32 +1,32 @@
-# Remote mapping and a context menu
+# Mapped remote URLs and a right click menu
 
-Done from 2024-01-14 to 2024-08-08, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built from 2024-01-14 to 2024-08-08. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-Mirrors and proxies need their URLs mapped, and the palette is slower than a right click.
+A mirror or a proxy needs its URL swapped for the real one. A right click is also quicker than the palette.
 
-## User flows it touches
+## What changes for people
 
-- **Settings** map one remote URL to another.
-- **Right click** open or copy the file URL.
-- **Settings** always link to the default branch.
+- **Settings** a mapping swaps one remote URL for another.
+- **Right click** the editor menu opens or copies the file URL.
+- **Settings** a switch makes every link use the default branch.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/common.ts`** changed.
-- **`src/bitbucketServer.ts`** changed.
-- **`src/blame.ts`** changed.
-- **`src/file.ts`** changed.
-- **`src/history.ts`** changed.
-- **`src/test/bitbucketServer.test.ts`** changed.
-- **`src/test/blame.test.ts`** changed.
-- **`src/test/common.test.ts`** changed.
-- **`src/test/file.test.ts`** changed.
-- **Other files** 2 more.
+- **`package.json`** edited.
+- **`src/common.ts`** edited.
+- **`src/bitbucketServer.ts`** edited.
+- **`src/blame.ts`** edited.
+- **`src/file.ts`** edited.
+- **`src/history.ts`** edited.
+- **`src/test/bitbucketServer.test.ts`** edited.
+- **`src/test/blame.test.ts`** edited.
+- **`src/test/common.test.ts`** edited.
+- **`src/test/file.test.ts`** edited.
+- **The rest** 2 more files.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. feat: add remote mapping (2f7b923, 2024-01-14)
 2. fix: address linting warnings in package.json (52c2f62, 2024-01-14)
@@ -37,6 +37,6 @@ Mirrors and proxies need their URLs mapped, and the palette is slower than a rig
 7. 1.18.0 (bed5a60, 2024-01-14)
 8. docs: Fix configuration typo in README.md (#60) (7c76318, 2024-08-08)
 
-## Docs to update
+## Docs it updated
 
 - `README.md`

@@ -1,25 +1,25 @@
-# Multi-root workspaces
+# Workspaces with several folders
 
-Done from 2017-11-09 to 2018-03-02, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built from 2017-11-09 to 2018-03-02. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-In a workspace with several folders the extension read the wrong repo.
+A workspace with several folders made the extension read the wrong repo.
 
-## User flows it touches
+## What changes for people
 
-- **Multi-root workspace** each file opens in its own repo.
+- **Multi-root workspace** each file links into the repo it belongs to.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/common.ts`** changed.
+- **`package.json`** edited.
+- **`src/common.ts`** edited.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. Multi-root support (ab62697, 2017-11-09)
 2. chore: v1.7.0 (2a55f66, 2018-03-02)
 
-## Docs to update
+## Docs it updated
 
-None.
+No doc needed a change.

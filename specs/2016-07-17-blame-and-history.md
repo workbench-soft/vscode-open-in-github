@@ -1,29 +1,29 @@
-# Blame and history commands
+# Commands for the blame and history pages
 
-Done on 2016-07-17, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built on 2016-07-17. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-The GitHub blame and history pages were the next things people opened.
+After the file, people went on to its blame and history pages on GitHub.
 
-## User flows it touches
+## What changes for people
 
-- **Command palette** open the blame or the history of the file on GitHub.
+- **Command palette** 2 new commands open the file's blame or history on GitHub.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/extension.ts`** changed.
-- **`src/common.ts`** new.
-- **`src/file.ts`** new.
-- **`test/common.test.ts`** changed.
-- **`test/file.test.ts`** new.
-- **`src/blame.ts`** new.
-- **`test/blame.test.ts`** new.
-- **`src/history.ts`** new.
-- **`test/history.test.ts`** new.
+- **`package.json`** edited.
+- **`src/extension.ts`** edited.
+- **`src/common.ts`** added.
+- **`src/file.ts`** added.
+- **`test/common.test.ts`** edited.
+- **`test/file.test.ts`** added.
+- **`src/blame.ts`** added.
+- **`test/blame.test.ts`** added.
+- **`src/history.ts`** added.
+- **`test/history.test.ts`** added.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. refactor(*): Move common parts to separate file (147e9bb, 2016-07-17)
 2. feat(commands): Blame command (6ea673f, 2016-07-17)
@@ -34,6 +34,6 @@ The GitHub blame and history pages were the next things people opened.
 7. feat(commands): History command (379db08, 2016-07-17)
 8. chore(version): v1.2.0 (a9a4f36, 2016-07-17)
 
-## Docs to update
+## Docs it updated
 
 - `README.md`

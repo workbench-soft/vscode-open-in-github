@@ -1,30 +1,30 @@
-# Work with any branch and odd remote URLs
+# Links from subfolders, any branch and unusual remote URLs
 
-Done from 2016-10-14 to 2016-12-27, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built from 2016-10-14 to 2016-12-27. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-The extension broke on repos opened below the git root, on remotes with `@` and on branches other than master.
+The extension failed in 3 cases: a folder opened below the git root, a remote URL with `@`, and a branch other than master.
 
-## User flows it touches
+## What changes for people
 
-- **Open a link** works from a subfolder and from any branch with a remote.
+- **Open a link** the command works in a subfolder and on any branch that has a remote.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/common.ts`** changed.
-- **`test/common.test.ts`** changed.
-- **`tsconfig.json`** changed.
-- **`typings/index.d.ts`** removed.
-- **`typings/modules/ramda/index.d.ts`** removed.
-- **`typings/modules/ramda/typings.json`** removed.
-- **`typings/node.d.ts`** removed.
-- **`typings/vscode-typings.d.ts`** removed.
-- **`test/blame.test.ts`** changed.
-- **Other files** 2 more.
+- **`package.json`** edited.
+- **`src/common.ts`** edited.
+- **`test/common.test.ts`** edited.
+- **`tsconfig.json`** edited.
+- **`typings/index.d.ts`** deleted.
+- **`typings/modules/ramda/index.d.ts`** deleted.
+- **`typings/modules/ramda/typings.json`** deleted.
+- **`typings/node.d.ts`** deleted.
+- **`typings/vscode-typings.d.ts`** deleted.
+- **`test/blame.test.ts`** edited.
+- **The rest** 2 more files.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. fix(*): Correct handle project which is not git repo root (ec64035, 2016-10-14)
 2. chore(package): Fix publish script (a3c4a26, 2016-10-17)
@@ -35,6 +35,6 @@ The extension broke on repos opened below the git root, on remotes with `@` and 
 7. fix(*): Consider all branches not only master (bb47912, 2016-12-27)
 8. chore(version): 1.3.1 (f30d841, 2016-12-27)
 
-## Docs to update
+## Docs it updated
 
-None.
+No doc needed a change.

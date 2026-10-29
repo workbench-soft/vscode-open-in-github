@@ -1,30 +1,30 @@
-# Bitbucket, a clearer picker and multiline selections
+# Bitbucket, a clearer picker and selections over several lines
 
-Done from 2017-01-18 to 2017-06-01, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built from 2017-01-18 to 2017-06-01. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-Bitbucket users asked for the same commands, and a selection of several lines opened only one.
+Bitbucket users wanted the same commands. A selection over several lines also opened just its first line.
 
-## User flows it touches
+## What changes for people
 
-- **Bitbucket repo** the commands open Bitbucket.
-- **Picker** prefers the default remote.
-- **Selection** several lines open as a range.
+- **Bitbucket repo** each command opens the page on Bitbucket.
+- **Picker** the default remote comes first.
+- **Selection** a selection over several lines opens as a line range.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/common.ts`** changed.
-- **`test/common.test.ts`** changed.
-- **`src/blame.ts`** changed.
-- **`src/file.ts`** changed.
-- **`src/history.ts`** changed.
-- **`test/blame.test.ts`** changed.
-- **`test/file.test.ts`** changed.
-- **`test/history.test.ts`** changed.
+- **`package.json`** edited.
+- **`src/common.ts`** edited.
+- **`test/common.test.ts`** edited.
+- **`src/blame.ts`** edited.
+- **`src/file.ts`** edited.
+- **`src/history.ts`** edited.
+- **`test/blame.test.ts`** edited.
+- **`test/file.test.ts`** edited.
+- **`test/history.test.ts`** edited.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. docs(README): Add TODO about multiline selections (e8ead30, 2017-01-18)
 2. feat(*): Add Bitbucket support (da0c091, 2017-02-16)
@@ -38,6 +38,6 @@ Bitbucket users asked for the same commands, and a selection of several lines op
 10. docs: Update readme (bd9efdc, 2017-06-01)
 11. chore: v1.6.0 (30a9175, 2017-06-01)
 
-## Docs to update
+## Docs it updated
 
 - `README.md`

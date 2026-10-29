@@ -1,29 +1,29 @@
-# Bitbucket Server, a buffer setting and the current revision
+# Bitbucket Server, a git output limit and the current commit
 
-Done on 2018-11-09, before the history was reset to one commit. The old commits sit under `refs/backup/master` in the local backup mirror of `vscode-open-in-github`.
+Built on 2018-11-09. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## Why
+## The problem
 
-Self hosted Bitbucket was missing and big repos overflowed the git output buffer.
+Self hosted Bitbucket had no support. In big repos the git output also ran past its buffer.
 
-## User flows it touches
+## What changes for people
 
-- **Bitbucket Server** links work.
-- **Settings** `maxBuffer` sets the git output limit.
-- **Picker** offers a link to the current commit.
+- **Bitbucket Server** the commands build links for it.
+- **Settings** `maxBuffer` raises the limit on git output.
+- **Picker** one entry links to the current commit.
 
-## Changes
+## Files
 
-- **`package.json`** changed.
-- **`src/common.ts`** changed.
-- **`test/common.test.ts`** changed.
-- **`src/bitbucketServer.ts`** new.
-- **`src/blame.ts`** changed.
-- **`src/file.ts`** changed.
-- **`src/history.ts`** changed.
-- **`test/bitbucketServer.test.ts`** new.
+- **`package.json`** edited.
+- **`src/common.ts`** edited.
+- **`test/common.test.ts`** edited.
+- **`src/bitbucketServer.ts`** added.
+- **`src/blame.ts`** edited.
+- **`src/file.ts`** edited.
+- **`src/history.ts`** edited.
+- **`test/bitbucketServer.test.ts`** added.
 
-## Steps, in commit order
+## Commits, oldest first
 
 1. add bitbucket server support (8433de5, 2018-11-09)
 2. Make `maxBuffer` configurable. (15be9c7, 2018-07-13)
@@ -44,6 +44,6 @@ Self hosted Bitbucket was missing and big repos overflowed the git output buffer
 17. fix: Correctly join branches links (a28a34b, 2018-11-09)
 18. 1.10.0 (c950a84, 2018-11-09)
 
-## Docs to update
+## Docs it updated
 
 - `README.md`

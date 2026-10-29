@@ -1,50 +1,51 @@
 # Open in Remote Repo
 
-Opens or copies a link to the current file or folder on GitHub, GitLab or Bitbucket.
+A VS Code extension that opens the current file or folder on GitHub, GitLab or Bitbucket, or copies its link.
 
-A fork of [Open in GitHub](https://github.com/d4rkr00t/vscode-open-in-github) by Stanislav Sysoev.
+It forks [Open in GitHub](https://github.com/d4rkr00t/vscode-open-in-github), written by Stanislav Sysoev.
 
-## Installation
+## Install
 
-Launch VS Code Quick Open (⌘+P), paste the following command, and press Enter.
+1. Open VS Code Quick Open (⌘+P).
+2. Paste the command below.
+3. Press Enter.
 
 ```
 ext install workbench-soft.open-in-remote-repo
 ```
 
-Uninstall the original Open in GitHub first. Both use the same command ids.
+Remove the original Open in GitHub before you install. The two extensions share their command ids.
 
-## Usage
+## Use it
 
-When editing a file, run these from the command palette (cmd + shift + p / ctrl + shift + p):
+Open the command palette (cmd + shift + p / ctrl + shift + p) in a file and pick a command:
 
-- **Remote Repo: Open File URL** opens the file, with the selected lines.
-- **Remote Repo: Open Blame URL** opens the blame.
-- **Remote Repo: Open History URL** opens the history.
-- **Remote Repo: Copy File URL**, **Copy Blame URL**, **Copy History URL** copy the same links.
+- **Remote Repo: Open File URL** opens the file, with the selected lines marked.
+- **Remote Repo: Open Blame URL** opens the blame page.
+- **Remote Repo: Open History URL** opens the history page.
+- **Copy File URL, Copy Blame URL, Copy History URL** put the same links on the clipboard, each under the `Remote Repo:` prefix.
 
-Right click a file or folder in the Explorer to open or copy its URL.
+A right click in the editor opens or copies the file URL. A right click on a file or folder in the Explorer does the same for that item.
 
-## Features
+## What it does
 
-- Links to main or master. Uses the current branch only when the file isn't on main yet.
-- Supports in-house GitHub installations.
-- Works with Bitbucket and Gitlab.
-- Configurable default branch.
-- Open/Copy multiline selection.
+- **Branch** links go to main or master. The current branch takes over only while the file is missing from main.
+- **Hosts** GitHub, in-house GitHub servers, GitLab, Bitbucket and Bitbucket Server.
+- **Default branch** a setting picks the branch to try first.
+- **Selections** a selection over several lines links to the whole range.
 
-## Configuration
+## Settings
 
-Add these lines to the workspace settings:
+Put these in the workspace settings:
 
 ```js
 {
   ...
-  // Branch to link to first, empty means the remote default, then main, then master
+  // The branch to try first. Empty tries the remote default, then main, then master
   "openInGitHub.defaultBranch": "",
   "openInGitHub.defaultRemote": "origin",
 
-  // Allows mapping from one remote to another when generating a URL
+  // Swaps one remote URL for another in the generated link
   "openInGitHub.remoteURLMapping": {
     "https://mirror.github.com": "https://github.com",
   }
@@ -52,6 +53,22 @@ Add these lines to the workspace settings:
 }
 ```
 
-## Links
+`openInGitHub.repositoryType` picks the host: `auto` (the default), `github`, `bitbucket`, `bitbucket-server` or `gitlab`.
 
-Logo taken from here: [https://octodex.github.com/](https://octodex.github.com/)
+## Develop
+
+[mise](https://mise.jdx.dev) pins Node 22 and runs the checks.
+
+| Task | Command |
+| --- | --- |
+| Install the packages | `mise x -- npm ci` |
+| Lint, typecheck and unit tests | `mise run check` |
+| Bundle into `out/extension.js` | `mise x -- npm run compile` |
+| Tests inside a VS Code window | `mise x -- npm test` |
+| Build and publish to the Marketplace | `mise x -- npx @vscode/vsce publish` |
+
+Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.
+
+## Credits
+
+The logo comes from [https://octodex.github.com/](https://octodex.github.com/).
