@@ -1,70 +1,51 @@
 import * as assert from "assert";
-import { formatBitbucketServerUrl } from "./bitbucket-server";
+import { bitbucketServerLinks } from "./bitbucket-server";
 
-suite("#formatBitbucketServerFileUrl", () => {
-  test("should format strings for quick pick view", () => {
-    const results = formatBitbucketServerUrl(
-      "https://bitbucket.org/my-project/my-repo",
-      "master",
-      "rel/path/to/file.js",
-      {},
-      { start: 10 }
-    );
+const remote = "https://bitbucket.org/my-project/my-repo";
+const path = "rel/path/to/file.js";
+const browse =
+  "/projects/my-project/repos/my-repo/browse/rel/path/to/file.js?at=refs%2Fheads%2Fmaster";
+const base = `https://bitbucket.org${browse}`;
+
+suite("bitbucketServerLinks", () => {
+  const link = bitbucketServerLinks.file;
+
+  test("anchors one line", () => {
     assert.equal(
-      results,
-      "https://bitbucket.org/projects/my-project/repos/my-repo/browse/rel/path/to/file.js?at=refs%2Fheads%2Fmaster#10"
+      link({ remote, branch: "master", path, lines: { start: 10 } }),
+      `${base}#10`
     );
   });
-  test("should format strings for quick pick view with remote mapping", () => {
-    const results = formatBitbucketServerUrl(
-      "https://bitbucket.org/my-project/my-repo",
-      "master",
-      "rel/path/to/file.js",
-      {
-        "https://bitbucket.org": "https://mapped.bitbucket.org",
-      },
-      { start: 10 }
-    );
+
+  test("maps the host alone", () => {
+    const mapping = { "https://bitbucket.org": "https://mapped.bitbucket.org" };
     assert.equal(
-      results,
-      "https://mapped.bitbucket.org/projects/my-project/repos/my-repo/browse/rel/path/to/file.js?at=refs%2Fheads%2Fmaster#10"
+      link({ remote, branch: "master", path, mapping, lines: { start: 10 } }),
+      `https://mapped.bitbucket.org${browse}#10`
     );
   });
-  test("should format strings for quick pick view", () => {
-    const results = formatBitbucketServerUrl(
-      "https://bitbucket.org/my-project/my-repo",
-      "master",
-      "rel/path/to/file.js",
-      {},
-      { start: 10, end: 20 }
-    );
+
+  test("anchors a line range", () => {
     assert.equal(
-      results,
-      "https://bitbucket.org/projects/my-project/repos/my-repo/browse/rel/path/to/file.js?at=refs%2Fheads%2Fmaster#10-20"
+      link({ remote, branch: "master", path, lines: { start: 10, end: 20 } }),
+      `${base}#10-20`
     );
   });
-  test("should format strings for quick pick view", () => {
-    const results = formatBitbucketServerUrl(
-      "https://bitbucket.org/my-project/my-repo",
-      "master",
-      "rel/path/to/file.js",
-      {},
-      { start: 10, end: 10 }
-    );
+
+  test("writes a range of one line as one line", () => {
     assert.equal(
-      results,
-      "https://bitbucket.org/projects/my-project/repos/my-repo/browse/rel/path/to/file.js?at=refs%2Fheads%2Fmaster#10"
+      link({ remote, branch: "master", path, lines: { start: 10, end: 10 } }),
+      `${base}#10`
     );
   });
-  test("should format strings for quick pick view", () => {
-    const results = formatBitbucketServerUrl(
-      "https://bitbucket.org/my-project/my-repo",
-      "master",
-      "rel/path/to/file.js"
-    );
-    assert.equal(
-      results,
-      "https://bitbucket.org/projects/my-project/repos/my-repo/browse/rel/path/to/file.js?at=refs%2Fheads%2Fmaster"
-    );
+
+  test("leaves out the anchor without lines", () => {
+    assert.equal(link({ remote, branch: "master", path }), base);
+  });
+
+  test("opens the browse page for blame and history", () => {
+    const target = { remote, branch: "master", path };
+    assert.equal(bitbucketServerLinks.blame(target), base);
+    assert.equal(bitbucketServerLinks.history(target), base);
   });
 });

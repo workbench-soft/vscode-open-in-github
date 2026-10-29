@@ -1,37 +1,26 @@
-import { RemoteURLMappings, SelectedLines } from "../commands/link-command";
+import { HostLinks, LinkTarget, lineAnchor, mapUrl } from "./host-links";
 
-export function formatBitbucketServerUrl(
-  remote: string,
-  branch: string,
-  filePath: string,
-  remoteURLMappings: RemoteURLMappings = {},
-  lines?: SelectedLines
-): string {
-  const re = /(https\:\/\/[^\/]+)\/([^\/]+)\/([^\/]+)/;
-  const matches = remote.match(re);
-  if (matches.length != 4) {
-    return "";
-  }
+/**
+ * Bitbucket Server and Data Center. The mapping applies to the host alone,
+ * and each view opens the same browse page.
+ */
+export const bitbucketServerLinks: HostLinks = {
+  file: browseLink,
+  blame: browseLink,
+  history: browseLink,
+};
 
-  const derivedHost = matches[1];
-  const project = matches[2];
-  const repo = matches[3];
-  const branchRef = encodeURIComponent(`refs/heads/${branch}`);
-  const linePointer = formatBitbucketServerLinePointer(lines);
-  const host =
-    derivedHost in remoteURLMappings
-      ? remoteURLMappings[derivedHost]
-      : derivedHost;
-
-  return `${host}/projects/${project}/repos/${repo}/browse/${filePath}?at=${branchRef}${linePointer}`;
-}
-
-function formatBitbucketServerLinePointer(lines?: SelectedLines): string {
-  if (!lines || !lines.start) {
-    return "";
-  }
-  let linePointer = `#${lines.start}`;
-  if (lines.end && lines.end != lines.start) linePointer += `-${lines.end}`;
-
-  return linePointer;
+function browseLink({ remote, branch, path, mapping, lines }: LinkTarget) {
+  const [, host, project, repo] = remote.match(
+    /(https:\/\/[^/]+)\/([^/]+)\/([^/]+)/
+  );
+  const ref = encodeURIComponent(`refs/heads/${branch}`);
+  return `${mapUrl(
+    host,
+    mapping
+  )}/projects/${project}/repos/${repo}/browse/${path}?at=${ref}${lineAnchor(
+    lines,
+    "#",
+    "-"
+  )}`;
 }

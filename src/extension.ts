@@ -1,44 +1,33 @@
-import * as vscode from "vscode";
-import { openQuickPickItem, copyQuickPickItem } from "./commands/link-command";
-import fileCommand from "./links/file-links";
-import blameCommand from "./links/blame-links";
-import historyCommand from "./links/history-links";
+import { commands, ExtensionContext, Uri } from "vscode";
+import { copyToClipboard, openInBrowser } from "./commands/deliver";
+import { Deliver, runLinkCommand } from "./commands/link-command";
+import { LinkView } from "./links/host-links";
 
-export function activate(context: vscode.ExtensionContext) {
-  const openFile = fileCommand(openQuickPickItem);
-  const copyFile = fileCommand(copyQuickPickItem);
+export function activate(context: ExtensionContext) {
+  const editorCommand = (view: LinkView, deliver: Deliver) => () =>
+    runLinkCommand(view, deliver);
+  const explorerCommand = (deliver: Deliver) => (uri?: Uri) =>
+    runLinkCommand("file", deliver, uri);
+
+  // The editor menu passes the file uri too. The editor commands drop it,
+  // so the link keeps the selected lines.
+  const handlers: Record<string, (uri?: Uri) => unknown> = {
+    "openInGithub.openInGitHubFile": editorCommand("file", openInBrowser),
+    "openInGithub.openInGitHubBlame": editorCommand("blame", openInBrowser),
+    "openInGithub.openInGitHubHistory": editorCommand("history", openInBrowser),
+    "openInGithub.copyInGitHubFile": editorCommand("file", copyToClipboard),
+    "openInGithub.copyInGitHubBlame": editorCommand("blame", copyToClipboard),
+    "openInGithub.copyInGitHubHistory": editorCommand(
+      "history",
+      copyToClipboard
+    ),
+    "openInGithub.openInGitHubExplorer": explorerCommand(openInBrowser),
+    "openInGithub.copyInGitHubExplorer": explorerCommand(copyToClipboard),
+  };
 
   context.subscriptions.push(
-    // The editor context menu passes the file uri too, drop it to keep the selected lines.
-    vscode.commands.registerCommand("openInGithub.openInGitHubFile", () =>
-      openFile()
-    ),
-    vscode.commands.registerCommand(
-      "openInGithub.openInGitHubBlame",
-      blameCommand(openQuickPickItem)
-    ),
-    vscode.commands.registerCommand(
-      "openInGithub.openInGitHubHistory",
-      historyCommand(openQuickPickItem)
-    ),
-    vscode.commands.registerCommand("openInGithub.copyInGitHubFile", () =>
-      copyFile()
-    ),
-    vscode.commands.registerCommand(
-      "openInGithub.openInGitHubExplorer",
-      openFile
-    ),
-    vscode.commands.registerCommand(
-      "openInGithub.copyInGitHubExplorer",
-      copyFile
-    ),
-    vscode.commands.registerCommand(
-      "openInGithub.copyInGitHubBlame",
-      blameCommand(copyQuickPickItem)
-    ),
-    vscode.commands.registerCommand(
-      "openInGithub.copyInGitHubHistory",
-      historyCommand(copyQuickPickItem)
+    ...Object.entries(handlers).map(([id, handler]) =>
+      commands.registerCommand(id, handler)
     )
   );
 }
