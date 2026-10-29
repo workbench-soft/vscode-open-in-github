@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import * as common from "../common";
+import * as common from "./link-command";
 
 suite("#getRemotes", () => {
   const mockRemoteResult = `

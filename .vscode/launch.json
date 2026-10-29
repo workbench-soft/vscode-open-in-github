@@ -19,9 +19,9 @@
       "runtimeExecutable": "${execPath}",
       "args": [
         "--extensionDevelopmentPath=${workspaceFolder}",
-        "--extensionTestsPath=${workspaceFolder}/out/src/test/index"
+        "--extensionTestsPath=${workspaceFolder}/out/src/test-host/suite"
       ],
-      "outFiles": ["${workspaceFolder}/out/src/test/**/*.js"],
+      "outFiles": ["${workspaceFolder}/out/src/**/*.js"],
       "preLaunchTask": "npm:compile-tests"
     }
   ]

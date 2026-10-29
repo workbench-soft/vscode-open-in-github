@@ -7,8 +7,8 @@ import {
   formatGitlabLinePointer,
   Action,
   RemoteURLMappings,
-} from "./common";
-import { formatBitbucketServerUrl } from "./bitbucketServer";
+} from "../commands/link-command";
+import { formatBitbucketServerUrl } from "./bitbucket-server";
 
 export default function blameCommand(action: Action) {
   return () =>

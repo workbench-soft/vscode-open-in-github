@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import * as file from "../file";
+import * as file from "./file-links";
 
 suite("fileCommand # formatGitHubFileUrl", () => {
   test("should format strings for quick pick view", () => {

@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
-import { openQuickPickItem, copyQuickPickItem } from "./common";
-import fileCommand from "./file";
-import blameCommand from "./blame";
-import historyCommand from "./history";
+import { openQuickPickItem, copyQuickPickItem } from "./commands/link-command";
+import fileCommand from "./links/file-links";
+import blameCommand from "./links/blame-links";
+import historyCommand from "./links/history-links";
 
 export function activate(context: vscode.ExtensionContext) {
   const openFile = fileCommand(openQuickPickItem);

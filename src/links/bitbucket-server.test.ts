@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { formatBitbucketServerUrl } from "../bitbucketServer";
+import { formatBitbucketServerUrl } from "./bitbucket-server";
 
 suite("#formatBitbucketServerFileUrl", () => {
   test("should format strings for quick pick view", () => {

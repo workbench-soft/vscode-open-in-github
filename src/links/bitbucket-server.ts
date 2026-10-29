@@ -1,4 +1,4 @@
-import { RemoteURLMappings, SelectedLines } from "./common";
+import { RemoteURLMappings, SelectedLines } from "../commands/link-command";
 
 export function formatBitbucketServerUrl(
   remote: string,
