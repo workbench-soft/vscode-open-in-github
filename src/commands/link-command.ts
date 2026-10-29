@@ -45,6 +45,7 @@ export async function runLinkCommand(
       explorerUri &&
       ((await workspace.fs.stat(uri)).type & FileType.Directory) !== 0;
     const repoRoot = await findRepoRoot(
+      runGit,
       isFolder ? openedPath : path.dirname(openedPath)
     );
     const repoPath = toRepoPath(
@@ -53,7 +54,9 @@ export async function runLinkCommand(
       openedPath
     );
     const [remotes, branch] = await Promise.all([
-      readRemoteUrl(repoRoot, remoteName).then((url) => toWebUrls([url])),
+      readRemoteUrl(runGit, repoRoot, remoteName).then((url) =>
+        toWebUrls([url])
+      ),
       pickBranch(runGit, repoRoot, remoteName, repoPath, configuredBranch),
     ]);
     const remote = remotes[0];
