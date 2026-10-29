@@ -1,4 +1,4 @@
-// A launch configuration that compiles the extension and then opens it inside a new window
+// F5 configurations: build the extension, then open a VS Code window with it.
 {
   "version": "0.2.0",
   "configurations": [

@@ -1,25 +1,31 @@
-const production = process.argv[2] === "--production";
-const watch = process.argv[2] === "--watch";
+// Bundles the extension into out/extension.js. Pass --production to minify,
+// or --watch to rebuild on each save.
+const esbuild = require("esbuild");
 
-require("esbuild")
+const mode = process.argv[2];
+const production = mode === "--production";
+
+esbuild
   .build({
     entryPoints: ["./src/extension.ts"],
-    bundle: true,
     outdir: "./out",
-    external: ["vscode", "open"],
+    bundle: true,
     format: "cjs",
-    sourcemap: !production,
-    minify: production,
     platform: "node",
     target: ["node16"],
-    watch: watch && {
-      onRebuild(error) {
-        if (error) console.error("watch build failed:", error);
-        else console.log("watch build succeeded");
-      },
+    // VS Code provides `vscode`. `open` ships its xdg-open script beside its
+    // own code, so the bundle loads it from node_modules.
+    external: ["vscode", "open"],
+    sourcemap: !production,
+    minify: production,
+    watch: mode === "--watch" && {
+      onRebuild: (error) =>
+        error
+          ? console.error("watch build failed:", error)
+          : console.log("watch build succeeded"),
     },
   })
-  .catch((e) => {
-    console.error(e);
+  .catch((error) => {
+    console.error(error);
     process.exit(1);
   });

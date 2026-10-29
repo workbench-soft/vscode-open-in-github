@@ -1,0 +1,18 @@
+[tools]
+node = "22"
+
+[tasks.lint]
+description = "Check the formatting with Prettier"
+run = "npm run lint"
+
+[tasks.typecheck]
+description = "Type check the sources"
+run = "npm run typecheck"
+
+[tasks.test]
+description = "Run the unit tests outside VS Code"
+run = "npm run test:unit"
+
+[tasks.check]
+description = "Run lint, typecheck and the unit tests"
+depends = ["lint", "typecheck", "test"]
