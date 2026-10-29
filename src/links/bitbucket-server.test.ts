@@ -43,6 +43,13 @@ suite("bitbucketServerLinks", () => {
     assert.equal(link({ remote, branch: "master", path }), base);
   });
 
+  test("fails for a remote without project and repo", () => {
+    assert.throws(
+      () => link({ remote: "http://host/repo", branch: "master", path }),
+      { message: "No Bitbucket Server project and repo in http://host/repo" }
+    );
+  });
+
   test("opens the browse page for blame and history", () => {
     const target = { remote, branch: "master", path };
     assert.equal(bitbucketServerLinks.blame(target), base);

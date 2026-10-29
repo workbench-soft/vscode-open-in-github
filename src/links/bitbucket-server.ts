@@ -10,17 +10,15 @@ export const bitbucketServerLinks: HostLinks = {
   history: browseLink,
 };
 
+/** Fails with a message when the remote isn't `https://host/project/repo`. */
 function browseLink({ remote, branch, path, mapping, lines }: LinkTarget) {
-  const [, host, project, repo] = remote.match(
-    /(https:\/\/[^/]+)\/([^/]+)\/([^/]+)/
-  );
+  const match = remote.match(/(https:\/\/[^/]+)\/([^/]+)\/([^/]+)/);
+  if (!match) {
+    throw new Error(`No Bitbucket Server project and repo in ${remote}`);
+  }
+
+  const [, host, project, repo] = match;
+  const page = `${mapUrl(host, mapping)}/projects/${project}/repos/${repo}`;
   const ref = encodeURIComponent(`refs/heads/${branch}`);
-  return `${mapUrl(
-    host,
-    mapping
-  )}/projects/${project}/repos/${repo}/browse/${path}?at=${ref}${lineAnchor(
-    lines,
-    "#",
-    "-"
-  )}`;
+  return `${page}/browse/${path}?at=${ref}${lineAnchor(lines, "#", "-")}`;
 }
