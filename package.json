@@ -177,7 +177,6 @@
     "lint:staged"
   ],
   "dependencies": {
-    "clipboardy": "^2.3.0",
     "open": "^8.4.2"
   }
 }

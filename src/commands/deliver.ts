@@ -1,7 +1,6 @@
-import * as clipboardy from "clipboardy";
-import { window } from "vscode";
+import { env, window } from "vscode";
 
-// `open` stays out of the bundle, see build.js.
+// build.js keeps `open` out of the bundle, so it finds its xdg-open script.
 const open = require("open");
 
 export async function openInBrowser(url?: string) {
@@ -9,8 +8,9 @@ export async function openInBrowser(url?: string) {
   return await open(url);
 }
 
-export function copyToClipboard(url?: string) {
+/** Copies through VS Code, so a remote window fills the local clipboard. */
+export async function copyToClipboard(url?: string) {
   if (!url) return;
-  clipboardy.writeSync(url);
+  await env.clipboard.writeText(url);
   window.showInformationMessage(`Copied to the clipboard: ${url}`);
 }
