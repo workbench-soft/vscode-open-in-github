@@ -7,6 +7,7 @@ import { toRepoPath } from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
 import { toWebUrls } from "../links/web-url";
+import { errorText } from "./error-text";
 
 /** Does something with the link: opens it, or copies it. */
 export type Deliver = (url?: string) => unknown;
@@ -71,16 +72,6 @@ export async function runLinkCommand(
       });
     return deliver(url);
   } catch (err) {
-    return showError(err);
+    return window.showErrorMessage(errorText(err));
   }
-}
-
-function showError(err: string | (Error & { code?: string })) {
-  if (typeof err === "string") return window.showErrorMessage(err);
-  if (err?.code === "ERR_CHILD_PROCESS_STDIO_MAXBUFFER") {
-    return window.showErrorMessage(
-      'Child process stdio maxbuffer error, increase the maxBuffer size in setting, e.g.:\n\n "openInGithub.maxBuffer": 512000'
-    );
-  }
-  return window.showErrorMessage(err.message ?? err.code);
 }
