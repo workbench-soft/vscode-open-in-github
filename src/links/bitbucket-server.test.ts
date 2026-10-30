@@ -50,6 +50,36 @@ suite("bitbucketServerLinks", () => {
     );
   });
 
+  test("reads the project and repo after /scm in an https clone URL", () => {
+    assert.equal(
+      link({
+        remote: "https://git.corp/scm/my-project/my-repo",
+        branch: "master",
+        path,
+      }),
+      `https://git.corp${browse}`
+    );
+  });
+
+  test("keeps a context path before /scm", () => {
+    assert.equal(
+      link({
+        remote: "https://git.corp/bitbucket/scm/my-project/my-repo",
+        branch: "master",
+        path,
+      }),
+      `https://git.corp/bitbucket${browse}`
+    );
+  });
+
+  test("links a detached HEAD to its commit", () => {
+    const sha = "0123456789abcdef0123456789abcdef01234567";
+    assert.equal(
+      link({ remote, branch: sha, path }),
+      `https://bitbucket.org/projects/my-project/repos/my-repo/browse/rel/path/to/file.js?at=${sha}`
+    );
+  });
+
   test("opens the browse page for blame and history", () => {
     const target = { remote, branch: "master", path };
     assert.equal(bitbucketServerLinks.blame(target), base);

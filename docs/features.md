@@ -28,4 +28,4 @@
 
 - **What** GitHub and GitHub servers, GitLab, Bitbucket and Bitbucket Server. `openInGitHub.remoteURLMapping` swaps a remote URL for another.
 - **Where** `openInGitHub.repositoryType` picks the host. `auto` reads it from the remote URL.
-- **Limits** on `auto`, a host other than `bitbucket.org` and `gitlab.com` gets GitHub links. Bitbucket Server needs a `https://host/project/repo` remote.
+- **Limits** on `auto`, a host other than `bitbucket.org` and `gitlab.com` gets GitHub links. Bitbucket Server reads the project and repo from the end of the remote, after `/scm` in an https clone URL.
