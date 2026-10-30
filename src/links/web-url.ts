@@ -21,8 +21,10 @@ function stripGitSuffix(url: string): string {
 
 function toWebForm(url: string): string | undefined {
   if (/^https?:/.test(url)) return stripGitSuffix(url);
-  // `ssh://[user@]host[:port]/owner/repo.git`
-  const ssh = url.match(/^ssh:\/\/(?:[^@/]*@)?([^:/]+)(?::\d+)?\/(.+)$/);
+  // `ssh://[user@]host[:port]/owner/repo.git`, also as `git+ssh://`
+  const ssh = url.match(
+    /^(?:git\+)?ssh(?:\+git)?:\/\/(?:[^@/]*@)?([^:/]+)(?::\d+)?\/(.+)$/
+  );
   if (ssh) return `https://${ssh[1]}/${stripGitSuffix(ssh[2])}`;
   // `[user@]host:owner/repo.git`. The path after the colon may start with a
   // digit, as in `1Password/sdk`, so no port is read there. A one letter

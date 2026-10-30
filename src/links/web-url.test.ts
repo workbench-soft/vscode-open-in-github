@@ -52,6 +52,8 @@ const cases: [string, string | undefined][] = [
   ],
   ["ssh://git@host.corp:22222/owner/repo.git", "https://host.corp/owner/repo"],
   ["ssh://host.xz:2222/team/repo.git", "https://host.xz/team/repo"],
+  ["git+ssh://git@github.com/owner/repo.git", "https://github.com/owner/repo"],
+  ["ssh+git://git@github.com/owner/repo.git", "https://github.com/owner/repo"],
   [
     "https://code.git.corp.com/team/repo.git",
     "https://code.git.corp.com/team/repo",
