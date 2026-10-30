@@ -12,6 +12,17 @@ suite("pickHost", () => {
     assert.equal(pickHost("auto", "https://git.corp/a/b"), githubLinks);
   });
 
+  test("reads the host alone, not the repo path", () => {
+    assert.equal(
+      pickHost("auto", "https://github.com/acme/gitlab-com-sync"),
+      githubLinks
+    );
+    assert.equal(
+      pickHost("auto", "https://github.com/acme/bitbucket_org-tools"),
+      githubLinks
+    );
+  });
+
   test("takes the named type over the remote", () => {
     assert.equal(
       pickHost("bitbucket-server", "https://git.corp/a/b"),

@@ -19,7 +19,17 @@ const linksByType = new Map<string, HostLinks>([
 export function pickHost(repositoryType: string, remote: string): HostLinks {
   const named = linksByType.get(repositoryType);
   if (named) return named;
-  if (/bitbucket.org/.test(remote)) return bitbucketLinks;
-  if (/gitlab.com/.test(remote)) return gitlabLinks;
+  // Only the host counts, so a repo named `gitlab-com-sync` stays on GitHub.
+  const host = hostOf(remote);
+  if (/bitbucket.org/.test(host)) return bitbucketLinks;
+  if (/gitlab.com/.test(host)) return gitlabLinks;
   return githubLinks;
+}
+
+function hostOf(remote: string): string {
+  try {
+    return new URL(remote).hostname;
+  } catch {
+    return "";
+  }
 }

@@ -16,8 +16,9 @@ export function toWebUrls(remoteUrls: string[]): string[] {
   return [...new Set(urls)];
 }
 
+/** Drops `.git` at the end only, so a host such as `code.git.corp` stays. */
 function stripGitSuffix(url: string): string {
-  return url.replace(/\.git(\b|$)/, "");
+  return url.replace(/\.git(?=\/?$)/, "");
 }
 
 function toWebForm(url: string): string | undefined {
