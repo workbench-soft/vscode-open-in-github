@@ -16,8 +16,11 @@ const linksByType = new Map<string, HostLinks>([
  * A named type wins. `auto`, an empty value and an unknown type read the host
  * from the remote URL, and an unknown host counts as GitHub.
  */
-export function pickHost(repositoryType: string, remote: string): HostLinks {
-  const named = linksByType.get(repositoryType);
+export function pickHost(
+  repositoryType: string | undefined,
+  remote: string
+): HostLinks {
+  const named = repositoryType && linksByType.get(repositoryType);
   if (named) return named;
   // Only the host counts, so a repo named `gitlab-com-sync` stays on GitHub.
   const host = hostOf(remote);
