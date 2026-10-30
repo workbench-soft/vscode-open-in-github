@@ -18,7 +18,6 @@
 ## app-audit
 
 - [ ] Run `mise x -- npm test` or press F5, then try Open and Copy on a GitHub, a GitLab and a Bitbucket repo, in a local and a Remote SSH or WSL window. Open now goes through `vscode.env.openExternal` (PR #4).
-- [ ] Look at the first run of `.github/workflows/checks.yml` on master after PR #4 merges, on the self-hosted runner.
 - Left: `capabilities.untrustedWorkspaces`, a product call, since it turns the commands off in Restricted Mode.
 - Left: an output channel that logs each git call, a new feature.
 - Left: a check that the current branch exists on the remote before it gets the link, a product call on the fallback.
