@@ -16,3 +16,9 @@ run = "npm run test:unit"
 [tasks.check]
 description = "Run lint, typecheck and the unit tests"
 depends = ["lint", "typecheck", "test"]
+
+[tasks.build]
+description = "Package the extension into dist/ as a .vsix"
+# vsce writes a file named dist when the folder is missing.
+run = ["mkdir -p dist", "npm exec -- vsce package -o dist/"]
+run_windows = ["if not exist dist mkdir dist", "npm exec -- vsce package -o dist/"]

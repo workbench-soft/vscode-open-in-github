@@ -1,7 +1,7 @@
 name: Checks
 
 # Runs lint, the type check, the unit tests and the production build on each
-# push to main.
+# push to main. Release runs once they pass.
 on:
   push:
     branches: [main]
@@ -17,21 +17,15 @@ concurrency:
 permissions:
   contents: read
 
-# Windows runs steps in PowerShell unless told otherwise.
-defaults:
-  run:
-    shell: bash
-
 jobs:
   checks:
-    # A private repo pays for hosted minutes, so the job runs on the Windows PC.
-    runs-on: [self-hosted, local]
+    # The repo is public, so GitHub runners cost 0. A self-hosted runner would run code from any fork.
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: jdx/mise-action@82a612c5ab8bcda7cc5db6b7e81a8e7584c3dc6e # v5.2.3
         with:
-          # The tools stay on the PC between runs.
-          cache: false
+          cache: true
       - run: mise x -- npm ci
       - run: mise run check
       - run: mise x -- npm run package
