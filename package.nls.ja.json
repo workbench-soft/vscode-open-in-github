@@ -1,0 +1,20 @@
+{
+  "openFile": "Remote Repo: ファイルの URL を開く",
+  "openBlame": "Remote Repo: Blame の URL を開く",
+  "openHistory": "Remote Repo: 履歴の URL を開く",
+  "copyFile": "Remote Repo: ファイルの URL をコピー",
+  "copyBlame": "Remote Repo: Blame の URL をコピー",
+  "copyHistory": "Remote Repo: 履歴の URL をコピー",
+  "openUrl": "Remote Repo: URL を開く",
+  "copyUrl": "Remote Repo: URL をコピー",
+  "configTitle": "Open in Remote Repo",
+  "defaultBranch": "最初にリンクするブランチ。空のときはリモートの既定ブランチ、次に main、次に master。ファイルがそこにない場合は現在のブランチを使います。",
+  "defaultRemote": "リンクが指す git リモート。",
+  "repositoryType": "リンクを作る対象のホスト。",
+  "repoAuto": "リモート URL からホストを判定します。bitbucket.org と gitlab.com 以外のホストには GitHub のリンクを使います",
+  "repoGithub": "GitHub と GitHub Enterprise",
+  "repoBitbucket": "Bitbucket Cloud",
+  "repoBitbucketServer": "Bitbucket Server と Data Center（/projects/<project>/repos/<repo> のリンク）",
+  "repoGitlab": "GitLab",
+  "remoteURLMapping": "リンク内のリモートの Web URL を別の URL に置き換えます。例：{\"https://mirror.github.com\": \"https://github.com\"}。"
+}

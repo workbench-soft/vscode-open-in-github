@@ -1,0 +1,20 @@
+{
+  "openFile": "Remote Repo：打开文件链接",
+  "openBlame": "Remote Repo：打开 Blame 链接",
+  "openHistory": "Remote Repo：打开历史记录链接",
+  "copyFile": "Remote Repo：复制文件链接",
+  "copyBlame": "Remote Repo：复制 Blame 链接",
+  "copyHistory": "Remote Repo：复制历史记录链接",
+  "openUrl": "Remote Repo：打开链接",
+  "copyUrl": "Remote Repo：复制链接",
+  "configTitle": "Open in Remote Repo",
+  "defaultBranch": "优先链接的分支。留空时依次使用远程默认分支、main、master。文件不在该分支时使用当前分支。",
+  "defaultRemote": "链接指向的 git 远程。",
+  "repositoryType": "生成链接所针对的托管平台。",
+  "repoAuto": "从远程 URL 读取托管平台。bitbucket.org 和 gitlab.com 以外的平台使用 GitHub 链接",
+  "repoGithub": "GitHub 和 GitHub Enterprise",
+  "repoBitbucket": "Bitbucket Cloud",
+  "repoBitbucketServer": "Bitbucket Server 和 Data Center，使用 /projects/<project>/repos/<repo> 链接",
+  "repoGitlab": "GitLab",
+  "remoteURLMapping": "在链接中把某个远程的网页 URL 替换为另一个 URL，例如 {\"https://mirror.github.com\": \"https://github.com\"}。"
+}

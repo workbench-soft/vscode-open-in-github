@@ -1,0 +1,20 @@
+{
+  "openFile": "Remote Repo: открыть ссылку на файл",
+  "openBlame": "Remote Repo: открыть ссылку на blame",
+  "openHistory": "Remote Repo: открыть ссылку на историю",
+  "copyFile": "Remote Repo: скопировать ссылку на файл",
+  "copyBlame": "Remote Repo: скопировать ссылку на blame",
+  "copyHistory": "Remote Repo: скопировать ссылку на историю",
+  "openUrl": "Remote Repo: открыть ссылку",
+  "copyUrl": "Remote Repo: скопировать ссылку",
+  "configTitle": "Open in Remote Repo",
+  "defaultBranch": "Ветка, на которую ссылаться в первую очередь. Если пусто: ветка по умолчанию на remote, затем main, затем master. Если файла там нет, берётся текущая ветка.",
+  "defaultRemote": "Git remote, на который указывают ссылки.",
+  "repositoryType": "Хостинг, для которого строятся ссылки.",
+  "repoAuto": "Определить хостинг по URL remote. Хостинги, кроме bitbucket.org и gitlab.com, получают ссылки GitHub",
+  "repoGithub": "GitHub и GitHub Enterprise",
+  "repoBitbucket": "Bitbucket Cloud",
+  "repoBitbucketServer": "Bitbucket Server и Data Center, со ссылками /projects/<project>/repos/<repo>",
+  "repoGitlab": "GitLab",
+  "remoteURLMapping": "Заменяет веб-URL remote на другой URL в ссылках, например {\"https://mirror.github.com\": \"https://github.com\"}."
+}

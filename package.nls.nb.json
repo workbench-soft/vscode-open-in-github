@@ -1,0 +1,20 @@
+{
+  "openFile": "Remote Repo: Åpne fil-URL",
+  "openBlame": "Remote Repo: Åpne blame-URL",
+  "openHistory": "Remote Repo: Åpne historikk-URL",
+  "copyFile": "Remote Repo: Kopier fil-URL",
+  "copyBlame": "Remote Repo: Kopier blame-URL",
+  "copyHistory": "Remote Repo: Kopier historikk-URL",
+  "openUrl": "Remote Repo: Åpne URL",
+  "copyUrl": "Remote Repo: Kopier URL",
+  "configTitle": "Open in Remote Repo",
+  "defaultBranch": "Grenen det lenkes til først. Tom: remotens standardgren, så main, så master. Finnes ikke filen der, brukes gjeldende gren.",
+  "defaultRemote": "Git-remoten lenkene peker på.",
+  "repositoryType": "Verten lenkene lages for.",
+  "repoAuto": "Les verten fra remote-URL-en. Andre verter enn bitbucket.org og gitlab.com får GitHub-lenker",
+  "repoGithub": "GitHub og GitHub Enterprise",
+  "repoBitbucket": "Bitbucket Cloud",
+  "repoBitbucketServer": "Bitbucket Server og Data Center, med lenker på formen /projects/<project>/repos/<repo>",
+  "repoGitlab": "GitLab",
+  "remoteURLMapping": "Bytter ut web-URL-en til en remote med en annen URL i lenkene, som {\"https://mirror.github.com\": \"https://github.com\"}."
+}

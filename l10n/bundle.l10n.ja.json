@@ -1,0 +1,6 @@
+{
+  "Copied to the clipboard: {0}": "クリップボードにコピーしました：{0}",
+  "Open a file first.": "先にファイルを開いてください。",
+  "Save the file in a git repo first.": "先にファイルを git リポジトリに保存してください。",
+  "The remote \"{0}\" points at {1}, which has no web page.": "リモート「{0}」は {1} を指していますが、Web ページがありません。"
+}

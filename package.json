@@ -65,52 +65,52 @@
     "commands": [
       {
         "command": "openInGithub.openInGitHubFile",
-        "title": "Remote Repo: Open File URL"
+        "title": "%openFile%"
       },
       {
         "command": "openInGithub.openInGitHubBlame",
-        "title": "Remote Repo: Open Blame URL"
+        "title": "%openBlame%"
       },
       {
         "command": "openInGithub.openInGitHubHistory",
-        "title": "Remote Repo: Open History URL"
+        "title": "%openHistory%"
       },
       {
         "command": "openInGithub.copyInGitHubFile",
-        "title": "Remote Repo: Copy File URL"
+        "title": "%copyFile%"
       },
       {
         "command": "openInGithub.copyInGitHubBlame",
-        "title": "Remote Repo: Copy Blame URL"
+        "title": "%copyBlame%"
       },
       {
         "command": "openInGithub.copyInGitHubHistory",
-        "title": "Remote Repo: Copy History URL"
+        "title": "%copyHistory%"
       },
       {
         "command": "openInGithub.openInGitHubExplorer",
-        "title": "Remote Repo: Open URL"
+        "title": "%openUrl%"
       },
       {
         "command": "openInGithub.copyInGitHubExplorer",
-        "title": "Remote Repo: Copy URL"
+        "title": "%copyUrl%"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "Open in Remote Repo",
+      "title": "%configTitle%",
       "properties": {
         "openInGitHub.defaultBranch": {
           "scope": "resource",
           "type": "string",
           "default": "",
-          "description": "Branch to link to first. When empty, the remote default branch, then main, then master. Falls back to the current branch when the file isn't there."
+          "description": "%defaultBranch%"
         },
         "openInGitHub.defaultRemote": {
           "scope": "resource",
           "type": "string",
           "default": "origin",
-          "description": "The git remote the links point at."
+          "description": "%defaultRemote%"
         },
         "openInGitHub.repositoryType": {
           "scope": "resource",
@@ -124,19 +124,19 @@
             "gitlab"
           ],
           "enumDescriptions": [
-            "Read the host from the remote URL. Hosts other than bitbucket.org and gitlab.com get GitHub links",
-            "GitHub and GitHub Enterprise",
-            "Bitbucket Cloud",
-            "Bitbucket Server and Data Center, with /projects/<project>/repos/<repo> links",
-            "GitLab"
+            "%repoAuto%",
+            "%repoGithub%",
+            "%repoBitbucket%",
+            "%repoBitbucketServer%",
+            "%repoGitlab%"
           ],
-          "description": "The host that the links are built for."
+          "description": "%repositoryType%"
         },
         "openInGitHub.remoteURLMapping": {
           "scope": "resource",
           "type": "object",
           "default": {},
-          "description": "Swaps the web URL of a remote for another URL in the links, such as {\"https://mirror.github.com\": \"https://github.com\"}."
+          "description": "%remoteURLMapping%"
         }
       }
     }
@@ -175,5 +175,6 @@
   },
   "pre-commit": [
     "lint:staged"
-  ]
+  ],
+  "l10n": "./l10n"
 }

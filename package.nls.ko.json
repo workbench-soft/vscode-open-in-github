@@ -1,0 +1,20 @@
+{
+  "openFile": "Remote Repo: 파일 URL 열기",
+  "openBlame": "Remote Repo: Blame URL 열기",
+  "openHistory": "Remote Repo: 기록 URL 열기",
+  "copyFile": "Remote Repo: 파일 URL 복사",
+  "copyBlame": "Remote Repo: Blame URL 복사",
+  "copyHistory": "Remote Repo: 기록 URL 복사",
+  "openUrl": "Remote Repo: URL 열기",
+  "copyUrl": "Remote Repo: URL 복사",
+  "configTitle": "Open in Remote Repo",
+  "defaultBranch": "먼저 링크할 브랜치. 비어 있으면 원격의 기본 브랜치, 그다음 main, 그다음 master. 파일이 거기 없으면 현재 브랜치를 씁니다.",
+  "defaultRemote": "링크가 가리키는 git 원격.",
+  "repositoryType": "링크를 만들 호스트.",
+  "repoAuto": "원격 URL에서 호스트를 읽습니다. bitbucket.org와 gitlab.com이 아닌 호스트는 GitHub 링크를 받습니다",
+  "repoGithub": "GitHub와 GitHub Enterprise",
+  "repoBitbucket": "Bitbucket Cloud",
+  "repoBitbucketServer": "Bitbucket Server와 Data Center, /projects/<project>/repos/<repo> 링크 사용",
+  "repoGitlab": "GitLab",
+  "remoteURLMapping": "링크에서 원격의 웹 URL을 다른 URL로 바꿉니다. 예: {\"https://mirror.github.com\": \"https://github.com\"}."
+}
