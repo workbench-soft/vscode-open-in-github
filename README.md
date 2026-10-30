@@ -27,6 +27,8 @@ Open the command palette (cmd + shift + p / ctrl + shift + p) in a file and pick
 
 A right click in the editor opens or copies the file URL. A right click on a file or folder in the Explorer does the same for that item.
 
+VS Code asks before it opens a host outside its trusted domains, such as GitLab or a company server. Pick **Configure Trusted Domains** in that dialog to stop the question for that host.
+
 ## What it does
 
 - **Branch** links go to main or master. The current branch takes over only while the file is missing from main.

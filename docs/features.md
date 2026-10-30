@@ -5,6 +5,7 @@
 - **What** opens the file, its blame or its history on the remote host, with the selected lines.
 - **Where** the command palette, under `Remote Repo:`, and the editor right click menu for the file link.
 - **Limits** the link uses the `openInGitHub.defaultRemote` remote, `origin` by default. History links carry no line anchor.
+- **Trusted domains** VS Code asks before it opens a host outside its trusted domains, such as GitLab or a company server. **Configure Trusted Domains** in that dialog stops the question for the host.
 
 ## Copy a link
 
