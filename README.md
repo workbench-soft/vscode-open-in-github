@@ -67,11 +67,21 @@ Put these in the workspace settings:
 | Lint, typecheck and unit tests | `mise run check` |
 | Bundle into `out/extension.js` | `mise x -- npm run compile` |
 | Tests inside a VS Code window | `mise x -- npm test` |
-| Build and publish to the Marketplace | `mise x -- npx @vscode/vsce publish` |
+| Package into `dist/` as a `.vsix` | `mise run build` |
+| Build and publish to the Marketplace | `mise x -- npm exec -- vsce publish` |
 
 Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.
 
-Each push to main runs `mise run check` and the production build in `.github/workflows/checks.yml`, on the self-hosted runner.
+Each push to main runs `mise run check` and the production build in `.github/workflows/checks.yml`, on `ubuntu-latest`.
+
+## Release
+
+Each push to main whose Checks pass gets a [GitHub release](https://github.com/workbench-soft/vscode-open-in-github/releases) with the `.vsix` attached.
+
+- **Tag** the date in Sydney and the release of the day, such as `v2026.10.30.1`.
+- **Extension version** vsce takes semver only, so that `.vsix` reads `2026.1030.1`. The version in git stays as it is.
+- **Install** download the `.vsix` and run `code --install-extension open-in-remote-repo-2026.1030.1.vsix`.
+- **Marketplace** a person publishes with `mise x -- npm exec -- vsce publish`, since it needs a token.
 
 ## Credits
 
