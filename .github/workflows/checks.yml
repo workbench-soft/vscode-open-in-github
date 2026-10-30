@@ -1,13 +1,12 @@
 name: Checks
 
 # Runs lint, the type check, the unit tests and the production build on each
-# push to main. Release runs once they pass.
+# push to main and each PR. Release runs once a push to main passes.
 on:
   push:
     branches: [main]
-  # PR runs are off: agents run `mise run check` locally before they merge.
-  # To run this on PRs again, uncomment the line below.
-  # pull_request:
+  # The repo is public, so PRs from outside get checked too.
+  pull_request:
   workflow_dispatch:
 
 concurrency:
@@ -19,7 +18,8 @@ permissions:
 
 jobs:
   checks:
-    # The repo is public, so GitHub runners cost 0. A self-hosted runner would run code from any fork.
+    # The repo is public, so GitHub runners cost nothing and fork PRs stay off
+    # the Windows PC.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
