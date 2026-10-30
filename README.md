@@ -27,6 +27,8 @@ Open the command palette (cmd + shift + p / ctrl + shift + p) in a file and pick
 
 A right click in the editor opens or copies the file URL. A right click on a file or folder in the Explorer does the same for that item.
 
+VS Code asks before it opens a host outside its trusted domains, such as GitLab or a company server. Pick **Configure Trusted Domains** in that dialog to stop the question for that host.
+
 ## What it does
 
 - **Branch** links go to main or master. The current branch takes over only while the file is missing from main.
@@ -68,6 +70,8 @@ Put these in the workspace settings:
 | Build and publish to the Marketplace | `mise x -- npx @vscode/vsce publish` |
 
 Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.
+
+Each push to master runs `mise run check` and the production build in `.github/workflows/checks.yml`, on the self-hosted runner.
 
 ## Credits
 

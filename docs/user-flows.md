@@ -38,12 +38,13 @@ flowchart TD
 
 1. The person runs a command outside a git repo, or with no remote.
 2. git fails, and VS Code shows git's message in an error notice.
-3. With no file open, the notice reads `No opened files.`
+3. With no file open, the notice reads `Open a file first.` An unsaved file asks to be saved in a git repo first.
+4. A remote with no web form, such as a local path, gets a notice that names it.
 
 ```mermaid
 flowchart TD
   A[Run a command] --> B{File open?}
-  B -->|No| C[No opened files.]
+  B -->|No| C[Open a file first.]
   B -->|Yes| D{git works?}
   D -->|No| E[git's message]
   D -->|Yes| F[Link opens or copies]

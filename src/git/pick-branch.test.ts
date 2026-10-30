@@ -10,8 +10,8 @@ function fakeGit(paths: string[], remoteHead = "", current = "feature/x"): Git {
         ? Promise.resolve(`origin/${remoteHead}`)
         : Promise.reject(new Error("no HEAD"));
     }
-    if (command === "cat-file") {
-      return paths.includes(rest[1])
+    if (command === "rev-parse" && rest[0] === "--verify") {
+      return paths.includes(rest[2])
         ? Promise.resolve("")
         : Promise.reject(new Error("missing"));
     }

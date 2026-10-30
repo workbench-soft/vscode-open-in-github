@@ -1,7 +1,13 @@
-import { HostLinks, LinkTarget, lineAnchor, mapUrl } from "./host-links";
+import {
+  encodePath,
+  HostLinks,
+  LinkTarget,
+  lineAnchor,
+  mapUrl,
+} from "./host-links";
 
 /**
- * Bitbucket Server and Data Center. The mapping applies to the host alone,
+ * Bitbucket Server and Data Center. The mapping applies to the server address,
  * and each view opens the same browse page.
  */
 export const bitbucketServerLinks: HostLinks = {
@@ -10,15 +16,26 @@ export const bitbucketServerLinks: HostLinks = {
   history: browseLink,
 };
 
-/** Fails with a message when the remote isn't `https://host/project/repo`. */
+/**
+ * Reads `https://host[/context][/scm]/project/repo`, the https clone URL or
+ * the web form of an SSH remote. Fails with a message for any other shape.
+ */
 function browseLink({ remote, branch, path, mapping, lines }: LinkTarget) {
-  const match = remote.match(/(https:\/\/[^/]+)\/([^/]+)\/([^/]+)/);
+  const match = remote.match(
+    /^(https?:\/\/[^/]+(?:\/.*?)??)(?:\/scm)?\/([^/]+)\/([^/]+)$/
+  );
   if (!match) {
     throw new Error(`No Bitbucket Server project and repo in ${remote}`);
   }
 
-  const [, host, project, repo] = match;
-  const page = `${mapUrl(host, mapping)}/projects/${project}/repos/${repo}`;
-  const ref = encodeURIComponent(`refs/heads/${branch}`);
-  return `${page}/browse/${path}?at=${ref}${lineAnchor(lines, "#", "-")}`;
+  const [, base, project, repo] = match;
+  const page = `${mapUrl(base, mapping)}/projects/${project}/repos/${repo}`;
+  // A detached HEAD gives a commit, which Bitbucket takes as it is.
+  const ref = /^[0-9a-f]{40}$/.test(branch) ? branch : `refs/heads/${branch}`;
+  const at = encodeURIComponent(ref);
+  return `${page}/browse/${encodePath(path)}?at=${at}${lineAnchor(
+    lines,
+    "#",
+    "-"
+  )}`;
 }

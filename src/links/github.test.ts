@@ -90,3 +90,32 @@ suite("githubLinks.history", () => {
     );
   });
 });
+
+suite("githubLinks file paths", () => {
+  test("escapes #, ?, $ and spaces in the file path", () => {
+    assert.equal(
+      githubLinks.file({
+        remote,
+        branch: "main",
+        path: "app/routes/users.$id/a#b c?.ts",
+      }),
+      "https://remote.url/blob/main/app/routes/users.%24id/a%23b%20c%3F.ts"
+    );
+  });
+});
+
+suite("githubLinks rendered files", () => {
+  for (const file of ["README.MD", "notes.markdown", "guide.adoc", "a.rst"]) {
+    test(`shows ${file} as source when lines are selected`, () => {
+      assert.equal(
+        githubLinks.file({
+          remote,
+          branch: "main",
+          path: file,
+          lines: { start: 3 },
+        }),
+        `https://remote.url/blob/main/${file}?plain=1#L3`
+      );
+    });
+  }
+});

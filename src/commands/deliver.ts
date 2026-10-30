@@ -1,11 +1,13 @@
-import { env, window } from "vscode";
+import { env, Uri, window } from "vscode";
 
-// build.js keeps `open` out of the bundle, so it finds its xdg-open script.
-const open = require("open");
-
+/**
+ * Opens through VS Code, so a remote window opens the browser on the
+ * person's machine. VS Code takes a string here, though its types say Uri.
+ * A Uri would decode and encode the link again (microsoft/vscode#85930).
+ */
 export async function openInBrowser(url?: string) {
   if (!url) return;
-  return await open(url);
+  await env.openExternal(url as unknown as Uri);
 }
 
 /** Copies through VS Code, so a remote window fills the local clipboard. */

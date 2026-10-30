@@ -2,12 +2,13 @@ import { promises as fs } from "fs";
 import * as path from "path";
 import { FileType, Uri, window, workspace } from "vscode";
 import { pickBranch } from "../git/pick-branch";
-import { findRepoRoot, readRemoteUrl, runGit } from "../git/run-git";
+import { findRepoRoot, runGit } from "../git/run-git";
 import { toRepoPath } from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
-import { toWebUrls } from "../links/web-url";
 import { errorText } from "./error-text";
+import { selectedLines } from "./selected-lines";
+import { readWebRemote } from "./web-remote";
 
 /** Does something with the link: opens it, or copies it. */
 export type Deliver = (url?: string) => unknown;
@@ -24,16 +25,16 @@ export async function runLinkCommand(
   const editor = window.activeTextEditor;
   const uri = explorerUri ?? editor?.document.uri;
   if (!uri) {
-    window.showErrorMessage("No opened files.");
+    window.showErrorMessage("Open a file first.");
+    return;
+  }
+  if (uri.scheme === "untitled") {
+    window.showErrorMessage("Save the file in a git repo first.");
     return;
   }
 
-  const lines: SelectedLines | undefined = explorerUri
-    ? undefined
-    : {
-        start: editor.selection.start.line + 1,
-        end: editor.selection.end.line + 1,
-      };
+  const lines: SelectedLines | undefined =
+    explorerUri || !editor ? undefined : selectedLines(editor.selection);
   const config = workspace.getConfiguration("openInGitHub", uri);
   const configuredBranch = config.get<string>("defaultBranch") || "";
   const remoteName = config.get<string>("defaultRemote") || "origin";
@@ -54,23 +55,24 @@ export async function runLinkCommand(
       await fs.realpath(openedPath),
       openedPath
     );
-    const [remotes, branch] = await Promise.all([
-      readRemoteUrl(runGit, repoRoot, remoteName).then((url) =>
-        toWebUrls([url])
-      ),
+    const [{ stored, web: remote }, branch] = await Promise.all([
+      readWebRemote(runGit, repoRoot, remoteName),
       pickBranch(runGit, repoRoot, remoteName, repoPath, configuredBranch),
     ]);
-    const remote = remotes[0];
-    const url =
-      remote &&
-      pickHost(repositoryType, remote)[view]({
-        remote,
-        branch,
-        path: repoPath,
-        mapping,
-        lines,
-      });
-    return deliver(url);
+    if (!remote) {
+      return window.showErrorMessage(
+        `The remote "${remoteName}" points at ${stored}, which has no web page.`
+      );
+    }
+    const url = pickHost(repositoryType, remote)[view]({
+      remote,
+      branch,
+      path: repoPath,
+      mapping,
+      lines,
+    });
+    // Awaited, so a failed open or copy shows in the catch below.
+    return await deliver(url);
   } catch (err) {
     return window.showErrorMessage(errorText(err));
   }

@@ -18,7 +18,7 @@ flowchart LR
   cmd --> git[git/]
   cmd --> links[links/]
   cmd --> deliver[commands/deliver.ts]
-  deliver --> browser[Browser via open]
+  deliver --> browser[vscode.env.openExternal]
   deliver --> clip[vscode.env.clipboard]
 ```
 
@@ -27,11 +27,11 @@ flowchart LR
 The extension keeps no state. Each command reads these, then forgets them:
 
 - **Settings** the `openInGitHub.*` keys in `package.json`, read for the file's folder.
-- **Git** `git rev-parse`, `git config --get remote.<name>.url`, `git symbolic-ref` and `git cat-file -e` in the file's repo.
+- **Git** `git rev-parse`, `git config --get remote.<name>.url`, `git ls-remote --get-url` for an alias, `git symbolic-ref` and `git rev-parse --verify` in the file's repo. git stops after 10 seconds.
 
 ## Outside services
 
-- **Browser** the `open` package launches the default browser. `build.js` keeps it out of the bundle, so it finds its `xdg-open` script.
+- **Browser** `vscode.env.openExternal` opens the default browser on the person's machine, in local and remote windows.
 - **Hosts** the link points at GitHub, GitLab, Bitbucket or Bitbucket Server. The extension sends them no requests.
 
 ## The path of one command
@@ -45,7 +45,7 @@ sequenceDiagram
   P->>C: Remote Repo: Open File URL
   C->>G: repo root, then remote URL and branch together
   G-->>C: root, remote, branch
-  C->>L: toWebUrls, pickHost, file link
+  C->>L: toWebUrl, pickHost, file link
   L-->>C: URL
   C->>P: browser tab, or clipboard and a notice
 ```

@@ -23,9 +23,14 @@ export async function pickBranch(
   const candidates = [
     ...new Set([configuredBranch, remoteHead, "main", "master"]),
   ].filter(Boolean);
+  // rev-parse reads trees only. cat-file fetched the file in a partial clone,
+  // and hung offline.
   const hasPath = await Promise.all(
     candidates.map((branch) =>
-      git(["cat-file", "-e", `${remote}/${branch}:${path}`], repoRoot).then(
+      git(
+        ["rev-parse", "--verify", "--quiet", `${remote}/${branch}:${path}`],
+        repoRoot
+      ).then(
         () => true,
         () => false
       )

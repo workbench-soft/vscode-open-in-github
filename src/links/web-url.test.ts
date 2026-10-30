@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { toWebUrls } from "./web-url";
+import { toWebUrl } from "./web-url";
 
 /** Each git remote URL, then the web URL it turns into. */
 const cases: [string, string | undefined][] = [
@@ -31,29 +31,51 @@ const cases: [string, string | undefined][] = [
   ["ftp://host.xz/path/to/repo.git/", "http://host.xz/path/to/repo.git"],
   ["https://user@github.com/some/repo.git", "https://github.com/some/repo"],
   [
+    "https://oauth2:glpat-secret@gitlab.com/group/sub/repo.git",
+    "https://gitlab.com/group/sub/repo",
+  ],
+  [
+    "https://alice@bitbucket.org/team/repo.git",
+    "https://bitbucket.org/team/repo",
+  ],
+  [
     "ssh://git@bitbucket-mirror-au.internal.atlassian.com:7999/confcloud/confluence-frontend.git",
     "https://bitbucket-mirror-au.internal.atlassian.com/confcloud/confluence-frontend",
   ],
+  [
+    "git@github.com:1Password/onepassword-sdk-go.git",
+    "https://github.com/1Password/onepassword-sdk-go",
+  ],
+  [
+    "git@github.com:99designs/gqlgen.git",
+    "https://github.com/99designs/gqlgen",
+  ],
+  ["ssh://git@host.corp:22222/owner/repo.git", "https://host.corp/owner/repo"],
+  ["ssh://host.xz:2222/team/repo.git", "https://host.xz/team/repo"],
+  ["git+ssh://git@github.com/owner/repo.git", "https://github.com/owner/repo"],
+  ["ssh+git://git@github.com/owner/repo.git", "https://github.com/owner/repo"],
+  [
+    "https://code.git.corp.com/team/repo.git",
+    "https://code.git.corp.com/team/repo",
+  ],
+  ["github.com:owner/repo.git", "https://github.com/owner/repo"],
   ["../other", undefined],
+  ["C:/repos/other", undefined],
+  ["gh:owner/repo", undefined],
+  ["file:///srv/repo.git", undefined],
 ];
 
-suite("toWebUrls", () => {
+suite("toWebUrl", () => {
   for (const [remoteUrl, webUrl] of cases) {
     test(`turns ${remoteUrl} into ${webUrl}`, () => {
-      assert.equal(toWebUrls([remoteUrl])[0], webUrl);
+      assert.equal(toWebUrl(remoteUrl), webUrl);
     });
   }
 
-  test("trims the newline that git config prints", () => {
-    assert.deepEqual(toWebUrls(["git@github.com:a/b.git\n"]), [
-      "https://github.com/a/b",
-    ]);
-  });
-
-  test("drops repeated URLs", () => {
-    assert.deepEqual(
-      toWebUrls(["https://github.com/a/b.git", "git@github.com:a/b.git"]),
-      ["https://github.com/a/b"]
+  test("trims the newline that git prints", () => {
+    assert.equal(
+      toWebUrl("git@github.com:a/b.git\n"),
+      "https://github.com/a/b"
     );
   });
 });
