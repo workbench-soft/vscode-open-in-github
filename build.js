@@ -13,9 +13,8 @@ esbuild
     format: "cjs",
     platform: "node",
     target: ["node16"],
-    // VS Code provides `vscode`. `open` ships its xdg-open script beside its
-    // own code, so the bundle loads it from node_modules.
-    external: ["vscode", "open"],
+    // VS Code provides `vscode` at run time.
+    external: ["vscode"],
     sourcemap: !production,
     minify: production,
     watch: mode === "--watch" && {

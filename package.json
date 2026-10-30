@@ -175,8 +175,5 @@
   },
   "pre-commit": [
     "lint:staged"
-  ],
-  "dependencies": {
-    "open": "^8.4.2"
-  }
+  ]
 }

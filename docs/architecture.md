@@ -18,7 +18,7 @@ flowchart LR
   cmd --> git[git/]
   cmd --> links[links/]
   cmd --> deliver[commands/deliver.ts]
-  deliver --> browser[Browser via open]
+  deliver --> browser[vscode.env.openExternal]
   deliver --> clip[vscode.env.clipboard]
 ```
 
@@ -31,7 +31,7 @@ The extension keeps no state. Each command reads these, then forgets them:
 
 ## Outside services
 
-- **Browser** the `open` package launches the default browser. `build.js` keeps it out of the bundle, so it finds its `xdg-open` script.
+- **Browser** `vscode.env.openExternal` opens the default browser on the person's machine, in local and remote windows.
 - **Hosts** the link points at GitHub, GitLab, Bitbucket or Bitbucket Server. The extension sends them no requests.
 
 ## The path of one command

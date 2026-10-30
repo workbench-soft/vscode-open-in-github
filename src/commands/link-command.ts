@@ -67,7 +67,8 @@ export async function runLinkCommand(
         mapping,
         lines,
       });
-    return deliver(url);
+    // Awaited, so a failed open or copy shows in the catch below.
+    return await deliver(url);
   } catch (err) {
     return window.showErrorMessage(errorText(err));
   }
