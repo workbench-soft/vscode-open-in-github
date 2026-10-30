@@ -42,6 +42,16 @@ const cases: [string, string | undefined][] = [
     "ssh://git@bitbucket-mirror-au.internal.atlassian.com:7999/confcloud/confluence-frontend.git",
     "https://bitbucket-mirror-au.internal.atlassian.com/confcloud/confluence-frontend",
   ],
+  [
+    "git@github.com:1Password/onepassword-sdk-go.git",
+    "https://github.com/1Password/onepassword-sdk-go",
+  ],
+  [
+    "git@github.com:99designs/gqlgen.git",
+    "https://github.com/99designs/gqlgen",
+  ],
+  ["ssh://git@host.corp:22222/owner/repo.git", "https://host.corp/owner/repo"],
+  ["ssh://host.xz:2222/team/repo.git", "https://host.xz/team/repo"],
   ["../other", undefined],
 ];
 

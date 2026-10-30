@@ -5,7 +5,7 @@
  */
 export function toWebUrls(remoteUrls: string[]): string[] {
   const urls = remoteUrls
-    .map(toWebForm)
+    .map((url) => toWebForm(url.trim()))
     .filter((url): url is string => url != null)
     .map((url) => (/github\.com/.test(url) ? stripGitSuffix(url) : url))
     // A user name or token in the remote stays out of the link.
@@ -22,15 +22,14 @@ function stripGitSuffix(url: string): string {
 
 function toWebForm(url: string): string | undefined {
   if (/^https?:/.test(url)) return stripGitSuffix(url);
-  if (/@/.test(url)) {
-    // `user@host:owner/repo.git`, with an optional port after the host.
-    const hostAndPath = stripGitSuffix(url.replace(/^.+@/, ""))
-      .replace(/:\d{1,4}/, "")
-      .replace(/:/g, "/");
-    return `https://${hostAndPath}`;
-  }
+  // `ssh://[user@]host[:port]/owner/repo.git`
+  const ssh = url.match(/^ssh:\/\/(?:[^@/]*@)?([^:/]+)(?::\d+)?\/(.+)$/);
+  if (ssh) return `https://${ssh[1]}/${stripGitSuffix(ssh[2])}`;
+  // `user@host:owner/repo.git`. The path after the colon may start with a
+  // digit, as in `1Password/sdk`, so no port is read there.
+  const scp = url.match(/^[^@/]+@([^:/]+):\/?(.+)$/);
+  if (scp) return `https://${scp[1]}/${stripGitSuffix(scp[2])}`;
   if (/^ftps?:/.test(url)) return url.replace(/^ftp/, "http");
-  if (/^ssh:/.test(url)) return url.replace(/^ssh/, "https");
   if (/^git:/.test(url)) return url.replace(/^git/, "https");
   return undefined;
 }
