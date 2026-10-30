@@ -34,6 +34,6 @@ function toWebForm(url: string): string | undefined {
     return `https://${scp[2]}/${stripGitSuffix(scp[3])}`;
   }
   if (/^ftps?:/.test(url)) return url.replace(/^ftp/, "http");
-  if (/^git:/.test(url)) return url.replace(/^git/, "https");
+  if (url.startsWith("git:")) return url.replace(/^git/, "https");
   return undefined;
 }

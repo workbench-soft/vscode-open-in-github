@@ -5,6 +5,7 @@
 - [ ] Create the `workbench-soft` publisher at https://marketplace.visualstudio.com/manage before the next `vsce publish`.
 
 ## auto-merge
+
 - [ ] Turn on "Allow auto-merge" in the 40 private repos of `oleg-chibikov` and `workbench-soft` once the account or org moves to a paid GitHub plan; the Free plan ignores it for private repos.
 
 ## rewrite-repo
@@ -21,5 +22,5 @@
 - Left: `capabilities.untrustedWorkspaces`, a product call, since it turns the commands off in Restricted Mode.
 - Left: an output channel that logs each git call, a new feature.
 - Left: a check that the current branch exists on the remote before it gets the link, a product call on the fallback.
-- Left: TypeScript 7, esbuild 0.28, prettier 3 and mocha 12, with the last 5 dev advisories, each a major upgrade, and esbuild drops the `watch` option `build.js` uses.
+- Left: TypeScript 7, esbuild 0.28 and mocha 12, with the last dev advisories, each a major upgrade, and esbuild drops the `watch` option `build.js` uses.
 - Left: `@types/vscode` 1.85 above the `engines.vscode` floor of 1.75, a call on the oldest VS Code to support.
