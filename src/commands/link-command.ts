@@ -8,6 +8,7 @@ import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
 import { toWebUrls } from "../links/web-url";
 import { errorText } from "./error-text";
+import { selectedLines } from "./selected-lines";
 
 /** Does something with the link: opens it, or copies it. */
 export type Deliver = (url?: string) => unknown;
@@ -28,12 +29,8 @@ export async function runLinkCommand(
     return;
   }
 
-  const lines: SelectedLines | undefined = explorerUri
-    ? undefined
-    : {
-        start: editor.selection.start.line + 1,
-        end: editor.selection.end.line + 1,
-      };
+  const lines: SelectedLines | undefined =
+    explorerUri || !editor ? undefined : selectedLines(editor.selection);
   const config = workspace.getConfiguration("openInGitHub", uri);
   const configuredBranch = config.get<string>("defaultBranch") || "";
   const remoteName = config.get<string>("defaultRemote") || "origin";
