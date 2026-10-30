@@ -27,7 +27,7 @@ flowchart LR
 The extension keeps no state. Each command reads these, then forgets them:
 
 - **Settings** the `openInGitHub.*` keys in `package.json`, read for the file's folder.
-- **Git** `git rev-parse`, `git config --get remote.<name>.url`, `git symbolic-ref` and `git cat-file -e` in the file's repo.
+- **Git** `git rev-parse`, `git config --get remote.<name>.url`, `git symbolic-ref` and `git rev-parse --verify` in the file's repo. git stops after 10 seconds.
 
 ## Outside services
 
