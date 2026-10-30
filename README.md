@@ -6,7 +6,7 @@ It forks [Open in GitHub](https://github.com/d4rkr00t/vscode-open-in-github), wr
 
 ## Install
 
-1. Open VS Code Quick Open (⌘+P).
+1. Open VS Code Quick Open (Ctrl+P, or ⌘+P on a Mac).
 2. Paste the command below.
 3. Press Enter.
 
