@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { toWebUrls } from "./web-url";
+import { toWebUrl } from "./web-url";
 
 /** Each git remote URL, then the web URL it turns into. */
 const cases: [string, string | undefined][] = [
@@ -62,23 +62,17 @@ const cases: [string, string | undefined][] = [
   ["file:///srv/repo.git", undefined],
 ];
 
-suite("toWebUrls", () => {
+suite("toWebUrl", () => {
   for (const [remoteUrl, webUrl] of cases) {
     test(`turns ${remoteUrl} into ${webUrl}`, () => {
-      assert.equal(toWebUrls([remoteUrl])[0], webUrl);
+      assert.equal(toWebUrl(remoteUrl), webUrl);
     });
   }
 
-  test("trims the newline that git config prints", () => {
-    assert.deepEqual(toWebUrls(["git@github.com:a/b.git\n"]), [
-      "https://github.com/a/b",
-    ]);
-  });
-
-  test("drops repeated URLs", () => {
-    assert.deepEqual(
-      toWebUrls(["https://github.com/a/b.git", "git@github.com:a/b.git"]),
-      ["https://github.com/a/b"]
+  test("trims the newline that git prints", () => {
+    assert.equal(
+      toWebUrl("git@github.com:a/b.git\n"),
+      "https://github.com/a/b"
     );
   });
 });

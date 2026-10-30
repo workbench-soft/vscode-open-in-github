@@ -1,19 +1,17 @@
 /**
- * Turns `git remote` URLs into web URLs: SSH, git and FTP forms become
+ * Turns a `git remote` URL into a web URL: SSH, git and FTP forms become
  * https, and the `.git` suffix, the trailing slash and any user name or
- * token go. A URL with no web form, such as a local path, is dropped.
+ * token go. A URL with no web form, such as a local path, gives undefined.
  */
-export function toWebUrls(remoteUrls: string[]): string[] {
-  const urls = remoteUrls
-    .map((url) => toWebForm(url.trim()))
-    .filter((url): url is string => url != null)
-    .map((url) => (/github\.com/.test(url) ? stripGitSuffix(url) : url))
-    // A user name or token in the remote stays out of the link.
-    .map((url) => url.replace(/^(https?:\/\/)[^/]*@/, "$1").trim())
-    .map((url) => url.replace(/\n/, ""))
-    .filter((url) => url !== "")
-    .map((url) => url.replace(/\/$/, ""));
-  return [...new Set(urls)];
+export function toWebUrl(remoteUrl: string): string | undefined {
+  const url = toWebForm(remoteUrl.trim());
+  if (!url) return undefined;
+  return (
+    (/github\.com/.test(url) ? stripGitSuffix(url) : url)
+      // A user name or token in the remote stays out of the link.
+      .replace(/^(https?:\/\/)[^/]*@/, "$1")
+      .replace(/\/$/, "")
+  );
 }
 
 /** Drops `.git` at the end only, so a host such as `code.git.corp` stays. */

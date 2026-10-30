@@ -45,7 +45,7 @@ sequenceDiagram
   P->>C: Remote Repo: Open File URL
   C->>G: repo root, then remote URL and branch together
   G-->>C: root, remote, branch
-  C->>L: toWebUrls, pickHost, file link
+  C->>L: toWebUrl, pickHost, file link
   L-->>C: URL
   C->>P: browser tab, or clipboard and a notice
 ```

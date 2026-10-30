@@ -6,7 +6,7 @@ import { findRepoRoot, readRemoteUrl, runGit } from "../git/run-git";
 import { toRepoPath } from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
-import { toWebUrls } from "../links/web-url";
+import { toWebUrl } from "../links/web-url";
 import { errorText } from "./error-text";
 import { selectedLines } from "./selected-lines";
 
@@ -59,7 +59,7 @@ export async function runLinkCommand(
       readRemoteUrl(runGit, repoRoot, remoteName),
       pickBranch(runGit, repoRoot, remoteName, repoPath, configuredBranch),
     ]);
-    const remote = toWebUrls([remoteUrl])[0];
+    const remote = toWebUrl(remoteUrl);
     if (!remote) {
       return window.showErrorMessage(
         `The remote "${remoteName}" points at ${remoteUrl}, which has no web page.`
