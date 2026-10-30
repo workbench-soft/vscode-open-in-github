@@ -71,8 +71,10 @@ Put these in the workspace settings:
 
 Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.
 
-Each push to main runs `mise run check` and the production build in `.github/workflows/checks.yml`, on the self-hosted runner.
+Each push to main and each PR runs `mise run check` and the production build in `.github/workflows/checks.yml`, on a GitHub runner.
 
 ## Credits
+
+[Stanislav Sysoev](https://github.com/d4rkr00t) wrote [Open in GitHub](https://github.com/d4rkr00t/vscode-open-in-github), and this extension started as a fork of it. Its MIT licence and copyright stay in `LICENSE`.
 
 The logo comes from [https://octodex.github.com/](https://octodex.github.com/).
