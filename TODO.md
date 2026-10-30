@@ -12,7 +12,7 @@
 - [ ] Press F5 or run `mise x -- npm test`, then try Open and Copy for the file, blame, history and Explorer commands. The fast run skipped the VS Code test window.
 - [ ] Try Copy File URL in a Remote SSH or WSL window and paste locally, to confirm the `vscode.env.clipboard` fix.
 - [ ] Bump the version and publish with `mise x -- npx @vscode/vsce publish`, so users get the fix for `openInGitHub.defaultRemote` running shell commands.
-- [ ] Run step 12 of rewrite-repo (`reset-history`) on `master` when ready. The rewrite commits are local and unpushed.
+- [ ] Run step 12 of rewrite-repo (`reset-history`) on `main` when ready. The rewrite commits are local and unpushed.
 - [ ] Decide on `assets/multiple-remotes-and-branches.png`. No file references it, and it shows the old remote and branch picker.
 
 ## app-audit

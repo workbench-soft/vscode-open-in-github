@@ -1,10 +1,10 @@
 name: Checks
 
 # Runs lint, the type check, the unit tests and the production build on each
-# push to master.
+# push to main.
 on:
   push:
-    branches: [master]
+    branches: [main]
   # PR runs are off: agents run `mise run check` locally before they merge.
   # To run this on PRs again, uncomment the line below.
   # pull_request:
