@@ -1,14 +1,15 @@
 /**
  * Turns `git remote` URLs into web URLs: SSH, git and FTP forms become
- * https, and the `.git` suffix and trailing slash go. A URL with no web
- * form, such as a local path, is dropped.
+ * https, and the `.git` suffix, the trailing slash and any user name or
+ * token go. A URL with no web form, such as a local path, is dropped.
  */
 export function toWebUrls(remoteUrls: string[]): string[] {
   const urls = remoteUrls
     .map(toWebForm)
     .filter((url): url is string => url != null)
     .map((url) => (/github\.com/.test(url) ? stripGitSuffix(url) : url))
-    .map((url) => url.replace(/\/\/(.+)@github/, "//github").trim())
+    // A user name or token in the remote stays out of the link.
+    .map((url) => url.replace(/^(https?:\/\/)[^/]*@/, "$1").trim())
     .map((url) => url.replace(/\n/, ""))
     .filter((url) => url !== "")
     .map((url) => url.replace(/\/$/, ""));

@@ -31,6 +31,14 @@ const cases: [string, string | undefined][] = [
   ["ftp://host.xz/path/to/repo.git/", "http://host.xz/path/to/repo.git"],
   ["https://user@github.com/some/repo.git", "https://github.com/some/repo"],
   [
+    "https://oauth2:glpat-secret@gitlab.com/group/sub/repo.git",
+    "https://gitlab.com/group/sub/repo",
+  ],
+  [
+    "https://alice@bitbucket.org/team/repo.git",
+    "https://bitbucket.org/team/repo",
+  ],
+  [
     "ssh://git@bitbucket-mirror-au.internal.atlassian.com:7999/confcloud/confluence-frontend.git",
     "https://bitbucket-mirror-au.internal.atlassian.com/confcloud/confluence-frontend",
   ],
