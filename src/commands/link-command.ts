@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 import * as path from "path";
-import { FileType, Uri, window, workspace } from "vscode";
+import { FileType, l10n, Uri, window, workspace } from "vscode";
 import { pickBranch } from "../git/pick-branch";
 import { findRepoRoot, runGit } from "../git/run-git";
 import { toRepoPath } from "../git/repo-path";
@@ -25,11 +25,11 @@ export async function runLinkCommand(
   const editor = window.activeTextEditor;
   const uri = explorerUri ?? editor?.document.uri;
   if (!uri) {
-    window.showErrorMessage("Open a file first.");
+    window.showErrorMessage(l10n.t("Open a file first."));
     return;
   }
   if (uri.scheme === "untitled") {
-    window.showErrorMessage("Save the file in a git repo first.");
+    window.showErrorMessage(l10n.t("Save the file in a git repo first."));
     return;
   }
 
@@ -61,7 +61,11 @@ export async function runLinkCommand(
     ]);
     if (!remote) {
       return window.showErrorMessage(
-        `The remote "${remoteName}" points at ${stored}, which has no web page.`
+        l10n.t(
+          'The remote "{0}" points at {1}, which has no web page.',
+          remoteName,
+          stored
+        )
       );
     }
     const url = pickHost(repositoryType, remote)[view]({

@@ -1,0 +1,6 @@
+{
+  "Copied to the clipboard: {0}": "Copié dans le presse-papiers : {0}",
+  "Open a file first.": "Ouvrez d’abord un fichier.",
+  "Save the file in a git repo first.": "Enregistrez d’abord le fichier dans un dépôt git.",
+  "The remote \"{0}\" points at {1}, which has no web page.": "Le remote « {0} » pointe vers {1}, qui n’a pas de page web."
+}

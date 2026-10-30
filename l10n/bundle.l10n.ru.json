@@ -1,0 +1,6 @@
+{
+  "Copied to the clipboard: {0}": "Скопировано в буфер обмена: {0}",
+  "Open a file first.": "Сначала откройте файл.",
+  "Save the file in a git repo first.": "Сначала сохраните файл в git-репозитории.",
+  "The remote \"{0}\" points at {1}, which has no web page.": "Remote «{0}» указывает на {1}, у которого нет веб-страницы."
+}

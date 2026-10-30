@@ -1,4 +1,4 @@
-import { env, Uri, window } from "vscode";
+import { env, l10n, Uri, window } from "vscode";
 
 /**
  * Opens through VS Code, so a remote window opens the browser on the
@@ -14,5 +14,5 @@ export async function openInBrowser(url?: string) {
 export async function copyToClipboard(url?: string) {
   if (!url) return;
   await env.clipboard.writeText(url);
-  window.showInformationMessage(`Copied to the clipboard: ${url}`);
+  window.showInformationMessage(l10n.t("Copied to the clipboard: {0}", url));
 }

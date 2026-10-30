@@ -30,3 +30,9 @@
 - **What** GitHub and GitHub servers, GitLab, Bitbucket and Bitbucket Server. `openInGitHub.remoteURLMapping` swaps a remote URL for another.
 - **Where** `openInGitHub.repositoryType` picks the host. `auto` reads it from the remote URL.
 - **Limits** on `auto`, a host other than `bitbucket.org` and `gitlab.com` gets GitHub links. Bitbucket Server reads the project and repo from the end of the remote, after `/scm` in an https clone URL.
+
+## Languages
+
+- **What it does** the command names, the settings and the messages follow the VS Code display language: English, Russian, German, French, Spanish, Chinese, Japanese, Korean or Norwegian.
+- **Where** the command palette, the context menus, the settings page and the pop-up messages.
+- **Limits** any other display language gets English. Norwegian shows only with a community language pack, since VS Code ships none.

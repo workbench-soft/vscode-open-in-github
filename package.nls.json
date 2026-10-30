@@ -1,0 +1,20 @@
+{
+  "openFile": "Remote Repo: Open File URL",
+  "openBlame": "Remote Repo: Open Blame URL",
+  "openHistory": "Remote Repo: Open History URL",
+  "copyFile": "Remote Repo: Copy File URL",
+  "copyBlame": "Remote Repo: Copy Blame URL",
+  "copyHistory": "Remote Repo: Copy History URL",
+  "openUrl": "Remote Repo: Open URL",
+  "copyUrl": "Remote Repo: Copy URL",
+  "configTitle": "Open in Remote Repo",
+  "defaultBranch": "Branch to link to first. When empty, the remote default branch, then main, then master. Falls back to the current branch when the file isn't there.",
+  "defaultRemote": "The git remote the links point at.",
+  "repositoryType": "The host that the links are built for.",
+  "repoAuto": "Read the host from the remote URL. Hosts other than bitbucket.org and gitlab.com get GitHub links",
+  "repoGithub": "GitHub and GitHub Enterprise",
+  "repoBitbucket": "Bitbucket Cloud",
+  "repoBitbucketServer": "Bitbucket Server and Data Center, with /projects/<project>/repos/<repo> links",
+  "repoGitlab": "GitLab",
+  "remoteURLMapping": "Swaps the web URL of a remote for another URL in the links, such as {\"https://mirror.github.com\": \"https://github.com\"}."
+}

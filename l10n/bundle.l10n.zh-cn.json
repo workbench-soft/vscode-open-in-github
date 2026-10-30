@@ -1,0 +1,6 @@
+{
+  "Copied to the clipboard: {0}": "已复制到剪贴板：{0}",
+  "Open a file first.": "请先打开一个文件。",
+  "Save the file in a git repo first.": "请先把文件保存到 git 仓库中。",
+  "The remote \"{0}\" points at {1}, which has no web page.": "远程“{0}”指向 {1}，它没有网页。"
+}

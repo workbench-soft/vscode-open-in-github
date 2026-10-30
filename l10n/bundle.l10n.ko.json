@@ -1,0 +1,6 @@
+{
+  "Copied to the clipboard: {0}": "클립보드에 복사했어요: {0}",
+  "Open a file first.": "먼저 파일을 여세요.",
+  "Save the file in a git repo first.": "먼저 파일을 git 저장소에 저장하세요.",
+  "The remote \"{0}\" points at {1}, which has no web page.": "원격 “{0}”은(는) 웹 페이지가 없는 {1}을(를) 가리킵니다."
+}
