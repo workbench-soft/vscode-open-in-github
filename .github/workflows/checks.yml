@@ -1,7 +1,7 @@
 name: Checks
 
 # Runs lint, the type check, the unit tests and the production build on each
-# push to main and each PR.
+# push to main and each PR. Release runs once a push to main passes.
 on:
   push:
     branches: [main]
@@ -24,6 +24,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: jdx/mise-action@82a612c5ab8bcda7cc5db6b7e81a8e7584c3dc6e # v5.2.3
+        with:
+          cache: true
       - run: mise x -- npm ci
       - run: mise run check
       - run: mise x -- npm run package
