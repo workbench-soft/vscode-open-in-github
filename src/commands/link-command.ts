@@ -25,7 +25,11 @@ export async function runLinkCommand(
   const editor = window.activeTextEditor;
   const uri = explorerUri ?? editor?.document.uri;
   if (!uri) {
-    window.showErrorMessage("No opened files.");
+    window.showErrorMessage("Open a file first.");
+    return;
+  }
+  if (uri.scheme === "untitled") {
+    window.showErrorMessage("Save the file in a git repo first.");
     return;
   }
 
@@ -51,22 +55,23 @@ export async function runLinkCommand(
       await fs.realpath(openedPath),
       openedPath
     );
-    const [remotes, branch] = await Promise.all([
-      readRemoteUrl(runGit, repoRoot, remoteName).then((url) =>
-        toWebUrls([url])
-      ),
+    const [remoteUrl, branch] = await Promise.all([
+      readRemoteUrl(runGit, repoRoot, remoteName),
       pickBranch(runGit, repoRoot, remoteName, repoPath, configuredBranch),
     ]);
-    const remote = remotes[0];
-    const url =
-      remote &&
-      pickHost(repositoryType, remote)[view]({
-        remote,
-        branch,
-        path: repoPath,
-        mapping,
-        lines,
-      });
+    const remote = toWebUrls([remoteUrl])[0];
+    if (!remote) {
+      return window.showErrorMessage(
+        `The remote "${remoteName}" points at ${remoteUrl}, which has no web page.`
+      );
+    }
+    const url = pickHost(repositoryType, remote)[view]({
+      remote,
+      branch,
+      path: repoPath,
+      mapping,
+      lines,
+    });
     // Awaited, so a failed open or copy shows in the catch below.
     return await deliver(url);
   } catch (err) {

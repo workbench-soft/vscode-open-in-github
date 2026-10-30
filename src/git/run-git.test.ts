@@ -10,7 +10,7 @@ suite("readRemoteUrl", () => {
     };
     await readRemoteUrl(git, "/repo", "origin; touch pwned");
     assert.deepEqual(calls, [
-      ["config", "--get", "remote.origin; touch pwned.url"],
+      ["remote", "get-url", "--", "origin; touch pwned"],
     ]);
   });
 });

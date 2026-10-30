@@ -56,7 +56,10 @@ const cases: [string, string | undefined][] = [
     "https://code.git.corp.com/team/repo.git",
     "https://code.git.corp.com/team/repo",
   ],
+  ["github.com:owner/repo.git", "https://github.com/owner/repo"],
   ["../other", undefined],
+  ["C:/repos/other", undefined],
+  ["file:///srv/repo.git", undefined],
 ];
 
 suite("toWebUrls", () => {

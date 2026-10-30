@@ -33,7 +33,7 @@ export function findRepoRoot(git: Git, dir: string): Promise<string> {
   return git(["rev-parse", "--show-toplevel"], dir);
 }
 
-/** The fetch URL of `remote`, as `git config` prints it. */
+/** The fetch URL of `remote`, with `url.<base>.insteadOf` aliases applied. */
 export function readRemoteUrl(git: Git, repoRoot: string, remote: string) {
-  return git(["config", "--get", `remote.${remote}.url`], repoRoot);
+  return git(["remote", "get-url", "--", remote], repoRoot);
 }

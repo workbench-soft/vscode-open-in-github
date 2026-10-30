@@ -26,9 +26,10 @@ function toWebForm(url: string): string | undefined {
   // `ssh://[user@]host[:port]/owner/repo.git`
   const ssh = url.match(/^ssh:\/\/(?:[^@/]*@)?([^:/]+)(?::\d+)?\/(.+)$/);
   if (ssh) return `https://${ssh[1]}/${stripGitSuffix(ssh[2])}`;
-  // `user@host:owner/repo.git`. The path after the colon may start with a
-  // digit, as in `1Password/sdk`, so no port is read there.
-  const scp = url.match(/^[^@/]+@([^:/]+):\/?(.+)$/);
+  // `[user@]host:owner/repo.git`. The path after the colon may start with a
+  // digit, as in `1Password/sdk`, so no port is read there. A one letter
+  // host is a Windows drive.
+  const scp = url.match(/^(?:[^@/]+@)?([^:/\\]{2,}):(?!\/\/)\/?(.+)$/);
   if (scp) return `https://${scp[1]}/${stripGitSuffix(scp[2])}`;
   if (/^ftps?:/.test(url)) return url.replace(/^ftp/, "http");
   if (/^git:/.test(url)) return url.replace(/^git/, "https");
