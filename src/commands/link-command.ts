@@ -2,13 +2,13 @@ import { promises as fs } from "fs";
 import * as path from "path";
 import { FileType, Uri, window, workspace } from "vscode";
 import { pickBranch } from "../git/pick-branch";
-import { findRepoRoot, readRemoteUrl, runGit } from "../git/run-git";
+import { findRepoRoot, runGit } from "../git/run-git";
 import { toRepoPath } from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
-import { toWebUrl } from "../links/web-url";
 import { errorText } from "./error-text";
 import { selectedLines } from "./selected-lines";
+import { readWebRemote } from "./web-remote";
 
 /** Does something with the link: opens it, or copies it. */
 export type Deliver = (url?: string) => unknown;
@@ -55,14 +55,13 @@ export async function runLinkCommand(
       await fs.realpath(openedPath),
       openedPath
     );
-    const [remoteUrl, branch] = await Promise.all([
-      readRemoteUrl(runGit, repoRoot, remoteName),
+    const [{ stored, web: remote }, branch] = await Promise.all([
+      readWebRemote(runGit, repoRoot, remoteName),
       pickBranch(runGit, repoRoot, remoteName, repoPath, configuredBranch),
     ]);
-    const remote = toWebUrl(remoteUrl);
     if (!remote) {
       return window.showErrorMessage(
-        `The remote "${remoteName}" points at ${remoteUrl}, which has no web page.`
+        `The remote "${remoteName}" points at ${stored}, which has no web page.`
       );
     }
     const url = pickHost(repositoryType, remote)[view]({

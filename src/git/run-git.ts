@@ -33,7 +33,19 @@ export function findRepoRoot(git: Git, dir: string): Promise<string> {
   return git(["rev-parse", "--show-toplevel"], dir);
 }
 
-/** The fetch URL of `remote`, with `url.<base>.insteadOf` aliases applied. */
+/** The URL of `remote` as the repo config stores it. */
 export function readRemoteUrl(git: Git, repoRoot: string, remote: string) {
-  return git(["remote", "get-url", "--", remote], repoRoot);
+  return git(["config", "--get", `remote.${remote}.url`], repoRoot).catch(() =>
+    Promise.reject(
+      `No remote "${remote}" in this repo. Set openInGitHub.defaultRemote to a name from git remote.`
+    )
+  );
+}
+
+/**
+ * The URL git fetches `remote` from, with `url.<base>.insteadOf` aliases
+ * applied. ls-remote works on git older than 2.7 and makes no network call.
+ */
+export function readFetchUrl(git: Git, repoRoot: string, remote: string) {
+  return git(["ls-remote", "--get-url", "--", remote], repoRoot);
 }

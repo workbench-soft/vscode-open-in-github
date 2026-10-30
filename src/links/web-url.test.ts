@@ -61,6 +61,7 @@ const cases: [string, string | undefined][] = [
   ["github.com:owner/repo.git", "https://github.com/owner/repo"],
   ["../other", undefined],
   ["C:/repos/other", undefined],
+  ["gh:owner/repo", undefined],
   ["file:///srv/repo.git", undefined],
 ];
 
