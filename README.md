@@ -71,7 +71,7 @@ Put these in the workspace settings:
 
 Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.
 
-Each push to master runs `mise run check` and the production build in `.github/workflows/checks.yml`, on the self-hosted runner.
+Each push to main runs `mise run check` and the production build in `.github/workflows/checks.yml`, on the self-hosted runner.
 
 ## Credits
 
