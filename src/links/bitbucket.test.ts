@@ -70,3 +70,16 @@ suite("bitbucketLinks.history", () => {
     );
   });
 });
+
+suite("bitbucketLinks branch and path", () => {
+  test("escapes # in the branch and the file path", () => {
+    assert.equal(
+      bitbucketLinks.history({
+        remote,
+        branch: "fix/#12-crash",
+        path: "docs/a#b.md",
+      }),
+      "https://bitbucket.org/some/repo/history-node/fix/%2312-crash/docs/a%23b.md"
+    );
+  });
+});

@@ -90,3 +90,16 @@ suite("githubLinks.history", () => {
     );
   });
 });
+
+suite("githubLinks file paths", () => {
+  test("escapes #, ?, $ and spaces in the file path", () => {
+    assert.equal(
+      githubLinks.file({
+        remote,
+        branch: "main",
+        path: "app/routes/users.$id/a#b c?.ts",
+      }),
+      "https://remote.url/blob/main/app/routes/users.%24id/a%23b%20c%3F.ts"
+    );
+  });
+});

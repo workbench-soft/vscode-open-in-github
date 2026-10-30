@@ -25,9 +25,12 @@ export function mapUrl(url: string, mapping: UrlMapping = {}): string {
   return url in mapping ? mapping[url] : url;
 }
 
-/** Escapes each part of the branch, so `#` and `?` stay inside the path. */
-export function encodeBranchPath(branch: string): string {
-  return branch.split("/").map(encodeURIComponent).join("/");
+/**
+ * Escapes each part of a branch or a file path, so `#`, `?`, `%` and spaces
+ * stay inside the URL path.
+ */
+export function encodePath(slashPath: string): string {
+  return slashPath.split("/").map(encodeURIComponent).join("/");
 }
 
 /**

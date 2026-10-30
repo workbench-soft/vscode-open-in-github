@@ -1,5 +1,11 @@
 import { posix } from "path";
-import { HostLinks, LinkTarget, lineAnchor, mapUrl } from "./host-links";
+import {
+  encodePath,
+  HostLinks,
+  LinkTarget,
+  lineAnchor,
+  mapUrl,
+} from "./host-links";
 
 /** Bitbucket Cloud anchors lines by file name, as in `#app.ts-10:20`. */
 export const bitbucketLinks: HostLinks = {
@@ -16,5 +22,6 @@ function linkTo(
   const anchor = withLines
     ? lineAnchor(lines, `#${posix.basename(path)}-`, ":")
     : "";
-  return `${mapUrl(remote, mapping)}/${page}/${branch}/${path}${anchor}`;
+  const where = `${encodePath(branch)}/${encodePath(path)}`;
+  return `${mapUrl(remote, mapping)}/${page}/${where}${anchor}`;
 }

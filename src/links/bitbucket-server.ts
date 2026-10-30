@@ -1,7 +1,13 @@
-import { HostLinks, LinkTarget, lineAnchor, mapUrl } from "./host-links";
+import {
+  encodePath,
+  HostLinks,
+  LinkTarget,
+  lineAnchor,
+  mapUrl,
+} from "./host-links";
 
 /**
- * Bitbucket Server and Data Center. The mapping applies to the host alone,
+ * Bitbucket Server and Data Center. The mapping applies to the server address,
  * and each view opens the same browse page.
  */
 export const bitbucketServerLinks: HostLinks = {
@@ -27,5 +33,9 @@ function browseLink({ remote, branch, path, mapping, lines }: LinkTarget) {
   // A detached HEAD gives a commit, which Bitbucket takes as it is.
   const ref = /^[0-9a-f]{40}$/.test(branch) ? branch : `refs/heads/${branch}`;
   const at = encodeURIComponent(ref);
-  return `${page}/browse/${path}?at=${at}${lineAnchor(lines, "#", "-")}`;
+  return `${page}/browse/${encodePath(path)}?at=${at}${lineAnchor(
+    lines,
+    "#",
+    "-"
+  )}`;
 }
