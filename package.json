@@ -110,7 +110,7 @@
           "scope": "resource",
           "type": "string",
           "default": "origin",
-          "description": "Controls which remote will be treated as default."
+          "description": "The git remote the links point at."
         },
         "openInGitHub.repositoryType": {
           "scope": "resource",
@@ -124,19 +124,19 @@
             "gitlab"
           ],
           "enumDescriptions": [
-            "Auto detection of repository type",
-            "Github",
-            "Bitbucket",
-            "Bitbucket Server (uses /projects/<project>/repos/<repo> repository URL scheme)",
-            "Gitlab"
+            "Read the host from the remote URL. Hosts other than bitbucket.org and gitlab.com get GitHub links",
+            "GitHub and GitHub Enterprise",
+            "Bitbucket Cloud",
+            "Bitbucket Server and Data Center, with /projects/<project>/repos/<repo> links",
+            "GitLab"
           ],
-          "description": "Defines type of repository"
+          "description": "The host that the links are built for."
         },
         "openInGitHub.remoteURLMapping": {
           "scope": "resource",
           "type": "object",
           "default": {},
-          "description": "Allows to override URL that will be opened for specific remote."
+          "description": "Swaps the web URL of a remote for another URL in the links, such as {\"https://mirror.github.com\": \"https://github.com\"}."
         }
       }
     }
