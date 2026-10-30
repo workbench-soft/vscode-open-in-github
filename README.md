@@ -61,13 +61,13 @@ Put these in the workspace settings:
 
 [mise](https://mise.jdx.dev) pins Node 22 and runs the checks.
 
-| Task | Command |
-| --- | --- |
-| Install the packages | `mise x -- npm ci` |
-| Lint, typecheck and unit tests | `mise run check` |
-| Bundle into `out/extension.js` | `mise x -- npm run compile` |
-| Tests inside a VS Code window | `mise x -- npm test` |
-| Package into `dist/` as a `.vsix` | `mise run build` |
+| Task                                 | Command                              |
+| ------------------------------------ | ------------------------------------ |
+| Install the packages                 | `mise x -- npm ci`                   |
+| Lint, typecheck and unit tests       | `mise run check`                     |
+| Bundle into `out/extension.js`       | `mise x -- npm run compile`          |
+| Tests inside a VS Code window        | `mise x -- npm test`                 |
+| Package into `dist/` as a `.vsix`    | `mise run build`                     |
 | Build and publish to the Marketplace | `mise x -- npm exec -- vsce publish` |
 
 Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.

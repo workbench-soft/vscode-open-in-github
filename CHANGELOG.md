@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Lint and format** oxlint lints the code, and oxfmt formats it in place of Prettier. `mise run lint` runs both.
+
 - **Languages** the commands, settings and messages follow the VS Code display language: Russian, German, French, Spanish, Chinese, Japanese, Korean and Norwegian, along with English.
 - **Install** the README gives Ctrl+P for Quick Open, with ⌘+P for a Mac.
 - **Credits** the README names Stanislav Sysoev, who wrote the original Open in GitHub.
