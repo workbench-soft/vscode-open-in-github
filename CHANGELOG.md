@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Architecture decisions** `docs/architecture.md` gets a Decisions section. Each big choice names its reason, its cost and the rivals it beat.
+
 - **Lint and format** oxlint lints the code, and oxfmt formats it in place of Prettier. `mise run lint` runs both.
 
 - **Languages** the commands, settings and messages follow the VS Code display language: Russian, German, French, Spanish, Chinese, Japanese, Korean and Norwegian, along with English.
