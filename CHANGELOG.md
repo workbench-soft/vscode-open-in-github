@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Specs: one file per feature under `specs/`, with each dated spec moved in as an entry under `## Changes`.
 - **Architecture decisions** `docs/architecture.md` gets a Decisions section. Each big choice names its reason, its cost and the rivals it beat.
 
 - **Lint and format** oxlint lints the code, and oxfmt formats it in place of Prettier. `mise run lint` runs both.

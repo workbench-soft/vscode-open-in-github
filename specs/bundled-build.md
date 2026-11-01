@@ -1,17 +1,37 @@
 # One bundled file, plain markdown links and fixes for remote windows
 
+## What it does for the person
+
+None written down yet.
+
+## User flows
+
+None written down yet.
+
+## How it works: modules, files, data
+
+Each entry below names the files it changed.
+
+## Limits
+
+None written down yet.
+
+## Changes
+
+### 2022-01-04 One bundled file, plain markdown links and fixes for remote windows
+
 Built from 2022-01-04 to 2023-04-10. A later history reset folded these commits into one, and the local backup mirror of `vscode-open-in-github` keeps the originals under `refs/backup/master`.
 
-## The problem
+#### The problem
 
 The extension took long to load. Links to markdown also opened the rendered page.
 
-## What changes for people
+#### What changes for people
 
 - **Install** the package is smaller and loads faster.
 - **Markdown file** each link ends in `?plain=1`.
 
-## Files
+#### Files
 
 - **`package.json`** edited.
 - **`src/common.ts`** edited.
@@ -25,7 +45,7 @@ The extension took long to load. Links to markdown also opened the rendered page
 - **`src/test/blame.test.ts`** moved in.
 - **The rest** 7 more files.
 
-## Commits, oldest first
+#### Commits, oldest first
 
 1. chore: add license (a2bb99d, 2022-01-04)
 2. chore(deps): bump ansi-regex from 5.0.0 to 5.0.1 (b795201, 2022-01-03)
@@ -43,6 +63,6 @@ The extension took long to load. Links to markdown also opened the rendered page
 14. 1.17.2 (67a49a7, 2023-04-10)
 15. chore: ignore more files to reduce the size of the extension (30abd7b, 2023-04-10)
 
-## Docs it updated
+#### Docs it updated
 
 No doc needed a change.
