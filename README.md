@@ -10,7 +10,7 @@ It forks [Open in GitHub](https://github.com/d4rkr00t/vscode-open-in-github), wr
 2. Paste the command below.
 3. Press Enter.
 
-```
+```text
 ext install workbench-soft.open-in-remote-repo
 ```
 

@@ -2,7 +2,7 @@
 
 ## publisher-workbench-soft
 
-- [ ] Create the `workbench-soft` publisher at https://marketplace.visualstudio.com/manage before the next `vsce publish`.
+- [ ] Create the `workbench-soft` publisher at <https://marketplace.visualstudio.com/manage> before the next `vsce publish`.
 
 ## auto-merge
 
