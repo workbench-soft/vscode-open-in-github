@@ -176,3 +176,7 @@ sequenceDiagram
   - **Publish to the Marketplace from CI** the token would sit in the repo
     secrets of a public repo.
 - **Cost to undo** low. The two workflows.
+
+## Release build timing
+
+Release builds MUST start on pushes alongside their matching checks. Publication MUST wait for successful checks of the same commit and branch. Open PRs MUST NOT delay the build. LocalCI MUST record the causing run, commit and PR before cancelling a replaced build or a release whose checks failed.

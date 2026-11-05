@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Parallel release builds** releases build beside checks after a push. Only publication waits for matching checks; open PRs hold no build.
+
 - **CI** Release waits while a PR of an agent session is open, so the last merge of a batch releases them all.
 - **Docs** each heading of `docs/features.md` links its spec, and each feature that had no spec got one.
 - **Markdown** markdownlint-cli2 lints the docs in `mise run lint` and CI.

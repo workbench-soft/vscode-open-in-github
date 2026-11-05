@@ -9,9 +9,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-concurrency:
-  group: checks-${{ github.ref }}
-  cancel-in-progress: true
 
 permissions:
   contents: read
