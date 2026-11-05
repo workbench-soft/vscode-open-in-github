@@ -18,7 +18,6 @@ env:
   SHA: ${{ github.sha }}
 
 jobs:
-
   release:
     if: github.ref == 'refs/heads/main'
 

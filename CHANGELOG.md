@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **CI** Format the workflow YAML so the checks pass.
 - **Parallel release builds** releases build beside checks after a push. Only publication waits for matching checks; open PRs hold no build.
 
 - **CI** Release waits while a PR of an agent session is open, so the last merge of a batch releases them all.
