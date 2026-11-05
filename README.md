@@ -88,3 +88,7 @@ Each push to main whose Checks pass gets a [GitHub release](https://github.com/w
 [Stanislav Sysoev](https://github.com/d4rkr00t) wrote [Open in GitHub](https://github.com/d4rkr00t/vscode-open-in-github), and this extension started as a fork of it. Its MIT licence and copyright stay in `LICENSE`.
 
 The logo comes from [https://octodex.github.com/](https://octodex.github.com/).
+
+## Release build timing
+
+Release builds MUST start on pushes alongside their matching checks. Publication MUST wait for successful checks of the same commit and branch. Open PRs MUST NOT delay the build. LocalCI MUST record the causing run, commit and PR before cancelling a replaced build or a release whose checks failed.
