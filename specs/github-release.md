@@ -55,3 +55,8 @@ None written down yet.
 
 - The develop and release sections of `README.md`.
 - `CHANGELOG.md` under Unreleased.
+
+### 2026-11-09 Week review
+
+- **Why** the parallel release change pushed the tag before the release, left comments above the wrong steps, a guard script with mode 100644 and agent rules in the docs.
+- **Changes** `release.yml` follows the `repo-ci` template, with `gh release create --target`. The pasted "Release build timing" sections go.
