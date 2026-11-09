@@ -2,19 +2,25 @@
 
 ## What it does for the person
 
-None written down yet.
+Each push to `main` whose Checks pass gets a GitHub release with the `.vsix` attached, so a person installs a build without packaging it.
 
 ## User flows
 
-None written down yet.
+1. A PR merges into `main`.
+2. Checks and the Release build start on the same push.
+3. Checks pass, and the release `v2026.10.30.1` publishes with `open-in-remote-repo-2026.1030.1.vsix`.
+4. A person downloads it and runs `code --install-extension` on the file.
 
 ## How it works: modules, files, data
 
-Each entry below names the files it changed.
+- **Build** the `build` job of `.github/workflows/release.yml` packages the `.vsix` on `ubuntu-latest` and hands it to publish through the Actions cache. Its last step asks `release-gate.sh checks` for the Checks result once.
+- **Publish** runs right after the build when Checks already passed. Otherwise the end of Checks starts Release on `workflow_run`, and `release-gate.sh build` finds the finished build. One publish runs at a time.
+- **Cancel** a failed Checks run starts `release-gate.sh cancel`, which stops the unfinished build of the commit.
 
 ## Limits
 
-None written down yet.
+- **Marketplace** a person publishes there by hand, since it needs a token.
+- **Version** vsce takes semver only, so the `.vsix` reads `2026.1030.1`.
 
 ## Changes
 
@@ -60,3 +66,8 @@ None written down yet.
 
 - **Why** the parallel release change pushed the tag before the release, left comments above the wrong steps, a guard script with mode 100644 and agent rules in the docs.
 - **Changes** `release.yml` follows the `repo-ci` template, with `gh release create --target`. The pasted "Release build timing" sections go.
+
+### 2026-11-10 Docs follow the release gate
+
+- **Why** Release now builds beside Checks through `release-gate.sh`. The README and the architecture page said only that a release follows green Checks, and the top of this spec was empty.
+- **Changes** the top of this spec, the README Release section and the Releases decision describe the build, the gate and the cancel. A stray comment in the `on:` block of `release.yml` goes.

@@ -165,7 +165,9 @@ sequenceDiagram
 ### Releases: a `.vsix` on GitHub, Marketplace by hand
 
 - **Picked** each green push to `main` gets a GitHub release with the
-  `.vsix`, built on `ubuntu-latest`. A Marketplace publish stays manual.
+  `.vsix`, built on `ubuntu-latest` beside Checks. `release-gate.sh`
+  publishes the build once Checks pass, and a failed Checks run cancels it.
+  A Marketplace publish stays manual.
 - **Why** the repo is public, so a GitHub runner costs 0 minutes and fork
   PRs stay off the PC. A Marketplace publish needs a token and a person.
 - **Trade-off** vsce takes semver only, so the tag `v2026.10.30.1` turns into

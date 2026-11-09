@@ -78,6 +78,9 @@ Each push to main and each PR runs `mise run check` and the production build in 
 
 Each push to main whose Checks pass gets a [GitHub release](https://github.com/workbench-soft/vscode-open-in-github/releases) with the `.vsix` attached.
 
+- **Build** `.github/workflows/release.yml` packages the `.vsix` on `ubuntu-latest` beside Checks, on the same push.
+- **Gate** a failed Checks run cancels the build. Once Checks pass, the release publishes. `.github/scripts/release-gate.sh` ties the two runs together.
+
 - **Tag** the date in Sydney and the release of the day, such as `v2026.10.30.1`.
 - **Extension version** vsce takes semver only, so that `.vsix` reads `2026.1030.1`. The version in git stays as it is.
 - **Install** download the `.vsix` and run `code --install-extension open-in-remote-repo-2026.1030.1.vsix`.
