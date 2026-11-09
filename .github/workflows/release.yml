@@ -1,26 +1,24 @@
 name: Release
 
-# Release builds beside checks; publication waits for the same commit.
-
+# Each push to main gets a release with the .vsix once its Checks pass. The release builds beside Checks, and only publication waits.
 on:
   push:
     branches: [main]
-  # The repo is public, so PRs from outside get checked too.
   workflow_dispatch:
 
 permissions:
+  # wait-for-checks.sh reads the checks runs of the commit.
   actions: read
   contents: write
 
 env:
   GH_TOKEN: ${{ github.token }}
-
   SHA: ${{ github.sha }}
 
 jobs:
   release:
+    # A run by hand from another branch would tag a commit no check passed, so it releases main only.
     if: github.ref == 'refs/heads/main'
-
     # The repo is public, so GitHub runners cost 0.
     runs-on: ubuntu-latest
     steps:
@@ -49,20 +47,15 @@ jobs:
           mise x -- npm pkg set "version=$year.$((10#$month$day)).$n"
           mise run build
 
-      # A tag pushed with the workflow token doesn't start other workflows.
-      - name: Wait for matching checks before publication
-        shell: bash
-        working-directory: ${{ github.workspace }}
+      - name: Wait for the checks run of this commit
         env:
-          GH_TOKEN: ${{ github.token }}
           CHECKS_WORKFLOW: checks.yml
-        run: bash .github/scripts/wait-for-checks.sh
+        run: sh .github/scripts/wait-for-checks.sh
 
+      # gh release create makes the tag with the release, so a cancel leaves no tag without a release.
       - name: Tag the commit and publish the release
         env:
           TAG: ${{ steps.version.outputs.tag }}
         run: |
           .github/scripts/release-notes.sh "$TAG" > "$RUNNER_TEMP/notes.md"
-          git tag "$TAG" "$SHA"
-          git push origin "$TAG"
-          gh release create "$TAG" dist/*.vsix --verify-tag --notes-file "$RUNNER_TEMP/notes.md" --title "$TAG"
+          gh release create "$TAG" dist/*.vsix --target "$SHA" --notes-file "$RUNNER_TEMP/notes.md" --title "$TAG"

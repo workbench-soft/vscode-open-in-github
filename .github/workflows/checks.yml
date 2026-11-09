@@ -1,7 +1,7 @@
 name: Checks
 
 # Runs lint, the type check, the unit tests and the production build on each
-# push to main and each PR. Release runs once a push to main passes.
+# push to main and each PR. Release publishes once a push to main passes.
 on:
   push:
     branches: [main]
