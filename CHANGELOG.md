@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **CI** Release builds beside Checks again and publishes once they pass, through `release-gate.sh`. A failed Checks run cancels the build. No job waits on a runner for the other workflow.
+
 - **CI** Release starts on `workflow_run` once Checks pass on `main`, one at a time. It no longer holds a PC runner while it waits, which starved Checks and timed releases out.
 
 - **CI** `gh release create` makes the tag with the release, so a failed publish leaves no stray tag. The Release comments say what each step does, the guard script is the `repo-ci` one with its run bit, and the docs lose the agent rules pasted in by the CI rollout.
