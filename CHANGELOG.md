@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Older runs stop on GitHub** a newer push to `main` cancels the Checks and the release build of the older commit through `concurrency`, with the local-ci page off too.
+
 - **Lint before the push** a pre-push hook runs `mise run lint`, so a lint or format error stays on the PC instead of failing Checks on `main`.
 
 - **Docs** the README, the architecture page and the release spec describe the build beside Checks and the cancel on a failed Checks run.
