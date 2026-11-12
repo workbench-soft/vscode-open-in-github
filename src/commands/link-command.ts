@@ -1,9 +1,8 @@
-import { promises as fs } from "fs";
 import * as path from "path";
 import { FileType, l10n, Uri, window, workspace } from "vscode";
 import { pickBranch } from "../git/pick-branch";
 import { findRepoRoot, runGit } from "../git/run-git";
-import { toRepoPath } from "../git/repo-path";
+import { realPathOf, toRepoPath } from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
 import { errorText } from "./error-text";
@@ -52,7 +51,7 @@ export async function runLinkCommand(
     );
     const repoPath = toRepoPath(
       repoRoot,
-      await fs.realpath(openedPath),
+      await realPathOf(openedPath),
       openedPath
     );
     const [{ stored, web: remote }, branch] = await Promise.all([

@@ -1,5 +1,6 @@
 import * as assert from "assert";
-import { toRepoPath } from "./repo-path";
+import * as path from "path";
+import { realPathOf, toRepoPath } from "./repo-path";
 
 suite("toRepoPath", () => {
   test("follows a symlink whose target is in the repo", () => {
@@ -30,4 +31,11 @@ suite("toRepoPath", () => {
       );
     }
   );
+});
+
+suite("realPathOf", () => {
+  test("keeps the path of a file deleted on disk", async () => {
+    const gone = path.join(__dirname, "deleted-file.ts");
+    assert.equal(await realPathOf(gone), gone);
+  });
 });
