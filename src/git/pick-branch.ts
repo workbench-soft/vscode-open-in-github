@@ -12,11 +12,13 @@ export async function pickBranch(
   path: string,
   configuredBranch: string
 ): Promise<string> {
+  // Full ref names, since git shortens a name a tag or branch shares to
+  // `heads/v1` or `remotes/origin/main`.
   const remoteHead = await git(
-    ["symbolic-ref", "--short", `refs/remotes/${remote}/HEAD`],
+    ["symbolic-ref", "-q", `refs/remotes/${remote}/HEAD`],
     repoRoot
   ).then(
-    (ref) => ref.slice(remote.length + 1),
+    (ref) => stripPrefix(ref, `refs/remotes/${remote}/`),
     () => ""
   );
 
@@ -39,6 +41,13 @@ export async function pickBranch(
   const mainBranch = candidates.find((_, i) => hasPath[i]);
   if (mainBranch) return mainBranch;
 
-  const current = await git(["rev-parse", "--abbrev-ref", "HEAD"], repoRoot);
-  return current === "HEAD" ? git(["rev-parse", "HEAD"], repoRoot) : current;
+  // A detached HEAD fails here and gives the commit sha.
+  return git(["symbolic-ref", "-q", "HEAD"], repoRoot).then(
+    (ref) => stripPrefix(ref, "refs/heads/"),
+    () => git(["rev-parse", "HEAD"], repoRoot)
+  );
+}
+
+function stripPrefix(ref: string, prefix: string): string {
+  return ref.startsWith(prefix) ? ref.slice(prefix.length) : "";
 }
