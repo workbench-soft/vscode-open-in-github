@@ -11,9 +11,18 @@ suite("readRemoteUrl", () => {
     await readRemoteUrl(git, "/repo", "origin; touch pwned");
     await readFetchUrl(git, "/repo", "origin; touch pwned");
     assert.deepEqual(calls, [
-      ["config", "--get", "remote.origin; touch pwned.url"],
+      ["config", "--get-all", "remote.origin; touch pwned.url"],
       ["ls-remote", "--get-url", "--", "origin; touch pwned"],
     ]);
+  });
+
+  test("keeps the first of several URLs, the one git fetches", async () => {
+    const git = async () =>
+      "https://github.com/a/first.git\nhttps://gitlab.com/b/mirror.git";
+    assert.equal(
+      await readRemoteUrl(git, "/repo", "origin"),
+      "https://github.com/a/first.git"
+    );
   });
 
   test("names the setting when the remote is missing", async () => {

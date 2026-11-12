@@ -2,5 +2,6 @@
   "Copied to the clipboard: {0}": "Copiado al portapapeles: {0}",
   "Open a file first.": "Abre primero un archivo.",
   "Save the file in a git repo first.": "Guarda primero el archivo en un repositorio git.",
-  "The remote \"{0}\" points at {1}, which has no web page.": "El remote «{0}» apunta a {1}, que no tiene página web."
+  "The remote \"{0}\" points at {1}, which has no web page.": "El remote «{0}» apunta a {1}, que no tiene página web.",
+  "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0} no es un enlace http ni https, así que no se abre. Revisa openInGitHub.remoteURLMapping."
 }

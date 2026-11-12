@@ -1,3 +1,4 @@
+import { promises as fs } from "fs";
 import * as path from "path";
 
 /**
@@ -14,4 +15,12 @@ export function toRepoPath(
   const outside = fromTarget.startsWith("..") || path.isAbsolute(fromTarget);
   const relative = outside ? path.relative(repoRoot, openedPath) : fromTarget;
   return relative.split(path.sep).join("/");
+}
+
+/**
+ * Resolves symlinks in `openedPath`. A file deleted on disk, still open in an
+ * editor or a diff, keeps its own path, since the remote may still hold it.
+ */
+export function realPathOf(openedPath: string): Promise<string> {
+  return fs.realpath(openedPath).catch(() => openedPath);
 }

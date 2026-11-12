@@ -6,12 +6,17 @@
 export function toWebUrl(remoteUrl: string): string | undefined {
   const url = toWebForm(remoteUrl.trim());
   if (!url) return undefined;
-  return (
-    (/github\.com/.test(url) ? stripGitSuffix(url) : url)
-      // A user name or token in the remote stays out of the link.
-      .replace(/^(https?:\/\/)[^/]*@/, "$1")
-      .replace(/\/$/, "")
-  );
+  return hideCredentials(
+    /github\.com/.test(url) ? stripGitSuffix(url) : url
+  ).replace(/\/$/, "");
+}
+
+/**
+ * Drops the user name and token after any `scheme://`, so a remote such as
+ * `hg::https://user:token@host/repo` can show in a message or a link.
+ */
+export function hideCredentials(url: string): string {
+  return url.replace(/(:\/\/)[^/\s]*@/g, "$1");
 }
 
 /** Drops `.git` at the end only, so a host such as `code.git.corp` stays. */
@@ -36,4 +41,12 @@ function toWebForm(url: string): string | undefined {
   if (/^ftps?:/.test(url)) return url.replace(/^ftp/, "http");
   if (url.startsWith("git:")) return url.replace(/^git/, "https");
   return undefined;
+}
+
+/**
+ * True for an http or https link. A `remoteURLMapping` value from a cloned
+ * repo's settings could give `file:` or `vscode:`, which the OS would run.
+ */
+export function isWebLink(url: string): boolean {
+  return /^https?:\/\//i.test(url);
 }
