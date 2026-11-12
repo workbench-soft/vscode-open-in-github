@@ -37,3 +37,11 @@ function toWebForm(url: string): string | undefined {
   if (url.startsWith("git:")) return url.replace(/^git/, "https");
   return undefined;
 }
+
+/**
+ * True for an http or https link. A `remoteURLMapping` value from a cloned
+ * repo's settings could give `file:` or `vscode:`, which the OS would run.
+ */
+export function isWebLink(url: string): boolean {
+  return /^https?:\/\//i.test(url);
+}

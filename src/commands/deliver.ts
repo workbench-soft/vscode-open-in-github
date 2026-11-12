@@ -1,4 +1,5 @@
 import { env, l10n, Uri, window } from "vscode";
+import { isWebLink } from "../links/web-url";
 
 /**
  * Opens through VS Code, so a remote window opens the browser on the
@@ -7,6 +8,12 @@ import { env, l10n, Uri, window } from "vscode";
  */
 export async function openInBrowser(url?: string) {
   if (!url) return;
+  if (!isWebLink(url)) {
+    throw l10n.t(
+      "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.",
+      url
+    );
+  }
   await env.openExternal(url as unknown as Uri);
 }
 

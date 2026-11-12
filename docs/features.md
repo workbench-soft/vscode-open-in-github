@@ -38,6 +38,7 @@ Spec: [open-in-remote-repo](../specs/open-in-remote-repo.md).
 - **What** GitHub and GitHub servers, GitLab, Bitbucket and Bitbucket Server. `openInGitHub.remoteURLMapping` swaps a remote URL for another.
 - **Where** `openInGitHub.repositoryType` picks the host. `auto` reads it from the remote URL.
 - **Limits** on `auto`, a host other than `bitbucket.org` and `gitlab.com` gets GitHub links. Bitbucket Server reads the project and repo from the end of the remote, after `/scm` in an https clone URL.
+- **Safety** Open takes http and https links only. A mapped URL with another scheme, such as `file:` or `vscode:`, shows an error and stays closed.
 
 Spec: [remote-hosts](../specs/remote-hosts.md).
 

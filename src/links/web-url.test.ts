@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { toWebUrl } from "./web-url";
+import { isWebLink, toWebUrl } from "./web-url";
 
 /** Each git remote URL, then the web URL it turns into. */
 const cases: [string, string | undefined][] = [
@@ -77,5 +77,23 @@ suite("toWebUrl", () => {
       toWebUrl("git@github.com:a/b.git\n"),
       "https://github.com/a/b"
     );
+  });
+});
+
+suite("isWebLink", () => {
+  test("lets http and https links through", () => {
+    assert.ok(isWebLink("https://github.com/a/b/blob/main/x.ts"));
+    assert.ok(isWebLink("HTTP://host.xz/a"));
+  });
+
+  test("stops file, vscode and command links", () => {
+    for (const url of [
+      "file:///C:/Windows/System32/calc.exe?/blob/main/x.ts",
+      "vscode://vscode.git/clone?url=x",
+      "command:workbench.action.terminal.new",
+      "github.com/a/b",
+    ]) {
+      assert.equal(isWebLink(url), false, url);
+    }
   });
 });
