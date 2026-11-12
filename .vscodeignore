@@ -12,3 +12,9 @@ typings/**
 vsc-extension-quickstart.md
 .github/**
 dist/**
+TODO.md
+.githooks/**
+build.js
+.markdownlint-cli2.jsonc
+.oxfmtrc.json
+.oxlintrc.json
