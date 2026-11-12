@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import { isWebLink, toWebUrl } from "./web-url";
+import { hideCredentials, isWebLink, toWebUrl } from "./web-url";
 
 /** Each git remote URL, then the web URL it turns into. */
 const cases: [string, string | undefined][] = [
@@ -95,5 +95,23 @@ suite("isWebLink", () => {
     ]) {
       assert.equal(isWebLink(url), false, url);
     }
+  });
+});
+
+suite("hideCredentials", () => {
+  test("drops the token from a remote with no web form", () => {
+    assert.equal(
+      hideCredentials("hg::https://user:tok@host.xz/a/b"),
+      "hg::https://host.xz/a/b"
+    );
+    assert.equal(
+      hideCredentials("persistent-https://user:p@ss@host.xz/a"),
+      "persistent-https://host.xz/a"
+    );
+  });
+
+  test("keeps a path and an scp form as they are", () => {
+    assert.equal(hideCredentials("../other"), "../other");
+    assert.equal(hideCredentials("git@host.xz:a/b"), "git@host.xz:a/b");
   });
 });

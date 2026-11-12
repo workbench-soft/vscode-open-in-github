@@ -5,6 +5,7 @@ import { findRepoRoot, runGit } from "../git/run-git";
 import { realPathOf, toRepoPath } from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
+import { hideCredentials } from "../links/web-url";
 import { errorText } from "./error-text";
 import { selectedLines } from "./selected-lines";
 import { readWebRemote } from "./web-remote";
@@ -63,7 +64,7 @@ export async function runLinkCommand(
         l10n.t(
           'The remote "{0}" points at {1}, which has no web page.',
           remoteName,
-          stored
+          hideCredentials(stored)
         )
       );
     }
