@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- **Right branch** a link goes to the branch when a tag shares its name, to the fetch remote when it also pushes to a mirror, and opens for a file deleted on disk but still open in the editor.
+
+- **Safer links** only http and https links open in the browser, and the "no web page" error leaves the token out of the remote URL.
+
+- **Smaller package** the .vsix leaves out TODO.md, docs, lint configs, the git hook and unused screenshots. A test checks each bundle translates every message the code shows.
+
 - **Older runs stop on GitHub** a newer push to `main` cancels the Checks and the release build of the older commit through `concurrency`, with the local-ci page off too.
 
 - **Lint before the push** a pre-push hook runs `mise run lint`, so a lint or format error stays on the PC instead of failing Checks on `main`.
