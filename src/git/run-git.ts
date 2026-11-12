@@ -33,12 +33,18 @@ export function findRepoRoot(git: Git, dir: string): Promise<string> {
   return git(["rev-parse", "--show-toplevel"], dir);
 }
 
-/** The URL of `remote` as the repo config stores it. */
+/**
+ * The URL of `remote` as the repo config stores it. A remote with a second
+ * push URL added by `git remote set-url --add` keeps the first, which git
+ * fetches from.
+ */
 export function readRemoteUrl(git: Git, repoRoot: string, remote: string) {
-  return git(["config", "--get", `remote.${remote}.url`], repoRoot).catch(() =>
-    Promise.reject(
-      `No remote "${remote}" in this repo. Set openInGitHub.defaultRemote to a name from git remote.`
-    )
+  return git(["config", "--get-all", `remote.${remote}.url`], repoRoot).then(
+    (urls) => urls.split(/\r?\n/)[0],
+    () =>
+      Promise.reject(
+        `No remote "${remote}" in this repo. Set openInGitHub.defaultRemote to a name from git remote.`
+      )
   );
 }
 
