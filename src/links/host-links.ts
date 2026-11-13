@@ -21,6 +21,18 @@ export interface LinkTarget {
 
 export type HostLinks = Record<LinkView, (target: LinkTarget) => string>;
 
+/**
+ * The link to `page` of the file, as `<remote>/blob/<branch>/<path>`, with
+ * the selected lines as `#L10` and `separator` before the last one. History
+ * passes no separator, since its page has no line anchor.
+ */
+export const pageLink =
+  (page: string, separator?: string) =>
+  ({ remote, branch, path, mapping, lines }: LinkTarget): string =>
+    `${mapUrl(remote, mapping)}/${page}/${encodePath(branch)}/${encodePath(
+      path
+    )}${separator ? lineAnchor(lines, "#L", separator) : ""}`;
+
 export function mapUrl(url: string, mapping: UrlMapping = {}): string {
   return url in mapping ? mapping[url] : url;
 }
