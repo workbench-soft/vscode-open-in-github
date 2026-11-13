@@ -2,8 +2,6 @@
 
 ## Unreleased
 
-- **Releases by hand publish** a Release started by hand on a commit with no Checks run, such as a docs change, starts those Checks itself, and they publish the build once they pass. Such builds used to wait for Checks forever.
-
 - **Smaller package** the unused screenshot of the old remote and branch picker is gone.
 
 - **Right branch** a link goes to the branch when a tag shares its name, to the fetch remote when it also pushes to a mirror, and opens for a file deleted on disk but still open in the editor.
