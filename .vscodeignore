@@ -21,3 +21,4 @@ TODO.md
 tsconfig.json
 # Only the icon ships. The Marketplace shows README images from GitHub.
 assets/*.png
+.vscode-test/**

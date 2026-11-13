@@ -17,6 +17,7 @@
     "**/target/**",
     "**/dist/**",
     "**/build/**",
+    ".vscode-test/**",
     "CLAUDE.md",
     "**/CLAUDE.md",
   ],
