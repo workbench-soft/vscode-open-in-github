@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Smaller package** the unused screenshot of the old remote and branch picker is gone.
+
 - **Right branch** a link goes to the branch when a tag shares its name, to the fetch remote when it also pushes to a mirror, and opens for a file deleted on disk but still open in the editor.
 
 - **Safer links** only http and https links open in the browser, and the "no web page" error leaves the token out of the remote URL.

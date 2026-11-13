@@ -2,7 +2,10 @@
 
 ## publisher-workbench-soft
 
-- [ ] Create the `workbench-soft` publisher at <https://marketplace.visualstudio.com/manage> before the next `vsce publish`.
+- [ ] Publish the extension. The Marketplace has no `workbench-soft.open-in-remote-repo` yet, so users don't get the `openInGitHub.defaultRemote` fix.
+  1. Sign in at <https://marketplace.visualstudio.com/manage> and create the publisher with ID `workbench-soft`.
+  2. Make a personal access token with the Marketplace Manage scope at <https://dev.azure.com>, and tell an agent it is ready.
+  3. The agent bumps the version and runs `mise x -- npx @vscode/vsce publish` with that token.
 
 ## auto-merge
 
@@ -10,15 +13,15 @@
 
 ## rewrite-repo
 
-- [ ] Press F5 or run `mise x -- npm test`, then try Open and Copy for the file, blame, history and Explorer commands. The fast run skipped the VS Code test window.
-- [ ] Try Copy File URL in a Remote SSH or WSL window and paste locally, to confirm the `vscode.env.clipboard` fix.
-- [ ] Bump the version and publish with `mise x -- npx @vscode/vsce publish`, so users get the fix for `openInGitHub.defaultRemote` running shell commands.
-- [ ] Run step 12 of rewrite-repo (`reset-history`) on `main` when ready. The rewrite commits are local and unpushed.
-- [ ] Decide on `assets/multiple-remotes-and-branches.png`. No file references it, and it shows the old remote and branch picker.
+- [ ] Try Open and Copy by hand in VS Code. `npm test` passes in VS Code 1.146 (131 tests, 2026-11-13); these clicks need you.
+  1. Open this folder in VS Code and press F5.
+  2. In the new window, open a file and run Open in GitHub and Copy File URL from the Command Palette, for the file, blame, history and Explorer commands.
+  3. Repeat in a GitLab and a Bitbucket repo.
+  4. Repeat in a Remote SSH or WSL window, paste the copied link locally and check it is the right URL.
+- [ ] Decide whether to run step 12 of rewrite-repo (`reset-history`) on `main`. It wipes the history into one commit and force pushes, so it waits for your yes. Tell an agent "reset the history of vscode-open-in-github" when ready.
 
 ## app-audit
 
-- [ ] Run `mise x -- npm test` or press F5, then try Open and Copy on a GitHub, a GitLab and a Bitbucket repo, in a local and a Remote SSH or WSL window. Open now goes through `vscode.env.openExternal` (PR #4).
 - Left: `capabilities.untrustedWorkspaces`, a product call, since it turns the commands off in Restricted Mode.
 - Left: an output channel that logs each git call, a new feature.
 - Left: a check that the current branch exists on the remote before it gets the link, a product call on the fallback.
