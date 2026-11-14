@@ -18,18 +18,27 @@ export function toRepoPath(repoRoot: string, ...paths: string[]): string {
 /**
  * The nearest folder of `openedPath` that exists on disk, so git can start
  * there for a file whose folder got deleted, such as after a branch switch.
+ * It climbs no higher than `top`, so a deleted repo inside another repo
+ * doesn't give a link into the outer one. Undefined when none is left.
  */
-export async function existingFolder(openedPath: string): Promise<string> {
+export async function existingFolder(
+  openedPath: string,
+  top?: string
+): Promise<string | undefined> {
   const isFolder = (dir: string) =>
     fs.stat(dir).then(
       (stat) => stat.isDirectory(),
       () => false
     );
-  let dir = openedPath;
-  while (!(await isFolder(dir)) && path.dirname(dir) !== dir) {
-    dir = path.dirname(dir);
+  const above = (dir: string) => {
+    const rest = top === undefined ? "" : path.relative(top, dir);
+    return rest.startsWith("..") || path.isAbsolute(rest);
+  };
+  for (let dir = openedPath; !above(dir); dir = path.dirname(dir)) {
+    if (await isFolder(dir)) return dir;
+    if (path.dirname(dir) === dir) return undefined;
   }
-  return dir;
+  return undefined;
 }
 
 /**
@@ -38,7 +47,8 @@ export async function existingFolder(openedPath: string): Promise<string> {
  * workspace opened through a junction, macOS `/tmp` or a symlinked home.
  */
 export async function linkPathOf(openedPath: string): Promise<string> {
-  const folder = await existingFolder(path.dirname(openedPath));
+  const parent = path.dirname(openedPath);
+  const folder = (await existingFolder(parent)) ?? parent;
   const real = await fs.realpath(folder).catch(() => folder);
   return path.join(real, path.relative(folder, openedPath));
 }

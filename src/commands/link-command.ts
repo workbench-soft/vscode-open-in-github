@@ -11,6 +11,7 @@ import {
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
 import { hideCredentials } from "../links/web-url";
+import { KnownError } from "../known-error";
 import { errorText } from "./error-text";
 import { selectedLines } from "./selected-lines";
 import { tabUri } from "./tab-uri";
@@ -56,10 +57,15 @@ export async function runLinkCommand(
     const isFolder =
       explorerUri &&
       ((await workspace.fs.stat(uri)).type & FileType.Directory) !== 0;
-    const repoRoot = await findRepoRoot(
-      runGit,
-      await existingFolder(isFolder ? openedPath : path.dirname(openedPath))
+    // A deleted folder climbs to its workspace folder at most.
+    const startDir = await existingFolder(
+      isFolder ? openedPath : path.dirname(openedPath),
+      workspace.getWorkspaceFolder(uri)?.uri.fsPath
     );
+    if (!startDir) {
+      throw new KnownError("This file or folder isn't in a git repo.");
+    }
+    const repoRoot = await findRepoRoot(runGit, startDir);
     const linkPath = await linkPathOf(openedPath);
     const repoPath = toRepoPath(
       repoRoot,
