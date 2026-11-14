@@ -2,7 +2,12 @@ import * as path from "path";
 import { FileType, l10n, Uri, window, workspace } from "vscode";
 import { pickBranch } from "../git/pick-branch";
 import { findRepoRoot, runGit } from "../git/run-git";
-import { existingFolder, realPathOf, toRepoPath } from "../git/repo-path";
+import {
+  existingFolder,
+  linkPathOf,
+  realPathOf,
+  toRepoPath,
+} from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
 import { hideCredentials } from "../links/web-url";
@@ -50,9 +55,11 @@ export async function runLinkCommand(
       runGit,
       await existingFolder(isFolder ? openedPath : path.dirname(openedPath))
     );
+    const linkPath = await linkPathOf(openedPath);
     const repoPath = toRepoPath(
       repoRoot,
-      await realPathOf(openedPath),
+      await realPathOf(openedPath, linkPath),
+      linkPath,
       openedPath
     );
     const [{ stored, web: remote }, branch] = await Promise.all([

@@ -1,6 +1,13 @@
 import * as assert from "assert";
+import { promises as fs } from "fs";
+import * as os from "os";
 import * as path from "path";
-import { existingFolder, realPathOf, toRepoPath } from "./repo-path";
+import {
+  existingFolder,
+  linkPathOf,
+  realPathOf,
+  toRepoPath,
+} from "./repo-path";
 
 suite("toRepoPath", () => {
   test("follows a symlink whose target is in the repo", () => {
@@ -48,5 +55,25 @@ suite("realPathOf", () => {
   test("keeps the path of a file deleted on disk", async () => {
     const gone = path.join(__dirname, "deleted-file.ts");
     assert.equal(await realPathOf(gone), gone);
+  });
+});
+
+suite("linkPathOf", () => {
+  test("keeps a deleted file inside a repo opened through a link", async () => {
+    const tmp = await fs.mkdtemp(path.join(os.tmpdir(), "repo-path-"));
+    const repo = path.join(tmp, "repo");
+    const link = path.join(tmp, "link");
+    await fs.mkdir(repo);
+    await fs.symlink(repo, link, "junction");
+    try {
+      // git gives the root with links resolved.
+      const root = await fs.realpath(repo);
+      const opened = path.join(link, "src", "deleted.ts");
+      const linkPath = await linkPathOf(opened);
+      const real = await realPathOf(opened, linkPath);
+      assert.equal(toRepoPath(root, real, linkPath, opened), "src/deleted.ts");
+    } finally {
+      await fs.rm(tmp, { recursive: true, force: true });
+    }
   });
 });

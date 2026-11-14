@@ -2,25 +2,19 @@ import { promises as fs } from "fs";
 import * as path from "path";
 
 /**
- * Gives the path from the repo root with forward slashes. A symlink resolves
- * to its target, so the path exists on the remote, unless the target sits
- * outside the repo or on another Windows drive.
+ * Gives the path from the repo root with forward slashes, from the first of
+ * `paths` that sits inside the repo. Callers pass the symlink target first,
+ * so the path exists on the remote, unless the target sits outside the repo
+ * or on another Windows drive.
  */
-export function toRepoPath(
-  repoRoot: string,
-  realPath: string,
-  openedPath: string
-): string {
-  const fromTarget = path.relative(repoRoot, realPath);
-  const outside = fromTarget.startsWith("..") || path.isAbsolute(fromTarget);
-  const relative = outside ? path.relative(repoRoot, openedPath) : fromTarget;
-  return relative.split(path.sep).join("/");
+export function toRepoPath(repoRoot: string, ...paths: string[]): string {
+  const relatives = paths.map((p) => path.relative(repoRoot, p));
+  const inside = relatives.find(
+    (r) => !r.startsWith("..") && !path.isAbsolute(r)
+  );
+  return (inside ?? relatives[relatives.length - 1]).split(path.sep).join("/");
 }
 
-/**
- * Resolves symlinks in `openedPath`. A file deleted on disk, still open in an
- * editor or a diff, keeps its own path, since the remote may still hold it.
- */
 /**
  * The nearest folder of `openedPath` that exists on disk, so git can start
  * there for a file whose folder got deleted, such as after a branch switch.
@@ -38,6 +32,24 @@ export async function existingFolder(openedPath: string): Promise<string> {
   return dir;
 }
 
-export function realPathOf(openedPath: string): Promise<string> {
-  return fs.realpath(openedPath).catch(() => openedPath);
+/**
+ * `openedPath` with symlinks resolved in the folders above it, the file
+ * itself kept. git gives the repo root with symlinks resolved, as for a
+ * workspace opened through a junction, macOS `/tmp` or a symlinked home.
+ */
+export async function linkPathOf(openedPath: string): Promise<string> {
+  const folder = await existingFolder(path.dirname(openedPath));
+  const real = await fs.realpath(folder).catch(() => folder);
+  return path.join(real, path.relative(folder, openedPath));
+}
+
+/**
+ * Resolves symlinks in `openedPath`. A file deleted on disk, still open in an
+ * editor or a diff, takes `fallback`, since the remote may still hold it.
+ */
+export function realPathOf(
+  openedPath: string,
+  fallback = openedPath
+): Promise<string> {
+  return fs.realpath(openedPath).catch(() => fallback);
 }
