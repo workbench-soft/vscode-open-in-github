@@ -50,3 +50,17 @@ Planned on 2026-10-30 from an app audit of the whole repo. Each fix is its own c
 #### Left for later
 
 The `## app-audit` section of `TODO.md` lists the findings left and the reason.
+
+### 2026-11-14 Audit fixes: translated errors, previews, branch and path edge cases
+
+Planned on 2026-11-14 from a second app audit of the whole repo. Each fix is its own commit.
+
+- **Errors** git timeouts, a missing remote, a file outside a repo and a PC without git show a translated message. `src/known-error.ts` carries the English key from `git/` and `links/`.
+- **Previews** the palette commands read the active tab when no text editor is open.
+- **Branch** the branch check names `refs/remotes/<remote>/<branch>` in full, and runs beside the remote HEAD lookup.
+- **Paths** a deleted folder or a symlinked workspace still gives the right repo path.
+- **Remotes** `.git` goes from `git://` and `ftp://` remotes on every host.
+- **Package** a 256 px icon, the dead `pre-commit` and `lint-staged` packages gone, minor tool updates.
+- **CI** each Release job gets only the token rights it uses.
+
+Files: `src/`, `l10n/`, `package.json`, `package-lock.json`, `assets/`, `.github/workflows/release.yml`, the docs and `TODO.md`.
