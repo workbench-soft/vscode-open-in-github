@@ -18,13 +18,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'workflow_run' && github.run_id || github.ref }}
   cancel-in-progress: true
 
+# Each job widens these to what it needs. The build runs npm ci, so its dependencies see a read-only token.
 permissions:
-  # release-gate.sh reads the runs of the commit, and cancels a build.
-  actions: write
-  contents: write
+  contents: read
 
 env:
-  GH_TOKEN: ${{ github.token }}
   SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
   CHECKS_WORKFLOW: checks.yml
   RELEASE_WORKFLOW: release.yml
@@ -39,12 +37,18 @@ jobs:
     if: github.event_name != 'workflow_run' && github.ref == 'refs/heads/main'
     # The repo is public, so GitHub runners cost 0.
     runs-on: ubuntu-latest
+    permissions:
+      # release-gate.sh reads the Checks runs of the commit.
+      actions: read
+      contents: read
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ env.SHA }}
           # The release notes and the next version need every earlier tag and commit.
           fetch-depth: 0
+          # npm ci runs the scripts of each dependency, so the token stays out of .git/config.
+          persist-credentials: false
 
       - uses: jdx/mise-action@82a612c5ab8bcda7cc5db6b7e81a8e7584c3dc6e # v5.2.3
         with:
@@ -77,6 +81,8 @@ jobs:
       # The last step, so a Checks run that ends after it starts publish through workflow_run.
       - name: Look up Checks of this commit once
         id: checks
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: sh .github/scripts/release-gate.sh checks
     outputs:
       checks: ${{ steps.checks.outputs.checks }}
@@ -91,6 +97,12 @@ jobs:
       group: release-publish
     # The repo is public, so a GitHub runner costs 0 and fork code stays off the PC.
     runs-on: ubuntu-latest
+    permissions:
+      # release-gate.sh reads the runs and jobs of the commit, and gh release create makes the tag.
+      actions: read
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       # The release notes need every earlier tag and commit.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -139,6 +151,12 @@ jobs:
       github.event_name == 'workflow_run' && contains(fromJSON('["failure","timed_out"]'), github.event.workflow_run.conclusion) && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.head_repository.full_name == github.repository
     # The repo is public, so a GitHub runner costs 0 and fork code stays off the PC.
     runs-on: ubuntu-latest
+    permissions:
+      # release-gate.sh cancels the Release runs of the commit.
+      actions: write
+      contents: read
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
