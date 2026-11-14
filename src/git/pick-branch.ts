@@ -12,6 +12,31 @@ export async function pickBranch(
   path: string,
   configuredBranch: string
 ): Promise<string> {
+  // The remote HEAD lookup and the branch checks run at once, so a click
+  // waits for one round of git calls in place of two. rev-parse reads trees
+  // only, and the full name skips a local branch named `origin/main`.
+  // cat-file fetched the file in a partial clone, and hung offline.
+  const holdsPath = (branch: string) =>
+    git(
+      [
+        "rev-parse",
+        "--verify",
+        "--quiet",
+        `refs/remotes/${remote}/${branch}:${path}`,
+      ],
+      repoRoot
+    ).then(
+      () => true,
+      () => false
+    );
+  const checks = new Map<string, Promise<boolean>>();
+  const check = (branch: string) => {
+    const pending = checks.get(branch) ?? holdsPath(branch);
+    checks.set(branch, pending);
+    return pending;
+  };
+  [configuredBranch, "main", "master"].filter(Boolean).forEach(check);
+
   // Full ref names, since git shortens a name a tag or branch shares to
   // `heads/v1` or `remotes/origin/main`.
   const remoteHead = await git(
@@ -25,25 +50,7 @@ export async function pickBranch(
   const candidates = [
     ...new Set([configuredBranch, remoteHead, "main", "master"]),
   ].filter(Boolean);
-  // rev-parse reads trees only, and the full name skips a local branch named
-  // `origin/main`. cat-file fetched the file in a partial clone and hung
-  // offline.
-  const hasPath = await Promise.all(
-    candidates.map((branch) =>
-      git(
-        [
-          "rev-parse",
-          "--verify",
-          "--quiet",
-          `refs/remotes/${remote}/${branch}:${path}`,
-        ],
-        repoRoot
-      ).then(
-        () => true,
-        () => false
-      )
-    )
-  );
+  const hasPath = await Promise.all(candidates.map(check));
   const mainBranch = candidates.find((_, i) => hasPath[i]);
   if (mainBranch) return mainBranch;
 

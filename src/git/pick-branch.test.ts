@@ -91,4 +91,22 @@ suite("pickBranch", () => {
       "v1"
     );
   });
+
+  test("checks main and master while it looks up the remote HEAD", async () => {
+    const calls: string[] = [];
+    const base = fakeGit(["origin/main:a.ts"], "main");
+    const git: Git = (args, cwd) => {
+      calls.push(args.join(" "));
+      return base(args, cwd);
+    };
+    const picked = pick(git);
+    const firstRound = [...calls];
+    assert.equal(await picked, "main");
+    assert.deepEqual(firstRound, [
+      "rev-parse --verify --quiet refs/remotes/origin/main:a.ts",
+      "rev-parse --verify --quiet refs/remotes/origin/master:a.ts",
+      "symbolic-ref -q refs/remotes/origin/HEAD",
+    ]);
+    assert.equal(calls.length, 3);
+  });
 });
