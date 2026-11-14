@@ -4,6 +4,7 @@ import { Git } from "./run-git";
 
 /**
  * A git whose remote holds `paths`, each written as `origin/branch:path`.
+ * A short `origin/branch` ref fails, as when a local branch shares the name.
  * With `ambiguous`, a tag shares each branch name, so git shortens refs to
  * `heads/x` and `remotes/origin/x`.
  */
@@ -30,7 +31,7 @@ function fakeGit(
         : Promise.reject(new Error("no HEAD"));
     }
     if (command === "rev-parse" && rest[0] === "--verify") {
-      return paths.includes(rest[2])
+      return paths.some((p) => `refs/remotes/${p}` === rest[2])
         ? Promise.resolve("")
         : Promise.reject(new Error("missing"));
     }

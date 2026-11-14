@@ -25,12 +25,18 @@ export async function pickBranch(
   const candidates = [
     ...new Set([configuredBranch, remoteHead, "main", "master"]),
   ].filter(Boolean);
-  // rev-parse reads trees only. cat-file fetched the file in a partial clone,
-  // and hung offline.
+  // rev-parse reads trees only, and the full name skips a local branch named
+  // `origin/main`. cat-file fetched the file in a partial clone and hung
+  // offline.
   const hasPath = await Promise.all(
     candidates.map((branch) =>
       git(
-        ["rev-parse", "--verify", "--quiet", `${remote}/${branch}:${path}`],
+        [
+          "rev-parse",
+          "--verify",
+          "--quiet",
+          `refs/remotes/${remote}/${branch}:${path}`,
+        ],
         repoRoot
       ).then(
         () => true,
