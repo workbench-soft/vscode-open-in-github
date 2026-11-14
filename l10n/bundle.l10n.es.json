@@ -5,6 +5,8 @@
   "Open a file first.": "Abre primero un archivo.",
   "Save the file in a git repo first.": "Guarda primero el archivo en un repositorio git.",
   "The remote \"{0}\" points at {1}, which has no web page.": "El remote «{0}» apunta a {1}, que no tiene página web.",
+  "This file or folder isn't in a git repo.": "Este archivo o carpeta no está en un repositorio git.",
+  "VS Code can't find git. Install git, or add it to the PATH.": "VS Code no encuentra git. Instala git o añádelo al PATH.",
   "git {0} took more than {1} seconds.": "git {0} tardó más de {1} segundos.",
   "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0} no es un enlace http ni https, así que no se abre. Revisa openInGitHub.remoteURLMapping."
 }

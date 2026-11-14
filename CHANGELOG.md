@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Clear errors** a file outside a git repo, and a PC without git, get a plain message in your language in place of `fatal: not a git repository` or `spawn git ENOENT`.
+
 - **Languages** the git timeout, a missing remote and a Bitbucket Server remote with no project show their error in the VS Code display language.
 
 - **Smaller package** the unused screenshot of the old remote and branch picker is gone.

@@ -5,6 +5,8 @@
   "Open a file first.": "먼저 파일을 여세요.",
   "Save the file in a git repo first.": "먼저 파일을 git 저장소에 저장하세요.",
   "The remote \"{0}\" points at {1}, which has no web page.": "원격 “{0}”은(는) 웹 페이지가 없는 {1}을(를) 가리킵니다.",
+  "This file or folder isn't in a git repo.": "이 파일이나 폴더는 git 저장소에 없어요.",
+  "VS Code can't find git. Install git, or add it to the PATH.": "VS Code가 git을 찾지 못했어요. git을 설치하거나 PATH에 추가하세요.",
   "git {0} took more than {1} seconds.": "git {0}이(가) {1}초를 넘겼어요.",
   "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0}은(는) http나 https 링크가 아니라서 열지 않아요. openInGitHub.remoteURLMapping을 확인하세요."
 }

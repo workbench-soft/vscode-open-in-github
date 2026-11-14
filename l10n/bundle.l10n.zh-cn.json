@@ -5,6 +5,8 @@
   "Open a file first.": "请先打开一个文件。",
   "Save the file in a git repo first.": "请先把文件保存到 git 仓库中。",
   "The remote \"{0}\" points at {1}, which has no web page.": "远程“{0}”指向 {1}，它没有网页。",
+  "This file or folder isn't in a git repo.": "此文件或文件夹不在 git 仓库中。",
+  "VS Code can't find git. Install git, or add it to the PATH.": "VS Code 找不到 git。请安装 git，或把它加入 PATH。",
   "git {0} took more than {1} seconds.": "git {0} 运行超过了 {1} 秒。",
   "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0} 不是 http 或 https 链接，因此不会打开。请检查 openInGitHub.remoteURLMapping。"
 }

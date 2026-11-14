@@ -26,6 +26,12 @@ export const runGit: Git = (args, cwd) =>
               String(timeoutMs / 1000),
             ])
           );
+        } else if ((error as { code?: unknown } | null)?.code === "ENOENT") {
+          reject(
+            new KnownError(
+              "VS Code can't find git. Install git, or add it to the PATH."
+            )
+          );
         } else if (error) {
           reject(stderr.trim() || error);
         } else {
@@ -35,8 +41,19 @@ export const runGit: Git = (args, cwd) =>
     );
   });
 
+/**
+ * The repo root above `dir`. Outside a repo, git's English `fatal:` line
+ * gives way to a translated message. Other failures, such as dubious
+ * ownership, keep git's text, since it names the fix.
+ */
 export function findRepoRoot(git: Git, dir: string): Promise<string> {
-  return git(["rev-parse", "--show-toplevel"], dir);
+  return git(["rev-parse", "--show-toplevel"], dir).catch((err) =>
+    Promise.reject(
+      /not a git repository/.test(String(err))
+        ? new KnownError("This file or folder isn't in a git repo.")
+        : err
+    )
+  );
 }
 
 /**

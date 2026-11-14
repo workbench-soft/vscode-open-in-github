@@ -1,5 +1,43 @@
 import * as assert from "assert";
-import { readFetchUrl, readRemoteUrl } from "./run-git";
+import { KnownError } from "../known-error";
+import { findRepoRoot, readFetchUrl, readRemoteUrl, runGit } from "./run-git";
+
+suite("findRepoRoot", () => {
+  test("says the file is outside a git repo", async () => {
+    const git = () =>
+      Promise.reject(
+        "fatal: not a git repository (or any of the parent directories): .git"
+      );
+    await assert.rejects(
+      findRepoRoot(git, "/tmp"),
+      (err) =>
+        err instanceof KnownError &&
+        err.text === "This file or folder isn't in a git repo."
+    );
+  });
+
+  test("keeps git's own text for other failures", async () => {
+    const dubious = "fatal: detected dubious ownership in repository at '/r'";
+    const git = () => Promise.reject(dubious);
+    await assert.rejects(findRepoRoot(git, "/r"), (err) => err === dubious);
+  });
+});
+
+suite("runGit", () => {
+  test("says git is missing when the PATH has no git", async () => {
+    const path = process.env.PATH;
+    process.env.PATH = "";
+    try {
+      await assert.rejects(
+        runGit(["--version"], process.cwd()),
+        (err) =>
+          err instanceof KnownError && err.text.startsWith("VS Code can't find")
+      );
+    } finally {
+      process.env.PATH = path;
+    }
+  });
+});
 
 suite("readRemoteUrl", () => {
   test("hands the remote name to git as one argument", async () => {
