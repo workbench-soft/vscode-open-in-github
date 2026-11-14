@@ -1,7 +1,12 @@
 {
   "Copied to the clipboard: {0}": "クリップボードにコピーしました：{0}",
+  "No Bitbucket Server project and repo in {0}.": "{0} に Bitbucket Server のプロジェクトとリポジトリがありません。",
+  "No remote \"{0}\" in this repo. Set openInGitHub.defaultRemote to a name from git remote.": "このリポジトリにはリモート「{0}」がありません。openInGitHub.defaultRemote に git remote の名前を設定してください。",
   "Open a file first.": "先にファイルを開いてください。",
   "Save the file in a git repo first.": "先にファイルを git リポジトリに保存してください。",
   "The remote \"{0}\" points at {1}, which has no web page.": "リモート「{0}」は {1} を指していますが、Web ページがありません。",
+  "This file or folder isn't in a git repo.": "このファイルまたはフォルダーは git リポジトリにありません。",
+  "VS Code can't find git. Install git, or add it to the PATH.": "VS Code が git を見つけられません。git をインストールするか、PATH に追加してください。",
+  "git {0} took more than {1} seconds.": "git {0} に {1} 秒以上かかりました。",
   "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0} は http や https のリンクではないため、開きません。openInGitHub.remoteURLMapping を確認してください。"
 }

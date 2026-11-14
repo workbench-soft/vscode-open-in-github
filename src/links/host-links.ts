@@ -33,8 +33,15 @@ export const pageLink =
       path
     )}${separator ? lineAnchor(lines, "#L", separator) : ""}`;
 
+/**
+ * Swaps `url` through the mapping. A key that still ends in `.git` matches
+ * too, as `git://` and `ftp://` remotes kept the suffix before.
+ */
 export function mapUrl(url: string, mapping: UrlMapping = {}): string {
-  return url in mapping ? mapping[url] : url;
+  const key = [url, `${url}.git`].find((k) =>
+    Object.prototype.hasOwnProperty.call(mapping, k)
+  );
+  return key === undefined ? url : mapping[key];
 }
 
 /**

@@ -46,7 +46,7 @@ suite("bitbucketServerLinks", () => {
   test("fails for a remote without project and repo", () => {
     assert.throws(
       () => link({ remote: "http://host/repo", branch: "master", path }),
-      { message: "No Bitbucket Server project and repo in http://host/repo" }
+      { message: "No Bitbucket Server project and repo in http://host/repo." }
     );
   });
 

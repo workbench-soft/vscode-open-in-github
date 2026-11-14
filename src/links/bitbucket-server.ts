@@ -1,3 +1,4 @@
+import { KnownError } from "../known-error";
 import {
   encodePath,
   HostLinks,
@@ -25,7 +26,9 @@ function browseLink({ remote, branch, path, mapping, lines }: LinkTarget) {
     /^(https?:\/\/[^/]+(?:\/.*?)??)(?:\/scm)?\/([^/]+)\/([^/]+)$/
   );
   if (!match) {
-    throw new Error(`No Bitbucket Server project and repo in ${remote}`);
+    throw new KnownError("No Bitbucket Server project and repo in {0}.", [
+      remote,
+    ]);
   }
 
   const [, base, project, repo] = match;

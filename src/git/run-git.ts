@@ -1,4 +1,5 @@
 import { execFile } from "child_process";
+import { KnownError } from "../known-error";
 
 /** Runs git with `args` in `cwd` and resolves with the trimmed output. */
 export type Git = (args: string[], cwd: string) => Promise<string>;
@@ -19,7 +20,18 @@ export const runGit: Git = (args, cwd) =>
       { cwd, env, timeout: timeoutMs },
       (error, stdout, stderr) => {
         if (error?.killed) {
-          reject(`git ${args[0]} took more than ${timeoutMs / 1000} seconds.`);
+          reject(
+            new KnownError("git {0} took more than {1} seconds.", [
+              args[0],
+              String(timeoutMs / 1000),
+            ])
+          );
+        } else if ((error as { code?: unknown } | null)?.code === "ENOENT") {
+          reject(
+            new KnownError(
+              "VS Code can't find git. Install git, or add it to the PATH."
+            )
+          );
         } else if (error) {
           reject(stderr.trim() || error);
         } else {
@@ -29,8 +41,19 @@ export const runGit: Git = (args, cwd) =>
     );
   });
 
+/**
+ * The repo root above `dir`. Outside a repo, git's English `fatal:` line
+ * gives way to a translated message. Other failures, such as dubious
+ * ownership, keep git's text, since it names the fix.
+ */
 export function findRepoRoot(git: Git, dir: string): Promise<string> {
-  return git(["rev-parse", "--show-toplevel"], dir);
+  return git(["rev-parse", "--show-toplevel"], dir).catch((err) =>
+    Promise.reject(
+      /not a git repository/.test(String(err))
+        ? new KnownError("This file or folder isn't in a git repo.")
+        : err
+    )
+  );
 }
 
 /**
@@ -43,7 +66,10 @@ export function readRemoteUrl(git: Git, repoRoot: string, remote: string) {
     (urls) => urls.split(/\r?\n/)[0],
     () =>
       Promise.reject(
-        `No remote "${remote}" in this repo. Set openInGitHub.defaultRemote to a name from git remote.`
+        new KnownError(
+          'No remote "{0}" in this repo. Set openInGitHub.defaultRemote to a name from git remote.',
+          [remote]
+        )
       )
   );
 }

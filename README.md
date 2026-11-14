@@ -18,7 +18,7 @@ Remove the original Open in GitHub before you install. The two extensions share 
 
 ## Use it
 
-Open the command palette (cmd + shift + p / ctrl + shift + p) in a file and pick a command:
+Open the command palette (Ctrl+Shift+P, or ⌘+Shift+P on a Mac) in a file and pick a command:
 
 - **Remote Repo: Open File URL** opens the file, with the selected lines marked.
 - **Remote Repo: Open Blame URL** opens the blame page.
@@ -31,7 +31,7 @@ VS Code asks before it opens a host outside its trusted domains, such as GitLab 
 
 ## What it does
 
-- **Branch** links go to main or master. The current branch takes over only while the file is missing from main.
+- **Branch** links go to the remote's default branch, then main or master. The current branch takes over only while the file is missing from all of them.
 - **Hosts** GitHub, in-house GitHub servers, GitLab, Bitbucket and Bitbucket Server.
 - **Default branch** a setting picks the branch to try first.
 - **Selections** a selection over several lines links to the whole range.
@@ -61,14 +61,17 @@ Put these in the workspace settings:
 
 [mise](https://mise.jdx.dev) pins Node 22 and runs the checks.
 
-| Task                                 | Command                              |
-| ------------------------------------ | ------------------------------------ |
-| Install the packages                 | `mise x -- npm ci`                   |
-| Lint, typecheck and unit tests       | `mise run check`                     |
-| Bundle into `out/extension.js`       | `mise x -- npm run compile`          |
-| Tests inside a VS Code window        | `mise x -- npm test`                 |
-| Package into `dist/` as a `.vsix`    | `mise run build`                     |
-| Build and publish to the Marketplace | `mise x -- npm exec -- vsce publish` |
+| Task                                 | Command                               |
+| ------------------------------------ | ------------------------------------- |
+| Install the packages                 | `mise x -- npm ci`                    |
+| Lint before each push                | `git config core.hooksPath .githooks` |
+| Lint, typecheck and unit tests       | `mise run check`                      |
+| Bundle into `out/extension.js`       | `mise x -- npm run compile`           |
+| Tests inside a VS Code window        | `mise x -- npm test`                  |
+| Package into `dist/` as a `.vsix`    | `mise run build`                      |
+| Build and publish to the Marketplace | `mise x -- npm exec -- vsce publish`  |
+
+A clone made before 2026-11-14 may still hold `.git/hooks/pre-commit` from the old `pre-commit` package, which now blocks each commit. Delete that file, or set `core.hooksPath` as above.
 
 Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.
 

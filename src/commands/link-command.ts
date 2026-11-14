@@ -2,12 +2,19 @@ import * as path from "path";
 import { FileType, l10n, Uri, window, workspace } from "vscode";
 import { pickBranch } from "../git/pick-branch";
 import { findRepoRoot, runGit } from "../git/run-git";
-import { realPathOf, toRepoPath } from "../git/repo-path";
+import {
+  existingFolder,
+  linkPathOf,
+  realPathOf,
+  toRepoPath,
+} from "../git/repo-path";
 import { LinkView, SelectedLines, UrlMapping } from "../links/host-links";
 import { pickHost } from "../links/pick-host";
 import { hideCredentials } from "../links/web-url";
+import { KnownError } from "../known-error";
 import { errorText } from "./error-text";
 import { selectedLines } from "./selected-lines";
+import { tabUri } from "./tab-uri";
 import { readWebRemote } from "./web-remote";
 
 /** Does something with the link: opens it, or copies it. */
@@ -23,7 +30,11 @@ export async function runLinkCommand(
   explorerUri?: Uri
 ) {
   const editor = window.activeTextEditor;
-  const uri = explorerUri ?? editor?.document.uri;
+  // An image or PDF preview has no text editor, only a tab.
+  const uri =
+    explorerUri ??
+    editor?.document.uri ??
+    tabUri(window.tabGroups.activeTabGroup.activeTab?.input);
   if (!uri) {
     window.showErrorMessage(l10n.t("Open a file first."));
     return;
@@ -46,13 +57,20 @@ export async function runLinkCommand(
     const isFolder =
       explorerUri &&
       ((await workspace.fs.stat(uri)).type & FileType.Directory) !== 0;
-    const repoRoot = await findRepoRoot(
-      runGit,
-      isFolder ? openedPath : path.dirname(openedPath)
+    // A deleted folder climbs to its workspace folder at most.
+    const startDir = await existingFolder(
+      isFolder ? openedPath : path.dirname(openedPath),
+      workspace.getWorkspaceFolder(uri)?.uri.fsPath
     );
+    if (!startDir) {
+      throw new KnownError("This file or folder isn't in a git repo.");
+    }
+    const repoRoot = await findRepoRoot(runGit, startDir);
+    const linkPath = await linkPathOf(openedPath);
     const repoPath = toRepoPath(
       repoRoot,
-      await realPathOf(openedPath),
+      await realPathOf(openedPath, linkPath),
+      linkPath,
       openedPath
     );
     const [{ stored, web: remote }, branch] = await Promise.all([
@@ -78,6 +96,6 @@ export async function runLinkCommand(
     // Awaited, so a failed open or copy shows in the catch below.
     return await deliver(url);
   } catch (err) {
-    return window.showErrorMessage(errorText(err));
+    return window.showErrorMessage(errorText(err, l10n.t));
   }
 }

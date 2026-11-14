@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+- **Previews** Open and Copy work from the command palette on an image or PDF preview.
+
+- **Right branch** a local branch named `origin/main` no longer hides the remote `main`.
+
+- **Deleted files** a file whose folder was deleted on disk, or opened through a symlink or junction, gets the right link.
+
+- **More remotes** `git://` and `ftp://` remotes drop `.git` on every host, so Bitbucket Server and GitLab links open.
+
+- **Faster** each click waits for one round of git calls in place of two, and the download shrinks from 100 KB to 34 KB.
+
+- **Clear errors** a file outside a git repo, and a PC without git, get a plain message in your language in place of `fatal: not a git repository` or `spawn git ENOENT`.
+
+- **Languages** the git timeout, a missing remote and a Bitbucket Server remote with no project show their error in the VS Code display language.
+
 - **Smaller package** the unused screenshot of the old remote and branch picker is gone.
 
 - **Right branch** a link goes to the branch when a tag shares its name, to the fetch remote when it also pushes to a mirror, and opens for a file deleted on disk but still open in the editor.

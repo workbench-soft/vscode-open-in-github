@@ -1,6 +1,6 @@
 [tools]
 node = "22"
-"npm:markdownlint-cli2" = "0.24.0"
+"npm:markdownlint-cli2" = "0.24.1"
 
 [tasks.lint]
 description = "Lint with oxlint and check the format with oxfmt"

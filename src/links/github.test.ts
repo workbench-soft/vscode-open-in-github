@@ -18,6 +18,14 @@ for (const view of ["file", "blame"] as const) {
       );
     });
 
+    test("takes a mapping key that ends in .git", () => {
+      const gitKey = { "https://remote.url.git": "https://mapped.remote.url" };
+      assert.equal(
+        link({ remote, branch: "master", path, mapping: gitKey }),
+        link({ remote, branch: "master", path, mapping })
+      );
+    });
+
     test("swaps the remote through the mapping", () => {
       assert.equal(
         link({ remote, branch: "master", path, mapping, lines: { start: 10 } }),
