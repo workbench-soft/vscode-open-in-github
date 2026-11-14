@@ -15,7 +15,7 @@
 
 - [ ] Try Open and Copy by hand in VS Code. `npm test` passes in VS Code 1.146 (131 tests, 2026-11-13); these clicks need you.
   1. Open this folder in VS Code and press F5.
-  2. In the new window, open a file and run Open in GitHub and Copy File URL from the Command Palette, for the file, blame, history and Explorer commands.
+  2. In the new window, open a file and run each `Remote Repo:` command from the Command Palette: Open File URL, Copy File URL, and the Blame and History ones. Then right click a file and a folder in the Explorer and pick Remote Repo: Open URL and Remote Repo: Copy URL.
   3. Repeat in a GitLab and a Bitbucket repo.
   4. Repeat in a Remote SSH or WSL window, paste the copied link locally and check it is the right URL.
 - [ ] Decide whether to run step 12 of rewrite-repo (`reset-history`) on `main`. It wipes the history into one commit and force pushes, so it waits for your yes. Tell an agent "reset the history of vscode-open-in-github" when ready.
