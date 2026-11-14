@@ -21,6 +21,23 @@ export function toRepoPath(
  * Resolves symlinks in `openedPath`. A file deleted on disk, still open in an
  * editor or a diff, keeps its own path, since the remote may still hold it.
  */
+/**
+ * The nearest folder of `openedPath` that exists on disk, so git can start
+ * there for a file whose folder got deleted, such as after a branch switch.
+ */
+export async function existingFolder(openedPath: string): Promise<string> {
+  const isFolder = (dir: string) =>
+    fs.stat(dir).then(
+      (stat) => stat.isDirectory(),
+      () => false
+    );
+  let dir = openedPath;
+  while (!(await isFolder(dir)) && path.dirname(dir) !== dir) {
+    dir = path.dirname(dir);
+  }
+  return dir;
+}
+
 export function realPathOf(openedPath: string): Promise<string> {
   return fs.realpath(openedPath).catch(() => openedPath);
 }
