@@ -1,7 +1,10 @@
 {
   "Copied to the clipboard: {0}": "Copié dans le presse-papiers : {0}",
+  "No Bitbucket Server project and repo in {0}.": "{0} ne contient ni projet ni dépôt Bitbucket Server.",
+  "No remote \"{0}\" in this repo. Set openInGitHub.defaultRemote to a name from git remote.": "Ce dépôt n’a pas de remote « {0} ». Mettez dans openInGitHub.defaultRemote un nom donné par git remote.",
   "Open a file first.": "Ouvrez d’abord un fichier.",
   "Save the file in a git repo first.": "Enregistrez d’abord le fichier dans un dépôt git.",
   "The remote \"{0}\" points at {1}, which has no web page.": "Le remote « {0} » pointe vers {1}, qui n’a pas de page web.",
+  "git {0} took more than {1} seconds.": "git {0} a pris plus de {1} secondes.",
   "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0} n’est pas un lien http ou https, il reste donc fermé. Vérifiez openInGitHub.remoteURLMapping."
 }

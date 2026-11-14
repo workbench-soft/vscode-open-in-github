@@ -1,7 +1,10 @@
 {
   "Copied to the clipboard: {0}": "已复制到剪贴板：{0}",
+  "No Bitbucket Server project and repo in {0}.": "{0} 中没有 Bitbucket Server 的项目和仓库。",
+  "No remote \"{0}\" in this repo. Set openInGitHub.defaultRemote to a name from git remote.": "此仓库中没有远程“{0}”。请把 openInGitHub.defaultRemote 设为 git remote 列出的名称。",
   "Open a file first.": "请先打开一个文件。",
   "Save the file in a git repo first.": "请先把文件保存到 git 仓库中。",
   "The remote \"{0}\" points at {1}, which has no web page.": "远程“{0}”指向 {1}，它没有网页。",
+  "git {0} took more than {1} seconds.": "git {0} 运行超过了 {1} 秒。",
   "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0} 不是 http 或 https 链接，因此不会打开。请检查 openInGitHub.remoteURLMapping。"
 }

@@ -4,13 +4,14 @@ The extension turns the open file into a web link with git, then opens it in the
 
 ## Modules
 
-| Folder             | Job                                                                                                                  |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| `src/extension.ts` | Registers the 8 commands from `package.json`.                                                                        |
-| `src/commands/`    | Reads the settings and the selection, builds the link, then opens or copies it. The only code that imports `vscode`. |
-| `src/git/`         | Runs git with `execFile`, finds the repo root, reads the remote URL and picks the branch.                            |
-| `src/links/`       | Turns a remote into a web URL and writes the file, blame and history link for each host.                             |
-| `src/test-host/`   | Starts the tests inside a VS Code window.                                                                            |
+| Folder               | Job                                                                                                                  |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `src/extension.ts`   | Registers the 8 commands from `package.json`.                                                                        |
+| `src/commands/`      | Reads the settings and the selection, builds the link, then opens or copies it. The only code that imports `vscode`. |
+| `src/git/`           | Runs git with `execFile`, finds the repo root, reads the remote URL and picks the branch.                            |
+| `src/links/`         | Turns a remote into a web URL and writes the file, blame and history link for each host.                             |
+| `src/test-host/`     | Starts the tests inside a VS Code window.                                                                            |
+| `src/known-error.ts` | An error with an English text that `src/commands/` translates, for `git/` and `links/`.                              |
 
 ```mermaid
 flowchart LR
@@ -160,6 +161,8 @@ sequenceDiagram
 - **Rejected**
   - **i18next** the org tool for TypeScript apps. VS Code already picks the
     display language for `vscode.l10n`.
+- **Errors** `src/git/` and `src/links/` throw `KnownError` with the English
+  text. `errorText` in `src/commands/` passes it to `l10n.t()`.
 - **Cost to undo** low. The catalogs and the `l10n.t()` calls.
 
 ### Releases: a `.vsix` on GitHub, Marketplace by hand

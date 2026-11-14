@@ -17,12 +17,18 @@ function sources(dir = "src"): string[] {
   });
 }
 
-/** The message of each `l10n.t("...")` call, as the bundles key it. */
+/**
+ * The message of each `l10n.t("...")` and `new KnownError("...")` call, as
+ * the bundles key it.
+ */
 const messages = unique(
   sources().flatMap((file) =>
-    [...read(file).matchAll(/l10n\.t\(\s*(["'])((?:\\.|(?!\1).)*)\1/g)].map(
-      ([, quote, text]) =>
-        quote === '"' ? JSON.parse(`"${text}"`) : text.replace(/\\'/g, "'")
+    [
+      ...read(file).matchAll(
+        /(?:l10n\.t|new KnownError)\(\s*(["'])((?:\\.|(?!\1).)*)\1/g
+      ),
+    ].map(([, quote, text]) =>
+      quote === '"' ? JSON.parse(`"${text}"`) : text.replace(/\\'/g, "'")
     )
   )
 );

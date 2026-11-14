@@ -12,6 +12,10 @@ Japanese, Korean or Norwegian. Any other display language gets English.
   `package.nls.json` holds the English, and `package.nls.<code>.json` the rest.
 - **Messages** the code calls `l10n.t()` from the `vscode` module.
   `l10n/bundle.l10n.<code>.json` maps each English message to its translation.
+- **Errors** `src/git/` and `src/links/` MUST throw `KnownError` from
+  `src/known-error.ts` with the English text as the key, since they don't
+  import `vscode`. `errorText` in `src/commands/` translates it.
+  `src/translations.test.ts` reads both `l10n.t()` and `new KnownError()`.
 - **Codes** VS Code calls Simplified Chinese `zh-cn`.
 
 ## Limits
@@ -25,3 +29,9 @@ Japanese, Korean or Norwegian. Any other display language gets English.
 
 - **Why** the owner wants each workbench-soft app in 9 languages.
 - **Steps** this spec, then the manifest strings, the messages and the docs.
+
+### 2026-11-14 Git and Bitbucket Server errors in 9 languages
+
+- **Why** the git timeout, a missing remote and a Bitbucket Server remote
+  with no project showed English in every display language.
+- **Changes** those errors throw `KnownError`, and the bundles translate them.

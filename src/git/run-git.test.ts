@@ -29,7 +29,7 @@ suite("readRemoteUrl", () => {
     const git = () => Promise.reject(new Error("exit 1"));
     await assert.rejects(
       readRemoteUrl(git, "/repo", "upstream"),
-      (err) => typeof err === "string" && err.startsWith('No remote "upstream"')
+      (err: Error) => err.message.startsWith('No remote "upstream"')
     );
   });
 });

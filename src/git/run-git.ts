@@ -1,4 +1,5 @@
 import { execFile } from "child_process";
+import { KnownError } from "../known-error";
 
 /** Runs git with `args` in `cwd` and resolves with the trimmed output. */
 export type Git = (args: string[], cwd: string) => Promise<string>;
@@ -19,7 +20,12 @@ export const runGit: Git = (args, cwd) =>
       { cwd, env, timeout: timeoutMs },
       (error, stdout, stderr) => {
         if (error?.killed) {
-          reject(`git ${args[0]} took more than ${timeoutMs / 1000} seconds.`);
+          reject(
+            new KnownError("git {0} took more than {1} seconds.", [
+              args[0],
+              String(timeoutMs / 1000),
+            ])
+          );
         } else if (error) {
           reject(stderr.trim() || error);
         } else {
@@ -43,7 +49,10 @@ export function readRemoteUrl(git: Git, repoRoot: string, remote: string) {
     (urls) => urls.split(/\r?\n/)[0],
     () =>
       Promise.reject(
-        `No remote "${remote}" in this repo. Set openInGitHub.defaultRemote to a name from git remote.`
+        new KnownError(
+          'No remote "{0}" in this repo. Set openInGitHub.defaultRemote to a name from git remote.',
+          [remote]
+        )
       )
   );
 }

@@ -1,7 +1,10 @@
 {
   "Copied to the clipboard: {0}": "Kopiert til utklippstavlen: {0}",
+  "No Bitbucket Server project and repo in {0}.": "{0} har ikke noe Bitbucket Server-prosjekt og repo.",
+  "No remote \"{0}\" in this repo. Set openInGitHub.defaultRemote to a name from git remote.": "Repoet har ingen remote «{0}». Sett openInGitHub.defaultRemote til et navn fra git remote.",
   "Open a file first.": "Åpne en fil først.",
   "Save the file in a git repo first.": "Lagre filen i et git-repo først.",
   "The remote \"{0}\" points at {1}, which has no web page.": "Remoten «{0}» peker på {1}, som ikke har noen nettside.",
+  "git {0} took more than {1} seconds.": "git {0} brukte mer enn {1} sekunder.",
   "{0} isn't an http or https link, so it stays closed. Check openInGitHub.remoteURLMapping.": "{0} er ikke en http- eller https-lenke, så den åpnes ikke. Sjekk openInGitHub.remoteURLMapping."
 }
