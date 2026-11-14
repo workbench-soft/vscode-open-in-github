@@ -13,6 +13,7 @@ import { pickHost } from "../links/pick-host";
 import { hideCredentials } from "../links/web-url";
 import { errorText } from "./error-text";
 import { selectedLines } from "./selected-lines";
+import { tabUri } from "./tab-uri";
 import { readWebRemote } from "./web-remote";
 
 /** Does something with the link: opens it, or copies it. */
@@ -28,7 +29,11 @@ export async function runLinkCommand(
   explorerUri?: Uri
 ) {
   const editor = window.activeTextEditor;
-  const uri = explorerUri ?? editor?.document.uri;
+  // An image or PDF preview has no text editor, only a tab.
+  const uri =
+    explorerUri ??
+    editor?.document.uri ??
+    tabUri(window.tabGroups.activeTabGroup.activeTab?.input);
   if (!uri) {
     window.showErrorMessage(l10n.t("Open a file first."));
     return;
