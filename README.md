@@ -31,7 +31,7 @@ VS Code asks before it opens a host outside its trusted domains, such as GitLab 
 
 ## What it does
 
-- **Branch** links go to main or master. The current branch takes over only while the file is missing from main.
+- **Branch** links go to the remote's default branch, then main or master. The current branch takes over only while the file is missing from all of them.
 - **Hosts** GitHub, in-house GitHub servers, GitLab, Bitbucket and Bitbucket Server.
 - **Default branch** a setting picks the branch to try first.
 - **Selections** a selection over several lines links to the whole range.
