@@ -4,8 +4,8 @@
 
 - [ ] Publish the extension. The Marketplace has no `workbench-soft.open-in-remote-repo` yet, so users don't get the `openInGitHub.defaultRemote` fix.
   1. Sign in at <https://marketplace.visualstudio.com/manage> and create the publisher with ID `workbench-soft`.
-  2. Make a personal access token with the Marketplace Manage scope at <https://dev.azure.com>, and tell an agent it is ready.
-  3. The agent bumps the version and runs `mise x -- npx @vscode/vsce publish` with that token.
+  2. Make a personal access token with the Marketplace Manage scope at <https://dev.azure.com>. Store it in the Bitwarden project `workbench-soft` as `VSCE_PAT`, and tell an agent it is ready.
+  3. The agent bumps the version and runs `bws run -- mise x -- npm exec -- vsce publish`, the command in the README Release section. vsce reads the token from `VSCE_PAT`.
 
 ## auto-merge
 
