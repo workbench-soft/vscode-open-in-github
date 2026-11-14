@@ -18,7 +18,7 @@ Remove the original Open in GitHub before you install. The two extensions share 
 
 ## Use it
 
-Open the command palette (cmd + shift + p / ctrl + shift + p) in a file and pick a command:
+Open the command palette (Ctrl+Shift+P, or ⌘+Shift+P on a Mac) in a file and pick a command:
 
 - **Remote Repo: Open File URL** opens the file, with the selected lines marked.
 - **Remote Repo: Open Blame URL** opens the blame page.
