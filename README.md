@@ -71,6 +71,8 @@ Put these in the workspace settings:
 | Package into `dist/` as a `.vsix`    | `mise run build`                      |
 | Build and publish to the Marketplace | `mise x -- npm exec -- vsce publish`  |
 
+A clone made before 2026-11-14 may still hold `.git/hooks/pre-commit` from the old `pre-commit` package, which now blocks each commit. Delete that file, or set `core.hooksPath` as above.
+
 Press F5 in VS Code to start a window with the extension loaded. `docs/architecture.md` maps the code.
 
 Each push to main and each PR runs `mise run check` and the production build in `.github/workflows/checks.yml`, on `ubuntu-latest`.
