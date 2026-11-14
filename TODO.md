@@ -29,7 +29,6 @@
 - Left: `@types/vscode` 1.85 above the `engines.vscode` floor of 1.75, a call on the oldest VS Code to support.
 - [ ] Try the 2026-11-14 audit fixes in VS Code (F5 in this folder): run Remote Repo: Open File URL from the palette on an image preview, run it on a file outside any git repo, and switch VS Code to Russian (Configure Display Language) to see the error in Russian.
 - [ ] Decide on the icon: `assets/icon.jpg` is a GitHub Octodex picture, and the Octodex terms may not allow it as another product's logo. Replace it, or confirm it is fine, before the Marketplace publish.
-- [ ] Check the next Release run on main publishes the vsix. Each Release job now gets only its own token rights, and only a real run proves it.
 - Left: SSH host aliases such as `git@github-work:o/r.git` give `https://github-work/o/r`, a new feature that reads `ssh -G`.
 - Left: Bitbucket Cloud may now anchor lines as `#lines-10:20`, unchecked against the live site.
 - Left: `gitlab.com` and `bitbucket.org` match anywhere in the host, so `gitlab.company.com` gets GitLab links. Tightening it is a product call.
