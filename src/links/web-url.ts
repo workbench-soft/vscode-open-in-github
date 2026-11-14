@@ -6,9 +6,7 @@
 export function toWebUrl(remoteUrl: string): string | undefined {
   const url = toWebForm(remoteUrl.trim());
   if (!url) return undefined;
-  return hideCredentials(
-    /github\.com/.test(url) ? stripGitSuffix(url) : url
-  ).replace(/\/$/, "");
+  return hideCredentials(stripGitSuffix(url)).replace(/\/$/, "");
 }
 
 /**
@@ -25,18 +23,18 @@ function stripGitSuffix(url: string): string {
 }
 
 function toWebForm(url: string): string | undefined {
-  if (/^https?:/.test(url)) return stripGitSuffix(url);
+  if (/^https?:/.test(url)) return url;
   // `ssh://[user@]host[:port]/owner/repo.git`, also as `git+ssh://`
   const ssh = url.match(
     /^(?:git\+)?ssh(?:\+git)?:\/\/(?:[^@/]*@)?([^:/]+)(?::\d+)?\/(.+)$/
   );
-  if (ssh) return `https://${ssh[1]}/${stripGitSuffix(ssh[2])}`;
+  if (ssh) return `https://${ssh[1]}/${ssh[2]}`;
   // `[user@]host:owner/repo.git`. The path after the colon may start with a
   // digit, as in `1Password/sdk`, so no port is read there. With no user, the
   // host needs a dot, which leaves out a Windows drive and an alias like `gh:`.
   const scp = url.match(/^(?:([^@/]+)@)?([^:/\\]+):(?!\/\/)\/?(.+)$/);
   if (scp && (scp[1] || scp[2].includes("."))) {
-    return `https://${scp[2]}/${stripGitSuffix(scp[3])}`;
+    return `https://${scp[2]}/${scp[3]}`;
   }
   if (/^ftps?:/.test(url)) return url.replace(/^ftp/, "http");
   if (url.startsWith("git:")) return url.replace(/^git/, "https");
