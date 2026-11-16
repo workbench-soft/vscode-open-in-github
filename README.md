@@ -1,3 +1,5 @@
+<img src="assets/icon.png" width="96" alt="">
+
 # Open in Remote Repo
 
 A VS Code extension that opens the current file or folder on GitHub, GitLab or Bitbucket, or copies its link.

@@ -20,3 +20,4 @@ test/**
 TODO.md
 tsconfig.json
 .vscode-test/**
+design/**

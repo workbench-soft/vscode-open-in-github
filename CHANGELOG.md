@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Own icon** a branch that leaves as an arrow to the remote, on a violet to pink tile, in place of the GitHub Octodex picture.
+
 - **Previews** Open and Copy work from the command palette on an image or PDF preview.
 
 - **Right branch** a local branch named `origin/main` no longer hides the remote `main`.
