@@ -2,8 +2,8 @@
 
 ## publisher-workbench-soft
 
-- [ ] Publish the extension. The Marketplace has no `workbench-soft.open-in-remote-repo` yet, so users don't get the `openInGitHub.defaultRemote` fix.
-  1. Sign in at <https://marketplace.visualstudio.com/manage> and create the publisher with ID `workbench-soft`.
+- [ ] Publish the extension. The Marketplace has no `workbench-soft.open-in-remote-repo` yet, so users don't get the `openInGitHub.defaultRemote` fix. The new icon is in. The agent's Chrome form stayed blank, since the Chrome window rendered at 0 by 0, so the publisher and the token stay with you. (secret)
+  1. Open <https://marketplace.visualstudio.com/manage/createpublisher> in Chrome. Type Name `Workbench Soft`, ID `workbench-soft`, Company website `https://workbench-soft.com`, and press Create.
   2. Make a personal access token with the Marketplace Manage scope at <https://dev.azure.com>. Store it in the Bitwarden project `workbench-soft` as `VSCE_PAT`, and tell an agent it is ready.
   3. The agent bumps the version and runs `bws run -- mise x -- npm exec -- vsce publish`, the command in the README Release section. vsce reads the token from `VSCE_PAT`.
 
