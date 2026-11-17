@@ -166,19 +166,22 @@ sequenceDiagram
   text. `errorText` in `src/commands/` passes it to `l10n.t()`.
 - **Cost to undo** low. The catalogs and the `l10n.t()` calls.
 
-### Releases: a `.vsix` on GitHub, Marketplace by hand
+### Releases: a `.vsix` on GitHub and the Marketplace
 
 - **Picked** each green push to `main` gets a GitHub release with the
   `.vsix`, built on `ubuntu-latest` beside Checks. `release-gate.sh`
   publishes the build once Checks pass, and a failed Checks run cancels it.
-  A Marketplace publish stays manual.
+  The same job then publishes the `.vsix` to the Marketplace with
+  `vsce publish --oidc`, through the Trusted Publishing policy of the
+  `workbench-soft` publisher.
 - **Why** the repo is public, so a GitHub runner costs 0 minutes and fork
-  PRs stay off the PC. A Marketplace publish needs a token and a person.
+  PRs stay off the PC. Trusted Publishing trades a GitHub OIDC token for a
+  15 minute credential, so no token sits in the repo.
 - **Trade-off** vsce takes semver only, so the tag `v2026.10.30.1` turns into
-  `2026.1030.1`. People who install from the Marketplace wait for the manual
-  publish.
+  `2026.1030.1`.
 - **Rejected**
   - **The Windows PC runner** a fork's PR could run its code on that PC.
-  - **Publish to the Marketplace from CI** the token would sit in the repo
-    secrets of a public repo.
+  - **A `VSCE_PAT` secret** the token would sit in the repo secrets of a
+    public repo.
+  - **Upload by hand** the upload page asks for a CAPTCHA.
 - **Cost to undo** low. The two workflows.

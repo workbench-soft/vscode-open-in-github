@@ -101,6 +101,8 @@ jobs:
       # release-gate.sh reads the runs and jobs of the commit, and gh release create makes the tag.
       actions: read
       contents: write
+      # vsce publish --oidc trades this token for a Marketplace credential through Trusted Publishing.
+      id-token: write
     env:
       GH_TOKEN: ${{ github.token }}
     steps:
@@ -144,6 +146,12 @@ jobs:
         run: |
           .github/scripts/release-notes.sh "$TAG" > "$RUNNER_TEMP/notes.md"
           gh release create "$TAG" dist/*.vsix --target "$SHA" --notes-file "$RUNNER_TEMP/notes.md" --title "$TAG"
+
+      # The Marketplace policy "Release workflow" of the workbench-soft publisher trusts this file, so no token sits in the repo.
+      # It runs after the GitHub release, so a Marketplace failure leaves the release in place.
+      - name: Publish the same .vsix to the Marketplace
+        if: steps.version.outputs.tag
+        run: npm exec --yes --package=@vscode/vsce@4.1.1 -- vsce publish --oidc --packagePath dist/*.vsix
 
   cancel:
     # A failed Checks run stops the build of the same commit.

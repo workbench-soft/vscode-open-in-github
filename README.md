@@ -63,15 +63,14 @@ Put these in the workspace settings:
 
 [mise](https://mise.jdx.dev) pins Node 22 and runs the checks.
 
-| Task                                 | Command                               |
-| ------------------------------------ | ------------------------------------- |
-| Install the packages                 | `mise x -- npm ci`                    |
-| Lint before each push                | `git config core.hooksPath .githooks` |
-| Lint, typecheck and unit tests       | `mise run check`                      |
-| Bundle into `out/extension.js`       | `mise x -- npm run compile`           |
-| Tests inside a VS Code window        | `mise x -- npm test`                  |
-| Package into `dist/` as a `.vsix`    | `mise run build`                      |
-| Build and publish to the Marketplace | `mise x -- npm exec -- vsce publish`  |
+| Task                              | Command                               |
+| --------------------------------- | ------------------------------------- |
+| Install the packages              | `mise x -- npm ci`                    |
+| Lint before each push             | `git config core.hooksPath .githooks` |
+| Lint, typecheck and unit tests    | `mise run check`                      |
+| Bundle into `out/extension.js`    | `mise x -- npm run compile`           |
+| Tests inside a VS Code window     | `mise x -- npm test`                  |
+| Package into `dist/` as a `.vsix` | `mise run build`                      |
 
 A clone made before 2026-11-14 may still hold `.git/hooks/pre-commit` from the old `pre-commit` package, which now blocks each commit. Delete that file, or set `core.hooksPath` as above.
 
@@ -89,7 +88,7 @@ Each push to main whose Checks pass gets a [GitHub release](https://github.com/w
 - **Tag** the date in Sydney and the release of the day, such as `v2026.10.30.1`.
 - **Extension version** vsce takes semver only, so that `.vsix` reads `2026.1030.1`. The version in git stays as it is.
 - **Install** download the `.vsix` and run `code --install-extension open-in-remote-repo-2026.1030.1.vsix`.
-- **Marketplace** a person publishes with `mise x -- npm exec -- vsce publish`, since it needs a token.
+- **Marketplace** the same `.vsix` goes to the [Marketplace](https://marketplace.visualstudio.com/items?itemName=workbench-soft.open-in-remote-repo) right after, through Trusted Publishing, so no token sits in the repo.
 
 ## Credits
 
