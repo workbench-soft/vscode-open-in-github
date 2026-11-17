@@ -44,3 +44,23 @@ The extension id was `oleg-chibikov.open-in-remote-repo`. The repo is owned by `
 #### Docs it updated
 
 - The install command in `README.md`.
+
+### 2026-11-17 Publish to the Marketplace from CI with Trusted Publishing
+
+#### The problem
+
+The `workbench-soft` publisher exists since 2026-11-17, but the extension has no Marketplace page. The upload page asks for a picture CAPTCHA, and a token in the secrets of a public repo was the reason CI stayed out.
+
+#### What changes for people
+
+- **Marketplace** each GitHub release also lands on the Marketplace as `workbench-soft.open-in-remote-repo`, with the same `.vsix`.
+
+#### How
+
+- **Trusted Publishing** the Marketplace policy "Release workflow" trusts `workbench-soft/vscode-open-in-github` and `release.yml`. The publish job asks GitHub for an OIDC token, and `vsce publish --oidc` trades it for a 15 minute Marketplace credential. No token sits in the repo.
+- **Order** the GitHub release comes first, so a failed Marketplace step leaves the release in place.
+
+#### Files
+
+- **`.github/workflows/release.yml`** the publish job gets `id-token: write` and a step after the release.
+- **`README.md`**, **`docs/architecture.md`** and **`CHANGELOG.md`** say the Marketplace publish runs in CI.
