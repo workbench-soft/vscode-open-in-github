@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- **No release for docs** the publish job runs the shared `affected` step of `workbench-soft/ci` with `since: release`, so a push that changed only Markdown or `docs/` since the last tag publishes no release and no Marketplace version. Proof with `affected.ts --since release`: code commit `e0f286c` gives `run=true`, docs commit `2530d30` gives `run=false`.
 - **Marketplace** each release also lands on the VS Code Marketplace as `workbench-soft.open-in-remote-repo`.
 
 - **Own icon** a branch that leaves as an arrow to the remote, on a violet to pink tile, in place of the GitHub Octodex picture.
